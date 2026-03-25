@@ -2,7 +2,7 @@
 
 Das leere Gerüst um eine App aufzubauen.
 
-## Autor.  
+## Autor     
 
 Samuel Wehrli (wehs@zhaw.ch)
 
