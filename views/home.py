@@ -1,6 +1,7 @@
 import streamlit as st
 
 st.title("Meine erste Streamlit App")
+st.markdown("Unser Rechner ermöglicht es, aus ausgewählten Elementen und deren Anzahl automatisch die gesamte molare Masse einer chemischen Verbindung zu berechnen. Dabei werden die Atommasse der einzelnen Elemente berücksichtigt und übersichtlich zu einem Gesamtergebnis zusammengeführt. Zusätzlich werden die Berechnungsschritte tabellarisch dargestellt, sodass die Zusammensetzung der Verbindung leicht nachvollziehbar ist.")
 
 # !! WICHTIG: Eure Emails müssen in der App erscheinen!!
 
