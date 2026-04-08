@@ -1,6 +1,8 @@
 # BMLD-Inf2-AppV0
 
-Das leere Gerüst um eine App aufzubauen.
+Giuliana Gross (grossgiu@students.zhaw.ch)
+Nadja Kuhn (kuhnnad1@students.zhaw.ch)
+Nadia Devi Jayapragash (jayapnad@students.zhaw.ch)
 
 ## Autor     
 
