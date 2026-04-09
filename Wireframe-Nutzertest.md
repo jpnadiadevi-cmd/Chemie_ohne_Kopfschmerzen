@@ -1,69 +1,74 @@
-## Nutzertest – Chemie ohne Kopfschmerzen
+## Nutzertest
 
----
+### Hypothese
 
-## Hypothese
-
-Wir gehen davon aus, dass der Nutzer die App „Chemie ohne Kopfschmerzen“ intuitiv bedienen kann und sich schnell auf der Startseite zurechtfindet. Die wichtigsten Funktionen wie Periodensystem, Formelsammlung und Rechner sollen ohne zusätzliche Erklärungen verstanden und genutzt werden können.
+Wir gehen davon aus, dass der Nutzer die App „Chemie ohne Kopfschmerzen“ intuitiv bedienen kann und sich schnell auf der Startseite zurechtfindet. Die wichtigsten Funktionen wie Periodensystem, Formelsammlung, Rechner und eine Seite, um Protokoll zu führen sollen ohne zusätzliche Erklärungen verstanden und genutzt werden können.
 
 Zudem möchten wir überprüfen, ob die Navigation klar ist und ob Elemente wie Buttons oder fehlende Funktionen die Nutzung erschweren.
 
 ---
 
-## Protokoll Nutzertest
+### Protokoll Nutzertest
 
-### Startseite / Homebildschirm
+*Startseite / Homebildschirm*
 •⁠  ⁠Übersichtlich
 •⁠  ⁠Gut strukturiert
 
-### Periodensystem
+*Protokoll*
+•⁠  ⁠Praktisch
+•⁠  ⁠Ordnend
+
+*Logbuch*
+•⁠  ⁠Kompakt
+•⁠  ⁠Übersichtlich
+•⁠  ⁠Zusammenfassend
+•⁠  ⁠Praktisch
+
+*Periodensystem*
 •⁠  ⁠Bildlich dargestellt
 •⁠  ⁠Kreativ
 •⁠  ⁠Interaktiv
 
-### Formelsammlung
+*Formelsammlung*
 •⁠  ⁠Kompakt
 •⁠  ⁠Übersichtlich
-•⁠  ⁠Buttons noch unauffällig
+•⁠  ⁠Unauffällige Buttons
 
-### Konzentration und Teilchen
+*Konzentration und Teilchen*
 •⁠  ⁠Selbsterklärend
 •⁠  ⁠Übersichtlich
 
-### Die Mol-Formel
+*Die Mol-Formel*
 •⁠  ⁠Selbsterklärend
 •⁠  ⁠Übersichtlich
 
-### Molare Masse via PSE
+*Molare Masse via PSE*
 •⁠  ⁠Interaktiv
 •⁠  ⁠Kreativ
 •⁠  ⁠Praktisch
 
 ---
 
-## Test-Grid – Chemie ohne Kopfschmerzen
+## Test-Grid
 
 ### Was war gut?
 •⁠  ⁠Übersichtlich
-•⁠  ⁠Die meisten Tools wurden vom Nutzer gut verstanden
+•⁠  ⁠Testnutzer fand die meisten Tools verständlich
 •⁠  ⁠Seitenliste wurde als nützlich empfunden
 •⁠  ⁠Interaktive Funktionen wurden als vielseitig wahrgenommen
-
----
+•⁠  ⁠Protokoll ist sehr praktisch für Notizen und Ergebnisse
+•⁠  ⁠Logbuch ermöglicht Zugriff auf vergangene Ergebnisse
 
 ### Was war schlecht?
-•⁠  ⁠Buttons bei der Formelsammlung sind nicht klar hervorgehoben
-•⁠  ⁠Startseite könnte visuell attraktiver gestaltet werden
-•⁠  ⁠Speicherung von Daten fehlt (noch nicht implementiert)
-
----
+•⁠  ⁠Buttons in der Formelsammlung nicht ausreichend hervorgehoben
+•⁠  ⁠Startseite könnte visuell attraktiver sein
+•⁠  ⁠Speicherung von Daten fehlt noch
 
 ### Neue Ideen
-•⁠  ⁠Speicherung von Daten integrieren
-•⁠  ⁠Zusätzliche Beschreibungen für Formeln hinzufügen
-
----
+•⁠  ⁠Beschreibung für die verschiedenen Formeln
+•⁠  ⁠Integration von Bildern
+•⁠  ⁠Darstellung von Molekülstrukturen im Periodensystem
 
 ### Neue Probleme
 •⁠  ⁠Ist der Rechner fehlerfrei?
-•⁠  ⁠Wie werden Kommastellen definiert?
+•⁠  ⁠Definition der Kommastellen
