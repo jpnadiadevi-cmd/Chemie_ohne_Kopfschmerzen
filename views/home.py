@@ -9,6 +9,7 @@ st.markdown("Unser Rechner ermöglicht es, aus ausgewählten Elementen und deren
 Diese App wurde von folgenden Personen entwickelt:
 - Nadia Devi Jayapragash (jayapnad@students.zhaw.ch)
 - Giuliana Gross (grossgiu@students.zhaw.ch)
+- Nadja Kuhn (kuhnad1@students.zhaw.ch)  
 
 Diese App ist das leere Gerüst für die App-Entwicklung im Modul Informatik 2 (BMLD/ZHAW)
 
