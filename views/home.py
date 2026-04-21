@@ -1,17 +1,18 @@
 import streamlit as st
 
-st.title("Meine erste Streamlit App")
-st.markdown("Unser Rechner ermöglicht es, aus ausgewählten Elementen und deren Anzahl automatisch die gesamte molare Masse einer chemischen Verbindung zu berechnen. Dabei werden die Atommasse der einzelnen Elemente berücksichtigt und übersichtlich zu einem Gesamtergebnis zusammengeführt. Zusätzlich werden die Berechnungsschritte tabellarisch dargestellt, sodass die Zusammensetzung der Verbindung leicht nachvollziehbar ist.")
+st.title("🧪 Chemie ohne Kopfschmerzen")
+st.markdown("Wähle eine Funktion:")
 
-# !! WICHTIG: Eure Emails müssen in der App erscheinen!!
+st.markdown("---")
 
-"""
-Diese App wurde von folgenden Personen entwickelt:
-- Nadia Devi Jayapragash (jayapnad@students.zhaw.ch)
-- Giuliana Gross (grossgiu@students.zhaw.ch)
-- Nadja Kuhn (kuhnad1@students.zhaw.ch)  
+if st.button("🧬 Periodensystem", use_container_width=True):
+    st.switch_page("views/periodensystem.py")
 
-Diese App ist das leere Gerüst für die App-Entwicklung im Modul Informatik 2 (BMLD/ZHAW)
+if st.button("📚 Formelsammlung", use_container_width=True):
+    st.switch_page("views/formelsammlung.py")
 
-Autor: Samuel Wehrli (wehs@zhaw.ch)
-"""
+if st.button("📓 Logbuch", use_container_width=True):
+    st.switch_page("views/logbuch.py")
+
+if st.button("📝 Protokoll", use_container_width=True):
+    st.switch_page("views/protokoll.py")
