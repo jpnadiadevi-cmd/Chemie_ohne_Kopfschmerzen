@@ -6,12 +6,30 @@ st.title("📚 Formelsammlung")
 
 st.markdown("---")
 
-# Navigation zu den Unterseiten
-if st.button("🧪 Konzentrationen und Teilchen", use_container_width=True):
-    st.switch_page("views/formelsammlung/konzentrationen_teilchen.py")
+# Sidebar Navigation
+with st.sidebar:
+    st.header("📚 Formelsammlung")
+    
+    if st.button("🧪 Konzentrationen und Teilchen", use_container_width=True):
+        st.switch_page("views/formelsammlung_konzentrationen.py")
+    
+    if st.button("🧬 Die Molformel", use_container_width=True):
+        st.switch_page("views/formelsammlung_molformel.py")
+    
+    if st.button("⚗️ Die molare Masse mit PSE", use_container_width=True):
+        st.switch_page("views/formelsammlung_molmasse.py")
 
-if st.button("🧬 Die Molformel", use_container_width=True):
-    st.switch_page("views/formelsammlung/molformel.py")
+# Hauptinhalt
+col1, col2, col3 = st.columns(3)
 
-if st.button("⚗️ Die molare Masse mit PSE", use_container_width=True):
-    st.switch_page("views/formelsammlung/molare_masse.py")
+with col1:
+    if st.button("🧪 Konzentrationen und Teilchen", use_container_width=True):
+        st.switch_page("views/formelsammlung_konzentrationen.py")
+
+with col2:
+    if st.button("🧬 Die Molformel", use_container_width=True):
+        st.switch_page("views/formelsammlung_molformel.py")
+
+with col3:
+    if st.button("⚗️ Die molare Masse mit PSE", use_container_width=True):
+        st.switch_page("views/formelsammlung_molmasse.py")
