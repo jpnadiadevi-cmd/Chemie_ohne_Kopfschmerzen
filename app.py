@@ -13,21 +13,13 @@ login_manager.login_register()
 
 # Seitenkonfiguration
 st.set_page_config(
-    page_title="Molare Masse",
-    page_icon=":material/science:"
+    page_title="Meine App",
+    page_icon=":material/home:"
 )
 
-# Seite definieren
-pg_rechner = st.Page(
-    "views/Rechner.py",
-    title="Molare Masse",
-    icon=":material/science:",
-    default=True
-)
-st.set_page_config(page_title="Meine App", page_icon=":material/home:")
-
+# Seiten definieren
 pg_home = st.Page("views/home.py", title="Home", icon=":material/home:", default=True)
-pg_second = st.Page("views/Rechner.py", title="Rechner", icon=":material/info:")
+pg_rechner = st.Page("views/Rechner.py", title="Rechner", icon=":material/science:")
 
-pg = st.navigation([pg_home, pg_second])
+pg = st.navigation([pg_home, pg_rechner])
 pg.run()
