@@ -1,3 +1,46 @@
+[11:34, 21.4.2026] Nadia 🐣: import streamlit as st
+
+st.set_page_config(layout="wide")
+
+st.title("⚛️ Interaktives Periodensystem - Alle 118 Elemente")
+
+st.write("Klicke auf ein Element, um detaillierte Informationen zu sehen!")
+
+# Vollständige Periodensystem-Daten mit allen 118 Elementen
+elemente = [
+    # Periode 1
+    {"symbol": "H", "name": "Wasserstoff", "ordnungszahl": 1, "gruppe": 1, "periode": 1, "atommasse": 1.008, "kategorie": "Nichtmetalle", "elektronegativität": 2.20},
+    {"symbol": "He", "name": "Helium", "ordnungszahl": 2, "gruppe": 18, "periode": 1, "atommasse": 4.003, "kategorie": "Edelgase", "elektronegativität": None},
+    
+    # Periode 2
+    {"symbol": "Li", "name": "Lithium", "ordnungszahl": 3, "gruppe": 1, "periode": 2, "atommasse": 6.941, "kategorie": …
+[11:36, 21.4.2026] Nadja BMLD: import streamlit as st
+from utils.data_manager import DataManager
+from utils.login_manager import LoginManager
+
+# DataManager und Login initialisieren
+data_manager = DataManager(
+    fs_protocol='webdav',
+    fs_root_folder="Chemie_Informatik2"
+)
+
+login_manager = LoginManager(data_manager)
+login_manager.login_register()
+
+# Seitenkonfiguration
+st.set_page_config(
+    page_title="Meine App",
+    page_icon=":material/home:"
+)
+
+# Seiten definieren
+pg_home = st.Page("views/home.py", title="Home", icon=":material/home:", default=True)
+pg_rechner = st.Page("views/Rechner.py", title="Rechner", icon=":material/science:")
+
+pg = st.navigation([pg_home, pg_rechner])
+pg.run()
+[11:39, 21.4.2026] Nadia 🐣: Molare Masse Rechner mit PSE
+
 import streamlit as st
 
 st.set_page_config(layout="wide")
@@ -64,9 +107,9 @@ elemente = [
     {"symbol": "Rh", "name": "Rhodium", "ordnungszahl": 45, "gruppe": 9, "periode": 5, "atommasse": 102.906, "kategorie": "Übergangsmetalle", "elektronegativität": 2.28},
     {"symbol": "Pd", "name": "Palladium", "ordnungszahl": 46, "gruppe": 10, "periode": 5, "atommasse": 106.42, "kategorie": "Übergangsmetalle", "elektronegativität": 2.20},
     {"symbol": "Ag", "name": "Silber", "ordnungszahl": 47, "gruppe": 11, "periode": 5, "atommasse": 107.868, "kategorie": "Übergangsmetalle", "elektronegativität": 1.93},
-    {"symbol": "Cd", "name": "Cadmium", "ordnungszahl": 48, "gruppe": 12, "periode": 5, "atommasse": 112.411, "kategorie": "Übergangsmetalle", "elektronegativität": 1.69},
-    {"symbol": "In", "name": "Indium", "ordnungszahl": 49, "gruppe": 13, "periode": 5, "atommasse": 114.818, "kategorie": "Übergangsmetalle", "elektronegativität": 1.78},
-    {"symbol": "Sn", "name": "Zinn", "ordnungszahl": 50, "gruppe": 14, "periode": 5, "atommasse": 118.711, "kategorie": "Übergangsmetalle", "elektronegativität": 1.96},
+    {"symbol": "Cd", "name": "Cadmium", "ordnungszahl": 48, "gruppe": 12, "periode": 5, "atommasse": 112.411, "kategorie": "Übergansmetalle", "elektronegativität": 1.69},
+    {"symbol": "In", "name": "Indium", "ordnungszahl": 49, "gruppe": 13, "periode": 5, "atommasse": 114.818, "kategorie": "Übergansmetalle", "elektronegativität": 1.78},
+    {"symbol": "Sn", "name": "Zinn", "ordnungszahl": 50, "gruppe": 14, "periode": 5, "atommasse": 118.711, "kategorie": "Übergansmetalle", "elektronegativität": 1.96},
     {"symbol": "Sb", "name": "Antimon", "ordnungszahl": 51, "gruppe": 15, "periode": 5, "atommasse": 121.760, "kategorie": "Halbmetalle", "elektronegativität": 2.05},
     {"symbol": "Te", "name": "Tellur", "ordnungszahl": 52, "gruppe": 16, "periode": 5, "atommasse": 127.60, "kategorie": "Halbmetalle", "elektronegativität": 2.10},
     {"symbol": "I", "name": "Iod", "ordnungszahl": 53, "gruppe": 17, "periode": 5, "atommasse": 126.904, "kategorie": "Halogene", "elektronegativität": 2.66},
@@ -90,18 +133,18 @@ elemente = [
     {"symbol": "Tm", "name": "Thulium", "ordnungszahl": 69, "gruppe": 3, "periode": 6, "atommasse": 168.934, "kategorie": "Lanthanoide", "elektronegativität": 1.25},
     {"symbol": "Yb", "name": "Ytterbium", "ordnungszahl": 70, "gruppe": 3, "periode": 6, "atommasse": 173.04, "kategorie": "Lanthanoide", "elektronegativität": None},
     {"symbol": "Lu", "name": "Lutetium", "ordnungszahl": 71, "gruppe": 3, "periode": 6, "atommasse": 174.967, "kategorie": "Lanthanoide", "elektronegativität": 1.27},
-    {"symbol": "Hf", "name": "Hafnium", "ordnungszahl": 72, "gruppe": 4, "periode": 6, "atommasse": 178.49, "kategorie": "Übergangsmetalle", "elektronegativität": 1.30},
-    {"symbol": "Ta", "name": "Tantal", "ordnungszahl": 73, "gruppe": 5, "periode": 6, "atommasse": 180.948, "kategorie": "Übergangsmetalle", "elektronegativität": 1.50},
-    {"symbol": "W", "name": "Wolfram", "ordnungszahl": 74, "gruppe": 6, "periode": 6, "atommasse": 183.84, "kategorie": "Übergangsmetalle", "elektronegativität": 2.36},
-    {"symbol": "Re", "name": "Rhenium", "ordnungszahl": 75, "gruppe": 7, "periode": 6, "atommasse": 186.207, "kategorie": "Übergangsmetalle", "elektronegativität": 1.90},
-    {"symbol": "Os", "name": "Osmium", "ordnungszahl": 76, "gruppe": 8, "periode": 6, "atommasse": 190.23, "kategorie": "Übergangsmetalle", "elektronegativität": 2.20},
-    {"symbol": "Ir", "name": "Iridium", "ordnungszahl": 77, "gruppe": 9, "periode": 6, "atommasse": 192.217, "kategorie": "Übergangsmetalle", "elektronegativität": 2.20},
-    {"symbol": "Pt", "name": "Platin", "ordnungszahl": 78, "gruppe": 10, "periode": 6, "atommasse": 195.084, "kategorie": "Übergangsmetalle", "elektronegativität": 2.28},
-    {"symbol": "Au", "name": "Gold", "ordnungszahl": 79, "gruppe": 11, "periode": 6, "atommasse": 196.967, "kategorie": "Übergangsmetalle", "elektronegativität": 2.54},
-    {"symbol": "Hg", "name": "Quecksilber", "ordnungszahl": 80, "gruppe": 12, "periode": 6, "atommasse": 200.592, "kategorie": "Übergangsmetalle", "elektronegativität": 2.00},
-    {"symbol": "Tl", "name": "Thallium", "ordnungszahl": 81, "gruppe": 13, "periode": 6, "atommasse": 204.383, "kategorie": "Übergangsmetalle", "elektronegativität": 1.62},
-    {"symbol": "Pb", "name": "Blei", "ordnungszahl": 82, "gruppe": 14, "periode": 6, "atommasse": 207.2, "kategorie": "Übergangsmetalle", "elektronegativität": 2.33},
-    {"symbol": "Bi", "name": "Bismut", "ordnungszahl": 83, "gruppe": 15, "periode": 6, "atommasse": 208.980, "kategorie": "Übergangsmetalle", "elektronegativität": 2.02},
+    {"symbol": "Hf", "name": "Hafnium", "ordnungszahl": 72, "gruppe": 4, "periode": 6, "atommasse": 178.49, "kategorie": "Übergansmetalle", "elektronegativität": 1.30},
+    {"symbol": "Ta", "name": "Tantal", "ordnungszahl": 73, "gruppe": 5, "periode": 6, "atommasse": 180.948, "kategorie": "Übergansmetalle", "elektronegativität": 1.50},
+    {"symbol": "W", "name": "Wolfram", "ordnungszahl": 74, "gruppe": 6, "periode": 6, "atommasse": 183.84, "kategorie": "Übergansmetalle", "elektronegativität": 2.36},
+    {"symbol": "Re", "name": "Rhenium", "ordnungszahl": 75, "gruppe": 7, "periode": 6, "atommasse": 186.207, "kategorie": "Übergansmetalle", "elektronegativität": 1.90},
+    {"symbol": "Os", "name": "Osmium", "ordnungszahl": 76, "gruppe": 8, "periode": 6, "atommasse": 190.23, "kategorie": "Übergansmetalle", "elektronegativität": 2.20},
+    {"symbol": "Ir", "name": "Iridium", "ordnungszahl": 77, "gruppe": 9, "periode": 6, "atommasse": 192.217, "kategorie": "Übergansmetalle", "elektronegativität": 2.20},
+    {"symbol": "Pt", "name": "Platin", "ordnungszahl": 78, "gruppe": 10, "periode": 6, "atommasse": 195.084, "kategorie": "Übergansmetalle", "elektronegativität": 2.28},
+    {"symbol": "Au", "name": "Gold", "ordnungszahl": 79, "gruppe": 11, "periode": 6, "atommasse": 196.967, "kategorie": "Übergansmetalle", "elektronegativität": 2.54},
+    {"symbol": "Hg", "name": "Quecksilber", "ordnungszahl": 80, "gruppe": 12, "periode": 6, "atommasse": 200.592, "kategorie": "Übergansmetalle", "elektronegativität": 2.00},
+    {"symbol": "Tl", "name": "Thallium", "ordnungszahl": 81, "gruppe": 13, "periode": 6, "atommasse": 204.383, "kategorie": "Übergansmetalle", "elektronegativität": 1.62},
+    {"symbol": "Pb", "name": "Blei", "ordnungszahl": 82, "gruppe": 14, "periode": 6, "atommasse": 207.2, "kategorie": "Übergansmetalle", "elektronegativität": 2.33},
+    {"symbol": "Bi", "name": "Bismut", "ordnungszahl": 83, "gruppe": 15, "periode": 6, "atommasse": 208.980, "kategorie": "Übergansmetalle", "elektronegativität": 2.02},
     {"symbol": "Po", "name": "Polonium", "ordnungszahl": 84, "gruppe": 16, "periode": 6, "atommasse": 209, "kategorie": "Halbmetalle", "elektronegativität": 2.00},
     {"symbol": "At", "name": "Astat", "ordnungszahl": 85, "gruppe": 17, "periode": 6, "atommasse": 210, "kategorie": "Halogene", "elektronegativität": 2.20},
     {"symbol": "Rn", "name": "Radon", "ordnungszahl": 86, "gruppe": 18, "periode": 6, "atommasse": 222, "kategorie": "Edelgase", "elektronegativität": None},
@@ -124,19 +167,19 @@ elemente = [
     {"symbol": "Md", "name": "Mendelevium", "ordnungszahl": 101, "gruppe": 3, "periode": 7, "atommasse": 258, "kategorie": "Actinoide", "elektronegativität": 1.30},
     {"symbol": "No", "name": "Nobelium", "ordnungszahl": 102, "gruppe": 3, "periode": 7, "atommasse": 259, "kategorie": "Actinoide", "elektronegativität": 1.30},
     {"symbol": "Lr", "name": "Lawrencium", "ordnungszahl": 103, "gruppe": 3, "periode": 7, "atommasse": 262, "kategorie": "Actinoide", "elektronegativität": None},
-    {"symbol": "Rf", "name": "Rutherfordium", "ordnungszahl": 104, "gruppe": 4, "periode": 7, "atommasse": 267, "kategorie": "Übergangsmetalle", "elektronegativität": None},
-    {"symbol": "Db", "name": "Dubnium", "ordnungszahl": 105, "gruppe": 5, "periode": 7, "atommasse": 270, "kategorie": "Übergangsmetalle", "elektronegativität": None},
-    {"symbol": "Sg", "name": "Seaborgium", "ordnungszahl": 106, "gruppe": 6, "periode": 7, "atommasse": 271, "kategorie": "Übergangsmetalle", "elektronegativität": None},
-    {"symbol": "Bh", "name": "Bohrium", "ordnungszahl": 107, "gruppe": 7, "periode": 7, "atommasse": 270, "kategorie": "Übergangsmetalle", "elektronegativität": None},
-    {"symbol": "Hs", "name": "Hassium", "ordnungszahl": 108, "gruppe": 8, "periode": 7, "atommasse": 277, "kategorie": "Übergangsmetalle", "elektronegativität": None},
-    {"symbol": "Mt", "name": "Meitnerium", "ordnungszahl": 109, "gruppe": 9, "periode": 7, "atommasse": 278, "kategorie": "Übergangsmetalle", "elektronegativität": None},
-    {"symbol": "Ds", "name": "Darmstadium", "ordnungszahl": 110, "gruppe": 10, "periode": 7, "atommasse": 281, "kategorie": "Übergangsmetalle", "elektronegativität": None},
-    {"symbol": "Rg", "name": "Roentgenium", "ordnungszahl": 111, "gruppe": 11, "periode": 7, "atommasse": 280, "kategorie": "Übergangsmetalle", "elektronegativität": None},
-    {"symbol": "Cn", "name": "Copernicium", "ordnungszahl": 112, "gruppe": 12, "periode": 7, "atommasse": 285, "kategorie": "Übergangsmetalle", "elektronegativität": None},
-    {"symbol": "Nh", "name": "Nihonium", "ordnungszahl": 113, "gruppe": 13, "periode": 7, "atommasse": 286, "kategorie": "Übergangsmetalle", "elektronegativität": None},
-    {"symbol": "Fl", "name": "Flerovium", "ordnungszahl": 114, "gruppe": 14, "periode": 7, "atommasse": 289, "kategorie": "Übergangsmetalle", "elektronegativität": None},
-    {"symbol": "Mc", "name": "Moscovium", "ordnungszahl": 115, "gruppe": 15, "periode": 7, "atommasse": 290, "kategorie": "Übergangsmetalle", "elektronegativität": None},
-    {"symbol": "Lv", "name": "Livermorium", "ordnungszahl": 116, "gruppe": 16, "periode": 7, "atommasse": 293, "kategorie": "Übergangsmetalle", "elektronegativität": None},
+    {"symbol": "Rf", "name": "Rutherfordium", "ordnungszahl": 104, "gruppe": 4, "periode": 7, "atommasse": 267, "kategorie": "Übergansmetalle", "elektronegativität": None},
+    {"symbol": "Db", "name": "Dubnium", "ordnungszahl": 105, "gruppe": 5, "periode": 7, "atommasse": 270, "kategorie": "Übergansmetalle", "elektronegativität": None},
+    {"symbol": "Sg", "name": "Seaborgium", "ordnungszahl": 106, "gruppe": 6, "periode": 7, "atommasse": 271, "kategorie": "Übergansmetalle", "elektronegativität": None},
+    {"symbol": "Bh", "name": "Bohrium", "ordnungszahl": 107, "gruppe": 7, "periode": 7, "atommasse": 270, "kategorie": "Übergansmetalle", "elektronegativität": None},
+    {"symbol": "Hs", "name": "Hassium", "ordnungszahl": 108, "gruppe": 8, "periode": 7, "atommasse": 277, "kategorie": "Übergansmetalle", "elektronegativität": None},
+    {"symbol": "Mt", "name": "Meitnerium", "ordnungszahl": 109, "gruppe": 9, "periode": 7, "atommasse": 278, "kategorie": "Übergansmetalle", "elektronegativität": None},
+    {"symbol": "Ds", "name": "Darmstadium", "ordnungszahl": 110, "gruppe": 10, "periode": 7, "atommasse": 281, "kategorie": "Übergansmetalle", "elektronegativität": None},
+    {"symbol": "Rg", "name": "Roentgenium", "ordnungszahl": 111, "gruppe": 11, "periode": 7, "atommasse": 280, "kategorie": "Übergansmetalle", "elektronegativität": None},
+    {"symbol": "Cn", "name": "Copernicium", "ordnungszahl": 112, "gruppe": 12, "periode": 7, "atommasse": 285, "kategorie": "Übergansmetalle", "elektronegativität": None},
+    {"symbol": "Nh", "name": "Nihonium", "ordnungszahl": 113, "gruppe": 13, "periode": 7, "atommasse": 286, "kategorie": "Übergansmetalle", "elektronegativität": None},
+    {"symbol": "Fl", "name": "Flerovium", "ordnungszahl": 114, "gruppe": 14, "periode": 7, "atommasse": 289, "kategorie": "Übergansmetalle", "elektronegativität": None},
+    {"symbol": "Mc", "name": "Moscovium", "ordnungszahl": 115, "gruppe": 15, "periode": 7, "atommasse": 290, "kategorie": "Übergansmetalle", "elektronegativität": None},
+    {"symbol": "Lv", "name": "Livermorium", "ordnungszahl": 116, "gruppe": 16, "periode": 7, "atommasse": 293, "kategorie": "Übergansmetalle", "elektronegativität": None},
     {"symbol": "Ts", "name": "Tennessium", "ordnungszahl": 117, "gruppe": 17, "periode": 7, "atommasse": 294, "kategorie": "Halogene", "elektronegativität": None},
     {"symbol": "Og", "name": "Oganesson", "ordnungszahl": 118, "gruppe": 18, "periode": 7, "atommasse": 294, "kategorie": "Edelgase", "elektronegativität": None},
 ]
@@ -147,7 +190,7 @@ farben_kategorien = {
     "Erdalkalimetalle": "#FFCC99",
     "Lanthanoide": "#FFBFFF",
     "Actinoide": "#FF99CC",
-    "Übergangsmetalle": "#CCCCFF",
+    "Übergansmetalle": "#CCCCFF",
     "Halbmetalle": "#CCFFCC",
     "Nichtmetalle": "#FFFFCC",
     "Halogene": "#FFCCFF",
