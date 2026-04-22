@@ -3,11 +3,10 @@ import pandas as pd
 
 st.set_page_config(layout="wide")
 
-st.title("⚛️ Interaktives Periodensystem - Alle 118 Elemente")
+st.title("⚛️ Interaktives Periodensystem - Molmasse berechnen")
 
-st.write("Klicke auf ein Element, um detaillierte Informationen zu sehen!")
-
-# Vollständige Periodensystem-Daten mit allen 118 Elementen
+st.write("Klicke auf ein / mehrere Elemente, um die Molmasse zu berechnen.")
+    
 elemente = [
     # Periode 1
     {"symbol": "H", "name": "Wasserstoff", "ordnungszahl": 1, "gruppe": 1, "periode": 1, "atommasse": 1.008, "kategorie": "Nichtmetalle", "elektronegativität": 2.20},
