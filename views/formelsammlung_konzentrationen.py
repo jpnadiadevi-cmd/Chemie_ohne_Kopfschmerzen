@@ -1,22 +1,14 @@
 import streamlit as st
-
-st.title("🧪 Konzentrationen und Teilchen")
-
-st.markdown("---")
-
-import streamlit as st
 import math
 
 st.set_page_config(layout="wide")
-
-st.title("🧪 Konzentration & Teilchen")
 
 st.write("""
 Berechne wichtige Konzentrationen und Teilchenzahlen in der Chemie!
 
 Diese Seite hilft dir bei:
 - **Molarität** (Konzentration in mol/L)
-- **Molalität** (Konzentration in mol/kg)
+- **Molalität** (Konzentration in mol/g)
 - **Teilchenzahl** (Anzahl der Atome/Moleküle)
 
 Gib einfach die Werte ein und erhalte sofort das Ergebnis! 🔬
@@ -61,7 +53,7 @@ with col3:
 st.markdown("---")
 
 # Molalität (Molality)
-st.subheader("2️⃣ Molalität: β [mol/kg] = n / m")
+st.subheader("2️⃣ Molalität: β [mol/g] = n / m")
 st.write("*Berechne die Molalität einer Lösung*")
 
 col1, col2, col3 = st.columns([1, 1, 1])
@@ -89,9 +81,8 @@ with col2:
 with col3:
     st.write("**Ergebnis:**")
     if m_molal > 0:
-        m_molal_kg = m_molal / 1000  # Umrechnung von g zu kg
-        beta_molal = n_molal / m_molal_kg
-        st.metric("Molalität β", f"{beta_molal:.4f} mol/kg")
+        beta_molal = n_molal / m_molal
+        st.metric("Molalität β", f"{beta_molal:.4f} mol/g")
     else:
         st.info("ℹ️ Bitte gib eine Masse > 0 ein")
 
