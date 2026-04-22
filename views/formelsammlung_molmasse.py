@@ -5,7 +5,21 @@ st.set_page_config(layout="wide")
 
 st.title("⚛️ Interaktives Periodensystem - Molmasse berechnen")
 
-st.write("Klicke auf ein / mehrere Elemente, um die Molmasse zu berechnen.")
+st.write("""
+🧪 **Interaktives PSE – molare Masse clever berechnen**
+
+Willkommen beim interaktiven Periodensystem!
+Hier werden Elemente nicht nur angeklickt, sondern direkt zur molaren Masse zusammengestellt 😉
+
+Keine Sorge:
+Dieses PSE ist übersichtlicher als ein Labortisch vor der Prüfung
+und deutlich hilfreicher als reines Auswendiglernen 😄
+
+Und denk daran:
+👉 Hinter jeder Formel steckt mehr als nur Chemie – manchmal auch ein wenig Geduld.
+
+Bleib neugierig – und rechne Element für Element ⚛️
+""")
     
 elemente = [
     # Periode 1

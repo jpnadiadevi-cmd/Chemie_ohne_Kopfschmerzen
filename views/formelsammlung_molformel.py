@@ -1,11 +1,25 @@
 import streamlit as st
-    
-st.markdown("---")
-import streamlit as st
 
 st.title("🧮 Mol-Rechner")
-st.markdown("---")
 
+st.write("""
+⚗️ **Mol-Rechner – Zahlen, die reagieren**
+
+Willkommen im Mol-Rechner!
+Hier werden nicht nur Werte berechnet, sondern ganze Formeln zum Leben erweckt 😉
+
+Keine Angst:
+Dieser Rechner ist präziser als ein Messzylinder
+und weniger chaotisch als ein unaufgeräumtes Labor 😄
+
+Und denk daran:
+👉 Wenn das Ergebnis nicht stimmt, war es… natürlich ein Rechenfehler im Experiment 😉
+
+Bleib exakt – ausser du bist ein Elektron ⚡
+""")
+
+st.markdown("---")
+# ...restlicher Code...
 # Abschnitt 1: Stoffmenge (n = m / M)
 st.header("Stoffmenge (n)")
 st.latex(r"n = \frac{m}{M}")
