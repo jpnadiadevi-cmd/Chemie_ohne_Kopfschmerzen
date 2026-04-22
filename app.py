@@ -19,8 +19,7 @@ st.set_page_config(
 
 # 👉 HIER kommt dein Code rein
 # Seiten definieren
-pg_home = st.Page("views/home.py", title="Home", icon=":material/home:", default=True)
-pg_rechner = st.Page("views/Rechner.py", title="Rechner", icon=":material/science:")
+pg_home = st.Page("views/home.py", title="Home", icon=":material/home:", default=True)  
 
 pg_periodensystem = st.Page("views/periodensystem.py", title="Periodensystem", icon=":material/table_chart:")
 pg_formelsammlung = st.Page("views/formelsammlung.py", title="Formelsammlung", icon=":material/menu_book:")
