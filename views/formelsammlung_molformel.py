@@ -1,7 +1,5 @@
 import streamlit as st
-
-st.title("🧬 Die Molformel")
-
+    
 st.markdown("---")
 import streamlit as st
 
