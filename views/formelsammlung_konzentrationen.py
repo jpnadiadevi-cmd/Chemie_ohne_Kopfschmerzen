@@ -3,7 +3,7 @@ import math
 
 st.set_page_config(layout="wide")
 
-st.title("🧬 Konzentrationen und Teilchenzahlen")
+st.title("🧪 Konzentrationen und Teilchenzahlen")
 
 st.markdown("---")
 
