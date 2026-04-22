@@ -3,6 +3,10 @@ import math
 
 st.set_page_config(layout="wide")
 
+st.title("🧬 Konzentrationen und Teilchenzahlen")
+
+st.markdown("---")
+
 st.write("""
 Berechne wichtige Konzentrationen und Teilchenzahlen in der Chemie!
 

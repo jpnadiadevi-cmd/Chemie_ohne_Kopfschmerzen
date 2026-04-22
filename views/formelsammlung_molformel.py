@@ -1,132 +1,48 @@
 import streamlit as st
-import math
 
-st.set_page_config(layout="wide")
-
-st.write("""
-Berechne wichtige Konzentrationen und Teilchenzahlen in der Chemie!
-
-Diese Seite hilft dir bei:
-- **Molarität** (Konzentration in mol/L)
-- **Molalität** (Konzentration in mol/g)
-- **Teilchenzahl** (Anzahl der Atome/Moleküle)
-
-Gib einfach die Werte ein und erhalte sofort das Ergebnis! 🔬
-""")
+st.title("🧬 Die Molformel")
 
 st.markdown("---")
+import streamlit as st
 
-# Molarität (Molarity)
-st.subheader("1️⃣ Molarität: c [mol/L] = n / V")
-st.write("*Berechne die Konzentration einer Lösung*")
+st.title("🧮 Mol-Rechner")
+st.markdown("---")
 
-col1, col2, col3 = st.columns([1, 1, 1])
-
+# Abschnitt 1: Stoffmenge (n = m / M)
+st.header("Stoffmenge (n)")
+st.latex(r"n = \frac{m}{M}")
+col1, col2 = st.columns(2)
 with col1:
-    st.write("**Eingaben:**")
-    n_molar = st.number_input(
-        "Stoffmenge n [mol]",
-        min_value=0.0,
-        value=0.0,
-        step=0.01,
-        key="n_molar"
-    )
-    V_molar = st.number_input(
-        "Volumen V [L]",
-        min_value=0.0,
-        value=0.0,
-        step=0.01,
-        key="V_molar"
-    )
-
+    m1 = st.number_input("Masse m [g]", key="mol_m1", value=0.0, format="%.4f")
+    M1 = st.number_input("Molare Masse M [g/mol]", key="mol_M1", value=0.0, format="%.4f")
 with col2:
-    st.write("")
-
-with col3:
-    st.write("**Ergebnis:**")
-    if V_molar > 0:
-        c_molar = n_molar / V_molar
-        st.metric("Molarität c", f"{c_molar:.4f} mol/L")
-    else:
-        st.info("ℹ️ Bitte gib ein Volumen > 0 ein")
+    n1 = m1 / M1 if M1 != 0 else 0.0
+    st.text_input("Stoffmenge n [mol]", value=f"{n1:.4f}", disabled=True)
 
 st.markdown("---")
 
-# Molalität (Molality)
-st.subheader("2️⃣ Molalität: β [mol/g] = n / m")
-st.write("*Berechne die Molalität einer Lösung*")
-
-col1, col2, col3 = st.columns([1, 1, 1])
-
-with col1:
-    st.write("**Eingaben:**")
-    n_molal = st.number_input(
-        "Stoffmenge n [mol]",
-        min_value=0.0,
-        value=0.0,
-        step=0.01,
-        key="n_molal"
-    )
-    m_molal = st.number_input(
-        "Masse m [g]",
-        min_value=0.0,
-        value=0.0,
-        step=0.1,
-        key="m_molal"
-    )
-
-with col2:
-    st.write("")
-
+# Abschnitt 2: Masse (m = M * n)
+st.header("Masse (m)")
+st.latex(r"m = M \cdot n")
+col3, col4 = st.columns(2)
 with col3:
-    st.write("**Ergebnis:**")
-    if m_molal > 0:
-        beta_molal = n_molal / m_molal
-        st.metric("Molalität β", f"{beta_molal:.4f} mol/g")
-    else:
-        st.info("ℹ️ Bitte gib eine Masse > 0 ein")
+    M2 = st.number_input("Molare Masse M [g/mol]", key="mol_M2", value=0.0, format="%.4f")
+    n2 = st.number_input("Stoffmenge n [mol]", key="mol_n2", value=0.0, format="%.4f")
+with col4:
+    m2 = M2 * n2
+    st.text_input("Masse m [g]", value=f"{m2:.4f}", disabled=True)
 
 st.markdown("---")
 
-# Teilchenzahl
-st.subheader("3️⃣ Teilchenzahl: N = n × 6.022 × 10²³")
-st.write("*Berechne die Anzahl der Atome/Moleküle*")
+# Abschnitt 3: Molare Masse (M = m / n)
+st.header("Molare Masse (M)")
+st.latex(r"M = \frac{m}{n}")
+col5, col6 = st.columns(2)
+with col5:
+    m3 = st.number_input("Masse m [g]", key="mol_m3", value=0.0, format="%.4f")
+    n3 = st.number_input("Stoffmenge n [mol]", key="mol_n3", value=0.0, format="%.4f")
+with col6:
+    M3 = m3 / n3 if n3 != 0 else 0.0
+    st.text_input("Molare Masse M [g/mol]", value=f"{M3:.4f}", disabled=True)
 
-col1, col2, col3 = st.columns([1, 1, 1])
-
-AVOGADRO = 6.022e23
-
-with col1:
-    st.write("**Eingaben:**")
-    n_teilchen = st.number_input(
-        "Stoffmenge n [mol]",
-        min_value=0.0,
-        value=0.0,
-        step=0.01,
-        key="n_teilchen"
-    )
-
-with col2:
-    st.write("")
-
-with col3:
-    st.write("**Ergebnis:**")
-    if n_teilchen >= 0:
-        N = n_teilchen * AVOGADRO
-        if N >= 1e9:
-            st.metric("Teilchenzahl N", f"{N:.3e}")
-        else:
-            st.metric("Teilchenzahl N", f"{N:,.0f}")
-    else:
-        st.info("ℹ️ Bitte gib eine positive Stoffmenge ein")
-
-st.markdown("---")
-
-st.write("""
-**Wichtige Konstanten:**
-- 🔬 **Avogadro-Konstante**: 6.022 × 10²³ (Teilchen/mol)
-- 💧 **Dichte von Wasser**: ≈ 1 g/mL = 1 kg/L
-
-**Tipp:** Molalität ist temperaturunabhängig, Molarität dagegen nicht!
-""")
-
+st.info("Zwei Werte eingeben, der dritte wird berechnet.")
