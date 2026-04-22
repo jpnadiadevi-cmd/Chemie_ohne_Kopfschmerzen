@@ -30,8 +30,7 @@ pg_logbuch = st.Page("views/logbuch.py", title="Logbuch", icon=":material/edit_n
 pg_protokoll = st.Page("views/protokoll.py", title="Protokoll", icon=":material/description:")
 
 pg = st.navigation([
-    pg_home,
-    pg_rechner,
+    pg_home,    
     pg_periodensystem,
     pg_formelsammlung,
     pg_formelsammlung_konzentrationen,
