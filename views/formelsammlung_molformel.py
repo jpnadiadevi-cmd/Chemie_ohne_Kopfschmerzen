@@ -1,59 +1,117 @@
 import streamlit as st
+from datetime import datetime
 
 st.title("🧬 Die Molformel")
 
 st.markdown("---")
-import streamlit as st
 
+st.header("Berechne Stoffmenge, Masse oder Molare Masse")
+st.latex(r"n = \frac{m}{M} \quad | \quad m = M \cdot n \quad | \quad M = \frac{m}{n}")
 
-# Abschnitt 1: Stoffmenge (n = m / M)
-st.header("Stoffmenge (n)")
-st.latex(r"n = \frac{m}{M}")
-col1, col2 = st.columns(2)
-with col1:
-    m1 = st.number_input("Masse m [g]", key="mol_m1", value=0.0, format="%.4f")
-    M1 = st.number_input("Molare Masse M [g/mol]", key="mol_M1", value=0.0, format="%.4f")
-with col2:
-    n1 = m1 / M1 if M1 != 0 else 0.0
-    st.text_input("Stoffmenge n [mol]", value=f"{n1:.4f}", disabled=True)
+st.info("ℹ️ Gib zwei Werte ein, der dritte wird automatisch berechnet.")
 
 st.markdown("---")
 
-# Abschnitt 2: Masse (m = M * n)
-st.header("Masse (m)")
-st.latex(r"m = M \cdot n")
-col3, col4 = st.columns(2)
-with col3:
-    M2 = st.number_input("Molare Masse M [g/mol]", key="mol_M2", value=0.0, format="%.4f")
-    n2 = st.number_input("Stoffmenge n [mol]", key="mol_n2", value=0.0, format="%.4f")
-with col4:
-    m2 = M2 * n2
-    st.text_input("Masse m [g]", value=f"{m2:.4f}", disabled=True)
-
-st.markdown("---")
-
-# Abschnitt 3: Molare Masse (M = m / n)
-st.header("Molare Masse (M)")
-st.latex(r"M = \frac{m}{n}")
-col5, col6 = st.columns(2)
-with col5:
-    m3 = st.number_input("Masse m [g]", key="mol_m3", value=0.0, format="%.4f")
-    n3 = st.number_input("Stoffmenge n [mol]", key="mol_n3", value=0.0, format="%.4f")
-with col6:
-    M3 = m3 / n3 if n3 != 0 else 0.0
-    st.text_input("Molare Masse M [g/mol]", value=f"{M3:.4f}", disabled=True)
-
-st.info("Zwei Werte eingeben, der dritte wird berechnet.")
-
-
-# Eintrag ins Logbuch speichern (am Ende der Seite hinzufügen)
-if st.button("💾 Ergebnis ins Logbuch speichern", key="save_molformel"):
-    from datetime import datetime
-    eintrag = {
-        "Datum & Uhrzeit": datetime.now().strftime("%d.%m.%Y %H:%M:%S"),
-        "Rechnung": "Stoffmenge/Masse/Molmasse",
-        "Eingaben": f"m1={m1}, M1={M1}" if M1 != 0 else f"m2={m2}, n2={n2}" if n2 != 0 else f"m3={m3}, n3={n3}",
-        "Ergebnis": f"{n1:.4f}" if M1 != 0 else f"{m2:.4f}" if n2 != 0 else f"{M3:.4f}"
+# Initialisiere Logbuch im Session State (falls nicht vorhanden)
+if "logbuch_daten" not in st.session_state:
+    st.session_state.logbuch_daten = {
+        "molmasse": [],
+        "molformel": [],
+        "konzentration": []
     }
-    st.session_state.logbuch_daten["molformel"].append(eintrag)
-    st.success("✅ Eintrag gespeichert!")
+
+# Eingabefelder in Spalten anordnen
+col1, col2, col3 = st.columns(3)
+
+with col1:
+    n_input = st.number_input(
+        "Stoffmenge n [mol]",
+        value=0.0,
+        format="%.4f",
+        key="n_input"
+    )
+
+with col2:
+    m_input = st.number_input(
+        "Masse m [g]",
+        value=0.0,
+        format="%.4f",
+        key="m_input"
+    )
+
+with col3:
+    M_input = st.number_input(
+        "Molare Masse M [g/mol]",
+        value=0.0,
+        format="%.4f",
+        key="M_input"
+    )
+
+st.markdown("---")
+
+# Bestimme welche Werte eingegeben wurden und berechne den fehlenden
+eingegeben_count = sum([n_input > 0, m_input > 0, M_input > 0])
+
+st.subheader("📊 Ergebnis")
+
+# Fall 1: n und m eingegeben → M berechnen
+if n_input > 0 and m_input > 0 and M_input == 0:
+    M_result = m_input / n_input
+    st.metric("Molare Masse M [g/mol]", f"{M_result:.4f}")
+    result_text = f"M = {M_result:.4f}"
+    result_key = "M"
+    result_value = M_result
+
+# Fall 2: n und M eingegeben → m berechnen
+elif n_input > 0 and M_input > 0 and m_input == 0:
+    m_result = M_input * n_input
+    st.metric("Masse m [g]", f"{m_result:.4f}")
+    result_text = f"m = {m_result:.4f}"
+    result_key = "m"
+    result_value = m_result
+
+# Fall 3: m und M eingegeben → n berechnen
+elif m_input > 0 and M_input > 0 and n_input == 0:
+    n_result = m_input / M_input
+    st.metric("Stoffmenge n [mol]", f"{n_result:.4f}")
+    result_text = f"n = {n_result:.4f}"
+    result_key = "n"
+    result_value = n_result
+
+# Fall 4: Nur ein Wert eingegeben
+elif eingegeben_count == 1:
+    st.warning("⚠️ Bitte gib mindestens zwei Werte ein!")
+    result_text = None
+    result_key = None
+    result_value = None
+
+# Fall 5: Kein Wert eingegeben
+elif eingegeben_count == 0:
+    st.info("👆 Bitte gib zwei Werte ein, um den dritten zu berechnen.")
+    result_text = None
+    result_key = None
+    result_value = None
+
+# Fall 6: Alle drei Werte eingegeben (ungültiger Zustand)
+else:
+    st.error("❌ Bitte gib nur zwei Werte ein!")
+    result_text = None
+    result_key = None
+    result_value = None
+
+st.markdown("---")
+
+# Button zum Speichern ins Logbuch
+if result_text is not None:
+    col1, col2 = st.columns(2)
+    
+    with col1:
+        if st.button("💾 Ergebnis ins Logbuch speichern", use_container_width=True, key="save_molformel"):
+            eintrag = {
+                "Datum & Uhrzeit": datetime.now().strftime("%d.%m.%Y %H:%M:%S"),
+                "Rechnung": "Molformel (n, m, M)",
+                "Eingaben": f"n={n_input if n_input > 0 else '—'}, m={m_input if m_input > 0 else '—'}, M={M_input if M_input > 0 else '—'}",
+                "Ergebnis": f"{result_key}={result_value:.4f}"
+            }
+            st.session_state.logbuch_daten["molformel"].append(eintrag)
+            st.success(f"✅ {result_key}={result_value:.4f} gespeichert!")

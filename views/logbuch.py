@@ -24,13 +24,6 @@ import os
 
 st.set_page_config(layout="wide")
 
-st.title("📓 Logbuch")
-st.write("""
-🧪 **Logbuch – Chemie ohne Kopfschmerzen**
-
-Hier werden alle deine Rechnungsergebnisse übersichtlich festgehalten und gespeichert.
-Bleib den Überblick – und positiv! ⚛️
-""")
 
 st.markdown("---")
 
