@@ -34,7 +34,6 @@ def save_data(data):
 data = load_data()
 
 # Neues Experiment erstellen
-col1, col2 = st.columns([4, 1])
 
 with col2:
     if st.button("➕ Neues Experiment", use_container_width=True):
