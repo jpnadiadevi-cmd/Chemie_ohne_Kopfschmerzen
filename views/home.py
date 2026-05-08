@@ -1,5 +1,8 @@
 import streamlit as st
 
+# Banner anzeigen
+st.image("assets/banner.png", use_container_width=True)
+
 st.title("🧪 Chemie ohne Kopfschmerzen")
 st.markdown("Wähle eine Funktion:")
 
