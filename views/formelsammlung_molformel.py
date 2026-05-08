@@ -8,7 +8,6 @@ st.markdown("---")
 st.header("Berechne Stoffmenge, Masse oder Molare Masse")
 st.latex(r"n = \frac{m}{M} \quad | \quad m = M \cdot n \quad | \quad M = \frac{m}{n}")
 
-st.info("ℹ️ Gib zwei Werte ein, der dritte wird automatisch berechnet.")
 
 st.markdown("---")
 
