@@ -44,3 +44,16 @@ with col6:
     st.text_input("Molare Masse M [g/mol]", value=f"{M3:.4f}", disabled=True)
 
 st.info("Zwei Werte eingeben, der dritte wird berechnet.")
+
+
+# Eintrag ins Logbuch speichern (am Ende der Seite hinzufügen)
+if st.button("💾 Ergebnis ins Logbuch speichern", key="save_molformel"):
+    from datetime import datetime
+    eintrag = {
+        "Datum & Uhrzeit": datetime.now().strftime("%d.%m.%Y %H:%M:%S"),
+        "Rechnung": "Stoffmenge/Masse/Molmasse",
+        "Eingaben": f"m1={m1}, M1={M1}" if M1 != 0 else f"m2={m2}, n2={n2}" if n2 != 0 else f"m3={m3}, n3={n3}",
+        "Ergebnis": f"{n1:.4f}" if M1 != 0 else f"{m2:.4f}" if n2 != 0 else f"{M3:.4f}"
+    }
+    st.session_state.logbuch_daten["molformel"].append(eintrag)
+    st.success("✅ Eintrag gespeichert!")

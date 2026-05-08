@@ -133,3 +133,45 @@ st.write("""
 
 **Tipp:** Molalität ist temperaturunabhängig, Molarität dagegen nicht!
 """)
+
+
+# Am Ende der Teilchenzahl-Sektion hinzufügen
+st.markdown("---")
+
+col1, col2, col3 = st.columns(3)
+
+with col1:
+    if st.button("💾 Molarität ins Logbuch", key="save_molar"):
+        from datetime import datetime
+        eintrag = {
+            "Datum & Uhrzeit": datetime.now().strftime("%d.%m.%Y %H:%M:%S"),
+            "Rechnung": "Molarität",
+            "Eingaben": f"n={n_molar} mol, V={V_molar} L",
+            "Ergebnis": f"{n_molar/V_molar:.4f} mol/L" if V_molar > 0 else "—"
+        }
+        st.session_state.logbuch_daten["konzentration"].append(eintrag)
+        st.success("✅ Gespeichert!")
+
+with col2:
+    if st.button("💾 Molalität ins Logbuch", key="save_molal"):
+        from datetime import datetime
+        eintrag = {
+            "Datum & Uhrzeit": datetime.now().strftime("%d.%m.%Y %H:%M:%S"),
+            "Rechnung": "Molalität",
+            "Eingaben": f"n={n_molal} mol, m={m_molal} g",
+            "Ergebnis": f"{n_molal/m_molal:.4f} mol/g" if m_molal > 0 else "—"
+        }
+        st.session_state.logbuch_daten["konzentration"].append(eintrag)
+        st.success("✅ Gespeichert!")
+
+with col3:
+    if st.button("💾 Teilchenzahl ins Logbuch", key="save_teilchen"):
+        from datetime import datetime
+        eintrag = {
+            "Datum & Uhrzeit": datetime.now().strftime("%d.%m.%Y %H:%M:%S"),
+            "Rechnung": "Teilchenzahl",
+            "Eingaben": f"n={n_teilchen} mol",
+            "Ergebnis": f"{n_teilchen * 6.022e23:.3e}" if n_teilchen >= 0 else "—"
+        }
+        st.session_state.logbuch_daten["konzentration"].append(eintrag)
+        st.success("✅ Gespeichert!")
