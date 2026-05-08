@@ -34,6 +34,7 @@ def save_data(data):
 data = load_data()
 
 # Neues Experiment erstellen
+col1, col2 = st.columns([4, 1])
 
 with col2:
     if st.button("➕ Neues Experiment", use_container_width=True):
@@ -88,6 +89,18 @@ else:
             ):
                 st.session_state.selected_protocol = folder
                 st.rerun()
+            
+            # Pink Hintergrund styling
+            st.markdown(f"""
+            <style>
+            button[key="folder_{folder}"] {{
+                background-color: #FFB6D9 !important;
+                border: 2px solid #FF69B4 !important;
+                color: #333 !important;
+                border-radius: 10px !important;
+            }}
+            </style>
+            """, unsafe_allow_html=True)
 
 st.markdown("---")
 
