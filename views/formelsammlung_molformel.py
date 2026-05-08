@@ -5,8 +5,6 @@ st.title("🧬 Die Molformel")
 st.markdown("---")
 import streamlit as st
 
-st.title("🧮 Mol-Rechner")
-st.markdown("---")
 
 # Abschnitt 1: Stoffmenge (n = m / M)
 st.header("Stoffmenge (n)")
