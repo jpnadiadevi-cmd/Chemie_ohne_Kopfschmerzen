@@ -17,7 +17,6 @@ Ein gutes Protokoll ist wie eine gute Reaktion:
 klar, nachvollziehbar und ohne unnötige Nebenprodukte 😉
 """)
 
-st.markdown("---")
 
 DATA_FILE = Path("protokolle.json")
 
@@ -68,8 +67,6 @@ if st.session_state.show_new_experiment:
                 st.session_state.show_new_experiment = False
                 st.success("✅ Experiment erstellt!")
                 st.rerun()
-
-st.markdown("---")
 
 # Meine Experimente anzeigen
 st.subheader("📂 Meine Experimente")
