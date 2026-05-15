@@ -175,3 +175,5 @@ with col3:
         }
         st.session_state.logbuch_daten["konzentration"].append(eintrag)
         st.success("✅ Gespeichert!")
+    data_manager = DataManager()
+    data_manager.save_user_data(st.session_state['data_df'], 'data.csv')
