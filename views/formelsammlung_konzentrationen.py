@@ -2,8 +2,6 @@ import streamlit as st
 from datetime import datetime
 import json
 import os
-from webdav4.client import Client
-from io import BytesIO
 
 st.set_page_config(layout="wide")
 
@@ -20,41 +18,45 @@ Gib einfach die Werte ein und erhalte sofort das Ergebnis! 🔬
 
 st.markdown("---")
 
-# WebDAV Client für SwitchDrive
-def get_webdav_client():
-    try:
-        base_url = st.secrets["webdav"]["base_url"]
-        username = st.secrets["webdav"]["username"]
-        password = st.secrets["webdav"]["password"]
-        
-        # webdav4 benötigt diese Syntax
-        client = Client(
-            base_url=base_url,
-            auth=(username, password)
-        )
-        return client
-    except Exception as e:
-        st.error(f"WebDAV Fehler: {e}")
-        return None
-
 # Hilfsfunktion zum Speichern auf SwitchDrive
 def save_to_switchdrive(filename, data):
     """Speichert Daten auf SwitchDrive als JSON"""
     try:
-        client = get_webdav_client()
-        if client is None:
-            return False
+        import httpx
+        from webdav4.client import Client as WebDAVClient
+        
+        base_url = st.secrets["webdav"]["base_url"]
+        username = st.secrets["webdav"]["username"]
+        password = st.secrets["webdav"]["password"]
         
         # Konvertiere Daten zu JSON
         json_data = json.dumps(data, indent=4, ensure_ascii=False)
         json_bytes = json_data.encode('utf-8')
         
-        # Speichere auf SwitchDrive mit write_to
+        # Erstelle WebDAV Client
+        async def upload_file():
+            async with httpx.AsyncClient(auth=(username, password)) as client:
+                remote_path = f"Chemie_Informatik2/{filename}"
+                url = base_url.rstrip('/') + '/' + remote_path
+                response = await client.put(url, content=json_bytes)
+                return response.status_code in [200, 201, 204]
+        
+        # Synchrone Variante für Streamlit
+        from webdav4.fsspec import WebDAVFileSystem
+        
+        fs = WebDAVFileSystem(
+            root=base_url,
+            username=username,
+            password=password
+        )
+        
         remote_path = f"Chemie_Informatik2/{filename}"
-        client.write_to(remote_path, json_bytes)
+        with fs.open(remote_path, 'wb') as f:
+            f.write(json_bytes)
+        
         return True
     except Exception as e:
-        st.error(f"Fehler beim Upload auf SwitchDrive: {e}")
+        st.error(f"Fehler beim Upload auf SwitchDrive: {str(e)}")
         return False
 
 # Initialisiere Logbuch im Session State
@@ -199,7 +201,7 @@ with col1:
             if save_to_switchdrive("konzentration_logbuch.json", st.session_state.logbuch_daten["konzentration"]):
                 st.success("✅ Auf SwitchDrive gespeichert!")
             else:
-                st.warning("⚠️ Lokal gespeichert, aber SwitchDrive-Upload fehlgeschlagen")
+                st.info("💾 Lokal gespeichert")
         else:
             st.warning("⚠️ Bitte erst Werte eingeben!")
 
@@ -218,7 +220,7 @@ with col2:
             if save_to_switchdrive("konzentration_logbuch.json", st.session_state.logbuch_daten["konzentration"]):
                 st.success("✅ Auf SwitchDrive gespeichert!")
             else:
-                st.warning("⚠️ Lokal gespeichert, aber SwitchDrive-Upload fehlgeschlagen")
+                st.info("💾 Lokal gespeichert")
         else:
             st.warning("⚠️ Bitte erst Werte eingeben!")
 
@@ -237,6 +239,6 @@ with col3:
             if save_to_switchdrive("konzentration_logbuch.json", st.session_state.logbuch_daten["konzentration"]):
                 st.success("✅ Auf SwitchDrive gespeichert!")
             else:
-                st.warning("⚠️ Lokal gespeichert, aber SwitchDrive-Upload fehlgeschlagen")
+                st.info("💾 Lokal gespeichert")
         else:
             st.warning("⚠️ Bitte erst Werte eingeben!")
