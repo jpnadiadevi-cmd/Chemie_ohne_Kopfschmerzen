@@ -2,6 +2,8 @@ import streamlit as st
 from datetime import datetime
 import json
 import os
+import tempfile
+import easywebdav
 
 st.set_page_config(layout="wide")
 
@@ -22,39 +24,39 @@ st.markdown("---")
 def save_to_switchdrive(filename, data):
     """Speichert Daten auf SwitchDrive als JSON"""
     try:
-        import httpx
-        from webdav4.client import Client as WebDAVClient
-        
         base_url = st.secrets["webdav"]["base_url"]
         username = st.secrets["webdav"]["username"]
         password = st.secrets["webdav"]["password"]
         
         # Konvertiere Daten zu JSON
         json_data = json.dumps(data, indent=4, ensure_ascii=False)
-        json_bytes = json_data.encode('utf-8')
         
-        # Erstelle WebDAV Client
-        async def upload_file():
-            async with httpx.AsyncClient(auth=(username, password)) as client:
-                remote_path = f"Chemie_Informatik2/{filename}"
-                url = base_url.rstrip('/') + '/' + remote_path
-                response = await client.put(url, content=json_bytes)
-                return response.status_code in [200, 201, 204]
+        # Erstelle temporäre Datei
+        with tempfile.NamedTemporaryFile(mode='w', suffix='.json', delete=False, encoding='utf-8') as tmp:
+            tmp.write(json_data)
+            tmp_path = tmp.name
         
-        # Synchrone Variante für Streamlit
-        from webdav4.fsspec import WebDAVFileSystem
-        
-        fs = WebDAVFileSystem(
-            root=base_url,
-            username=username,
-            password=password
-        )
-        
-        remote_path = f"Chemie_Informatik2/{filename}"
-        with fs.open(remote_path, 'wb') as f:
-            f.write(json_bytes)
-        
-        return True
+        try:
+            # Verbinde zu WebDAV
+            webdav = easywebdav.connect(
+                host='drive.switch.ch',
+                username=username,
+                password=password,
+                protocol='https',
+                port=443,
+                path='/remote.php/webdav/'
+            )
+            
+            # Speichere auf SwitchDrive
+            remote_path = f"/Chemie_Informatik2/{filename}"
+            webdav.upload(tmp_path, remote_path)
+            
+            return True
+        finally:
+            # Lösche temporäre Datei
+            if os.path.exists(tmp_path):
+                os.remove(tmp_path)
+                
     except Exception as e:
         st.error(f"Fehler beim Upload auf SwitchDrive: {str(e)}")
         return False
