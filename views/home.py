@@ -1,7 +1,11 @@
 import streamlit as st
 
-st.title("🧪 Chemie ohne Kopfschmerzen")
-st.markdown("Wähle eine Funktion:")
+# Banner anzeigen
+st.image("assets/banner.png", use_container_width=True)
+
+st.markdown("""
+Von Konzentrationen und Teilchen über die Molformel bis zur molaren Masse mit PSE findest du hier alles, was du für den Chemie Alltag brauchst. Der Chemie Rechner kombiniert Berechnungen, Formeln und automatische Protokolle in einer modernen Oberfläche, damit Experimente, Aufgaben und Ergebnisse immer übersichtlich bleiben. 🧪
+""")
 
 st.markdown("---")
 
