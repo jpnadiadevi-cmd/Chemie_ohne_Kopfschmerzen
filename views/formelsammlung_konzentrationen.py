@@ -1,5 +1,7 @@
 import streamlit as st
 from datetime import datetime
+import json
+import os
 
 st.set_page_config(layout="wide")
 
@@ -140,6 +142,17 @@ st.write("""
 
 st.markdown("---")
 
+# Hilfsfunktion zum Speichern auf dem lokalen Dateisystem
+def save_to_local(filename, data):
+    """Speichert Daten lokal als JSON"""
+    try:
+        with open(filename, 'w', encoding='utf-8') as f:
+            json.dump(data, f, indent=4, ensure_ascii=False)
+        return True
+    except Exception as e:
+        st.error(f"Fehler beim Speichern: {e}")
+        return False
+
 # Speichern ins Logbuch
 col1, col2, col3 = st.columns(3)
 
@@ -153,6 +166,9 @@ with col1:
                 "Ergebnis": f"c={n_molar/V_molar:.4f} mol/L"
             }
             st.session_state.logbuch_daten["konzentration"].append(eintrag)
+            
+            # Speichern auf Dateisystem
+            save_to_local("konzentration_logbuch.json", st.session_state.logbuch_daten["konzentration"])
             st.success("✅ Gespeichert!")
         else:
             st.warning("⚠️ Bitte erst Werte eingeben!")
@@ -167,6 +183,9 @@ with col2:
                 "Ergebnis": f"β={n_molal/m_molal:.4f} mol/g"
             }
             st.session_state.logbuch_daten["konzentration"].append(eintrag)
+            
+            # Speichern auf Dateisystem
+            save_to_local("konzentration_logbuch.json", st.session_state.logbuch_daten["konzentration"])
             st.success("✅ Gespeichert!")
         else:
             st.warning("⚠️ Bitte erst Werte eingeben!")
@@ -181,6 +200,9 @@ with col3:
                 "Ergebnis": f"N={n_teilchen * AVOGADRO:.3e}"
             }
             st.session_state.logbuch_daten["konzentration"].append(eintrag)
+            
+            # Speichern auf Dateisystem
+            save_to_local("konzentration_logbuch.json", st.session_state.logbuch_daten["konzentration"])
             st.success("✅ Gespeichert!")
         else:
             st.warning("⚠️ Bitte erst Werte eingeben!")
