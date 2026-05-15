@@ -2,8 +2,8 @@ import streamlit as st
 from datetime import datetime
 import json
 import os
-import tempfile
-import easywebdav
+import requests
+from requests.auth import HTTPBasicAuth
 
 st.set_page_config(layout="wide")
 
@@ -30,35 +30,41 @@ def save_to_switchdrive(filename, data):
         
         # Konvertiere Daten zu JSON
         json_data = json.dumps(data, indent=4, ensure_ascii=False)
+        json_bytes = json_data.encode('utf-8')
         
-        # Erstelle temporäre Datei
-        with tempfile.NamedTemporaryFile(mode='w', suffix='.json', delete=False, encoding='utf-8') as tmp:
-            tmp.write(json_data)
-            tmp_path = tmp.name
+        # WebDAV URL für SwitchDrive
+        remote_path = f"Chemie_Informatik2/{filename}"
+        upload_url = base_url.rstrip('/') + '/' + remote_path
         
-        try:
-            # Verbinde zu WebDAV
-            webdav = easywebdav.connect(
-                host='drive.switch.ch',
-                username=username,
-                password=password,
-                protocol='https',
-                port=443,
-                path='/remote.php/webdav/'
-            )
-            
-            # Speichere auf SwitchDrive
-            remote_path = f"/Chemie_Informatik2/{filename}"
-            webdav.upload(tmp_path, remote_path)
-            
+        # Upload mit HTTP PUT Request
+        response = requests.put(
+            upload_url,
+            data=json_bytes,
+            auth=HTTPBasicAuth(username, password),
+            headers={'Content-Type': 'application/json'}
+        )
+        
+        # Erfolgreich wenn Status 201 (Created) oder 204 (No Content)
+        if response.status_code in [200, 201, 204]:
             return True
-        finally:
-            # Lösche temporäre Datei
-            if os.path.exists(tmp_path):
-                os.remove(tmp_path)
-                
+        else:
+            st.error(f"SwitchDrive Error: Status {response.status_code}")
+            return False
+            
     except Exception as e:
         st.error(f"Fehler beim Upload auf SwitchDrive: {str(e)}")
+        return False
+
+# Hilfsfunktion zum Speichern lokal
+def save_to_local(filename, data):
+    """Speichert Daten lokal als JSON"""
+    try:
+        json_data = json.dumps(data, indent=4, ensure_ascii=False)
+        with open(filename, 'w', encoding='utf-8') as f:
+            f.write(json_data)
+        return True
+    except Exception as e:
+        st.error(f"Fehler beim lokalen Speichern: {str(e)}")
         return False
 
 # Initialisiere Logbuch im Session State
@@ -199,11 +205,14 @@ with col1:
             }
             st.session_state.logbuch_daten["konzentration"].append(eintrag)
             
+            # Speichern lokal
+            save_to_local("konzentration_logbuch.json", st.session_state.logbuch_daten["konzentration"])
+            
             # Speichern auf SwitchDrive
             if save_to_switchdrive("konzentration_logbuch.json", st.session_state.logbuch_daten["konzentration"]):
-                st.success("✅ Auf SwitchDrive gespeichert!")
+                st.success("✅ Auf SwitchDrive und lokal gespeichert!")
             else:
-                st.info("💾 Lokal gespeichert")
+                st.warning("⚠️ Lokal gespeichert, SwitchDrive-Upload fehlgeschlagen")
         else:
             st.warning("⚠️ Bitte erst Werte eingeben!")
 
@@ -218,11 +227,14 @@ with col2:
             }
             st.session_state.logbuch_daten["konzentration"].append(eintrag)
             
+            # Speichern lokal
+            save_to_local("konzentration_logbuch.json", st.session_state.logbuch_daten["konzentration"])
+            
             # Speichern auf SwitchDrive
             if save_to_switchdrive("konzentration_logbuch.json", st.session_state.logbuch_daten["konzentration"]):
-                st.success("✅ Auf SwitchDrive gespeichert!")
+                st.success("✅ Auf SwitchDrive und lokal gespeichert!")
             else:
-                st.info("💾 Lokal gespeichert")
+                st.warning("⚠️ Lokal gespeichert, SwitchDrive-Upload fehlgeschlagen")
         else:
             st.warning("⚠️ Bitte erst Werte eingeben!")
 
@@ -237,10 +249,13 @@ with col3:
             }
             st.session_state.logbuch_daten["konzentration"].append(eintrag)
             
+            # Speichern lokal
+            save_to_local("konzentration_logbuch.json", st.session_state.logbuch_daten["konzentration"])
+            
             # Speichern auf SwitchDrive
             if save_to_switchdrive("konzentration_logbuch.json", st.session_state.logbuch_daten["konzentration"]):
-                st.success("✅ Auf SwitchDrive gespeichert!")
+                st.success("✅ Auf SwitchDrive und lokal gespeichert!")
             else:
-                st.info("💾 Lokal gespeichert")
+                st.warning("⚠️ Lokal gespeichert, SwitchDrive-Upload fehlgeschlagen")
         else:
             st.warning("⚠️ Bitte erst Werte eingeben!")
