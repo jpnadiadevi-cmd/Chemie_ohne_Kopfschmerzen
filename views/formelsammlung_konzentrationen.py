@@ -1,13 +1,7 @@
-import pandas as pd
 import streamlit as st
-import math
-from utils.data_manager import DataManager 
+from datetime import datetime
 
 st.set_page_config(layout="wide")
-
-st.title("🧪 Konzentrationen und Teilchenzahlen")
-
-st.markdown("---")
 
 st.write("""
 Berechne wichtige Konzentrationen und Teilchenzahlen in der Chemie!
@@ -21,6 +15,14 @@ Gib einfach die Werte ein und erhalte sofort das Ergebnis! 🔬
 """)
 
 st.markdown("---")
+
+# Initialisiere Logbuch im Session State
+if "logbuch_daten" not in st.session_state:
+    st.session_state.logbuch_daten = {
+        "molmasse": [],
+        "molformel": [],
+        "konzentration": []
+    }
 
 # Molarität (Molarity)
 st.subheader("1️⃣ Molarität: c [mol/L] = n / V")
@@ -136,46 +138,49 @@ st.write("""
 **Tipp:** Molalität ist temperaturunabhängig, Molarität dagegen nicht!
 """)
 
-
-# Am Ende der Teilchenzahl-Sektion hinzufügen
 st.markdown("---")
 
+# Speichern ins Logbuch
 col1, col2, col3 = st.columns(3)
 
 with col1:
     if st.button("💾 Molarität ins Logbuch", key="save_molar"):
-        from datetime import datetime
-        eintrag = {
-            "Datum & Uhrzeit": datetime.now().strftime("%d.%m.%Y %H:%M:%S"),
-            "Rechnung": "Molarität",
-            "Eingaben": f"n={n_molar} mol, V={V_molar} L",
-            "Ergebnis": f"{n_molar/V_molar:.4f} mol/L" if V_molar > 0 else "—"
-        }
-        st.session_state.logbuch_daten["konzentration"].append(eintrag)
-        st.success("✅ Gespeichert!")
+        if V_molar > 0:
+            eintrag = {
+                "Datum & Uhrzeit": datetime.now().strftime("%d.%m.%Y %H:%M:%S"),
+                "Rechnung": "Molarität",
+                "Eingaben": f"n={n_molar} mol, V={V_molar} L",
+                "Ergebnis": f"c={n_molar/V_molar:.4f} mol/L"
+            }
+            st.session_state.logbuch_daten["konzentration"].append(eintrag)
+            st.success("✅ Gespeichert!")
+        else:
+            st.warning("⚠️ Bitte erst Werte eingeben!")
 
 with col2:
     if st.button("💾 Molalität ins Logbuch", key="save_molal"):
-        from datetime import datetime
-        eintrag = {
-            "Datum & Uhrzeit": datetime.now().strftime("%d.%m.%Y %H:%M:%S"),
-            "Rechnung": "Molalität",
-            "Eingaben": f"n={n_molal} mol, m={m_molal} g",
-            "Ergebnis": f"{n_molal/m_molal:.4f} mol/g" if m_molal > 0 else "—"
-        }
-        st.session_state.logbuch_daten["konzentration"].append(eintrag)
-        st.success("✅ Gespeichert!")
+        if m_molal > 0:
+            eintrag = {
+                "Datum & Uhrzeit": datetime.now().strftime("%d.%m.%Y %H:%M:%S"),
+                "Rechnung": "Molalität",
+                "Eingaben": f"n={n_molal} mol, m={m_molal} g",
+                "Ergebnis": f"β={n_molal/m_molal:.4f} mol/g"
+            }
+            st.session_state.logbuch_daten["konzentration"].append(eintrag)
+            st.success("✅ Gespeichert!")
+        else:
+            st.warning("⚠️ Bitte erst Werte eingeben!")
 
 with col3:
     if st.button("💾 Teilchenzahl ins Logbuch", key="save_teilchen"):
-        from datetime import datetime
-        eintrag = {
-            "Datum & Uhrzeit": datetime.now().strftime("%d.%m.%Y %H:%M:%S"),
-            "Rechnung": "Teilchenzahl",
-            "Eingaben": f"n={n_teilchen} mol",
-            "Ergebnis": f"{n_teilchen * 6.022e23:.3e}" if n_teilchen >= 0 else "—"
-        }
-        st.session_state.logbuch_daten["konzentration"].append(eintrag)
-        st.success("✅ Gespeichert!")
-    data_manager = DataManager()
-    data_manager.save_user_data(st.session_state['data_df'], 'data.csv')
+        if n_teilchen >= 0:
+            eintrag = {
+                "Datum & Uhrzeit": datetime.now().strftime("%d.%m.%Y %H:%M:%S"),
+                "Rechnung": "Teilchenzahl",
+                "Eingaben": f"n={n_teilchen} mol",
+                "Ergebnis": f"N={n_teilchen * AVOGADRO:.3e}"
+            }
+            st.session_state.logbuch_daten["konzentration"].append(eintrag)
+            st.success("✅ Gespeichert!")
+        else:
+            st.warning("⚠️ Bitte erst Werte eingeben!")
