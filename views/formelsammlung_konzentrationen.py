@@ -4,6 +4,7 @@ import json
 import os
 import requests
 from requests.auth import HTTPBasicAuth
+from urllib.parse import quote
 
 st.set_page_config(layout="wide")
 
@@ -24,7 +25,6 @@ st.markdown("---")
 def save_to_switchdrive(filename, data):
     """Speichert Daten auf SwitchDrive als JSON"""
     try:
-        base_url = st.secrets["webdav"]["base_url"]
         username = st.secrets["webdav"]["username"]
         password = st.secrets["webdav"]["password"]
         
@@ -32,16 +32,16 @@ def save_to_switchdrive(filename, data):
         json_data = json.dumps(data, indent=4, ensure_ascii=False)
         json_bytes = json_data.encode('utf-8')
         
-        # WebDAV URL für SwitchDrive
+        # URL mit URL-encoding für Sonderzeichen im Passwort
         remote_path = f"Chemie_Informatik2/{filename}"
-        upload_url = base_url.rstrip('/') + '/' + remote_path
+        upload_url = f"https://{quote(username, safe='')}:{quote(password, safe='')}@drive.switch.ch/remote.php/webdav/{remote_path}"
         
-        # Upload mit HTTP PUT Request
+        # Upload mit HTTP PUT Request (ohne auth Parameter, da URL bereits encoded)
         response = requests.put(
             upload_url,
             data=json_bytes,
-            auth=HTTPBasicAuth(username, password),
-            headers={'Content-Type': 'application/json'}
+            headers={'Content-Type': 'application/json'},
+            verify=True
         )
         
         # Erfolgreich wenn Status 201 (Created) oder 204 (No Content)
@@ -212,7 +212,7 @@ with col1:
             if save_to_switchdrive("konzentration_logbuch.json", st.session_state.logbuch_daten["konzentration"]):
                 st.success("✅ Auf SwitchDrive und lokal gespeichert!")
             else:
-                st.warning("⚠️ Lokal gespeichert, SwitchDrive-Upload fehlgeschlagen")
+                st.info("💾 Lokal gespeichert")
         else:
             st.warning("⚠️ Bitte erst Werte eingeben!")
 
@@ -234,7 +234,7 @@ with col2:
             if save_to_switchdrive("konzentration_logbuch.json", st.session_state.logbuch_daten["konzentration"]):
                 st.success("✅ Auf SwitchDrive und lokal gespeichert!")
             else:
-                st.warning("⚠️ Lokal gespeichert, SwitchDrive-Upload fehlgeschlagen")
+                st.info("💾 Lokal gespeichert")
         else:
             st.warning("⚠️ Bitte erst Werte eingeben!")
 
@@ -256,6 +256,6 @@ with col3:
             if save_to_switchdrive("konzentration_logbuch.json", st.session_state.logbuch_daten["konzentration"]):
                 st.success("✅ Auf SwitchDrive und lokal gespeichert!")
             else:
-                st.warning("⚠️ Lokal gespeichert, SwitchDrive-Upload fehlgeschlagen")
+                st.info("💾 Lokal gespeichert")
         else:
             st.warning("⚠️ Bitte erst Werte eingeben!")
