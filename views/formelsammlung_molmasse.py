@@ -40,7 +40,6 @@ elemente_sortiert = sorted(elemente, key=lambda x: x["ordnungszahl"])
 
 st.subheader("Periodensystem mit allen 118 Elementen")
 
-
 st.write("**Kategorien-Legende:**")
 legend_cols = st.columns(len(farben_kategorien))
 
@@ -217,7 +216,13 @@ if st.session_state.selected_elements_list:
             }
 
             st.session_state.logbuch_daten["molmasse"].append(eintrag)
-            st.success("✅ Eintrag ins Logbuch gespeichert!")
+
+            st.session_state.data_manager.save_user_data(
+                st.session_state.logbuch_daten,
+                "logbuch_daten.json"
+            )
+
+            st.success("✅ Eintrag ins Logbuch und auf SwitchDrive gespeichert!")
 
     with col2:
         if st.button("🗑️ Alle Elemente löschen", use_container_width=True):
