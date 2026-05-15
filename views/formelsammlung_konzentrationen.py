@@ -3,6 +3,7 @@ from datetime import datetime
 import json
 import os
 from webdav4.client import Client
+from io import BytesIO
 
 st.set_page_config(layout="wide")
 
@@ -48,9 +49,10 @@ def save_to_switchdrive(filename, data):
         json_data = json.dumps(data, indent=4, ensure_ascii=False)
         json_bytes = json_data.encode('utf-8')
         
-        # Speichere auf SwitchDrive
+        # Speichere auf SwitchDrive mit put_file
         remote_path = f"Chemie_Informatik2/{filename}"
-        client.upload(remote_path, json_bytes)
+        with BytesIO(json_bytes) as f:
+            client.put_file(remote_path, f)
         return True
     except Exception as e:
         st.error(f"Fehler beim Upload auf SwitchDrive: {e}")
