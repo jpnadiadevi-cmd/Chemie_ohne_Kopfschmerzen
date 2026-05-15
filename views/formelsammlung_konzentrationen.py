@@ -49,10 +49,9 @@ def save_to_switchdrive(filename, data):
         json_data = json.dumps(data, indent=4, ensure_ascii=False)
         json_bytes = json_data.encode('utf-8')
         
-        # Speichere auf SwitchDrive mit put_file
+        # Speichere auf SwitchDrive mit write_to
         remote_path = f"Chemie_Informatik2/{filename}"
-        with BytesIO(json_bytes) as f:
-            client.put_file(remote_path, f)
+        client.write_to(remote_path, json_bytes)
         return True
     except Exception as e:
         st.error(f"Fehler beim Upload auf SwitchDrive: {e}")
