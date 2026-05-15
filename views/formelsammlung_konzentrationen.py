@@ -4,8 +4,6 @@ import json
 import os
 from webdav4.client import Client
 
-# ...rest of code bleibt gleich...
-
 st.set_page_config(layout="wide")
 
 st.write("""
@@ -24,12 +22,16 @@ st.markdown("---")
 # WebDAV Client für SwitchDrive
 def get_webdav_client():
     try:
-        options = {
-            'webdav_hostname': st.secrets["webdav"]["base_url"],
-            'webdav_login': st.secrets["webdav"]["username"],
-            'webdav_password': st.secrets["webdav"]["password"]
-        }
-        return Client(options)
+        base_url = st.secrets["webdav"]["base_url"]
+        username = st.secrets["webdav"]["username"]
+        password = st.secrets["webdav"]["password"]
+        
+        # webdav4 benötigt diese Syntax
+        client = Client(
+            base_url=base_url,
+            auth=(username, password)
+        )
+        return client
     except Exception as e:
         st.error(f"WebDAV Fehler: {e}")
         return None
@@ -44,9 +46,11 @@ def save_to_switchdrive(filename, data):
         
         # Konvertiere Daten zu JSON
         json_data = json.dumps(data, indent=4, ensure_ascii=False)
+        json_bytes = json_data.encode('utf-8')
         
         # Speichere auf SwitchDrive
-        client.upload_to(json_data.encode('utf-8'), f"/Chemie_Informatik2/{filename}")
+        remote_path = f"Chemie_Informatik2/{filename}"
+        client.upload(remote_path, json_bytes)
         return True
     except Exception as e:
         st.error(f"Fehler beim Upload auf SwitchDrive: {e}")
