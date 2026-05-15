@@ -1,20 +1,8 @@
 [
     {
-        "Datum & Uhrzeit": "15.05.2026 11:20:38",
+        "Datum & Uhrzeit": "15.05.2026 11:44:15",
         "Rechnung": "Molarität",
-        "Eingaben": "n=0.02 mol, V=0.02 L",
+        "Eingaben": "n=0.01 mol, V=0.01 L",
         "Ergebnis": "c=1.0000 mol/L"
-    },
-    {
-        "Datum & Uhrzeit": "15.05.2026 11:20:38",
-        "Rechnung": "Molalität",
-        "Eingaben": "n=0.01 mol, m=0.1 g",
-        "Ergebnis": "β=0.1000 mol/g"
-    },
-    {
-        "Datum & Uhrzeit": "15.05.2026 11:20:39",
-        "Rechnung": "Teilchenzahl",
-        "Eingaben": "n=0.01 mol",
-        "Ergebnis": "N=6.022e+21"
     }
 ]
