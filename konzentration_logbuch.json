@@ -1,6 +1,16 @@
 [
     {
+
         "Datum & Uhrzeit": "19.05.2026 13:47:22",
+
+        "Datum & Uhrzeit": "15.05.2026 12:38:06",
+        "Rechnung": "Molarität",
+        "Eingaben": "n=0.01 mol, V=0.01 L",
+        "Ergebnis": "c=1.0000 mol/L"
+    },
+    {
+        "Datum & Uhrzeit": "15.05.2026 12:38:08",
+         
         "Rechnung": "Molarität",
         "Eingaben": "n=0.02 mol, V=0.02 L",
         "Ergebnis": "c=1.0000 mol/L"
