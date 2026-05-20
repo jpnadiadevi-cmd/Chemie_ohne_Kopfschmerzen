@@ -1,6 +1,9 @@
 import streamlit as st
 from datetime import datetime
 
+from utils.storage import save_to_switchdrive
+
+
 st.title("🧬 Die Molformel")
 
 st.markdown("---")
@@ -93,7 +96,11 @@ if result_text is not None:
             eintrag = {
                 "Datum & Uhrzeit": datetime.now().strftime("%d.%m.%Y %H:%M:%S"),
                 "Rechnung": "Molformel (n, m, M)",
-                "Eingaben": f"n={n_input if n_input > 0 else '—'}, m={m_input if m_input > 0 else '—'}, M={M_input if M_input > 0 else '—'}",
+                "Eingaben": (
+                    f"n={n_input if n_input > 0 else '—'}, "
+                    f"m={m_input if m_input > 0 else '—'}, "
+                    f"M={M_input if M_input > 0 else '—'}"
+                ),
                 "Ergebnis": f"{result_key}={result_value:.4f}"
             }
 
@@ -104,6 +111,14 @@ if result_text is not None:
                 "logbuch_daten.json"
             )
 
-            st.success(
-                f"✅ {result_key}={result_value:.4f} im Logbuch und auf SwitchDrive gespeichert!"
-            )
+            if save_to_switchdrive(
+                "logbuch_daten.json",
+                st.session_state.logbuch_daten
+            ):
+                st.success(
+                    f"✅ {result_key}={result_value:.4f} im Logbuch und auf SwitchDrive gespeichert!"
+                )
+            else:
+                st.info(
+                    f"💾 {result_key}={result_value:.4f} im Logbuch gespeichert, aber SwitchDrive konnte nicht aktualisiert werden."
+                )

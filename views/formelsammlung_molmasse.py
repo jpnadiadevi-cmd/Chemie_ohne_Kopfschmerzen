@@ -2,6 +2,7 @@ import streamlit as st
 from datetime import datetime
 
 from data.pse_data import elemente, farben_kategorien
+from utils.storage import save_to_switchdrive
 
 
 st.title("⚛️ Interaktives Periodensystem - Molmasse berechnen")
@@ -222,7 +223,13 @@ if st.session_state.selected_elements_list:
                 "logbuch_daten.json"
             )
 
-            st.success("✅ Eintrag ins Logbuch und auf SwitchDrive gespeichert!")
+            if save_to_switchdrive(
+                "logbuch_daten.json",
+                st.session_state.logbuch_daten
+            ):
+                st.success("✅ Eintrag ins Logbuch und auf SwitchDrive gespeichert!")
+            else:
+                st.info("💾 Eintrag im Logbuch gespeichert, aber SwitchDrive konnte nicht aktualisiert werden.")
 
     with col2:
         if st.button("🗑️ Alle Elemente löschen", use_container_width=True):

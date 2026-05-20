@@ -1,6 +1,9 @@
 import streamlit as st
 from datetime import datetime
 
+from utils.storage import save_to_switchdrive
+
+
 st.title("🧮 Mol-Rechner")
 st.markdown("---")
 
@@ -10,6 +13,21 @@ if "logbuch_daten" not in st.session_state:
         "molformel": [],
         "konzentration": []
     }
+
+
+def speichere_logbuch(eintrag, success_text):
+    st.session_state.logbuch_daten["molformel"].append(eintrag)
+
+    st.session_state.data_manager.save_user_data(
+        st.session_state.logbuch_daten,
+        "logbuch_daten.json"
+    )
+
+    if save_to_switchdrive("logbuch_daten.json", st.session_state.logbuch_daten):
+        st.success(success_text)
+    else:
+        st.info("💾 Im Logbuch gespeichert, aber SwitchDrive konnte nicht aktualisiert werden.")
+
 
 # Abschnitt 1: Stoffmenge
 st.header("Stoffmenge (n)")
@@ -34,18 +52,15 @@ if st.button("💾 Stoffmenge speichern", key="save_n"):
             "Ergebnis": f"n={n1:.4f} mol"
         }
 
-        st.session_state.logbuch_daten["molformel"].append(eintrag)
-
-        st.session_state.data_manager.save_user_data(
-            st.session_state.logbuch_daten,
-            "logbuch_daten.json"
+        speichere_logbuch(
+            eintrag,
+            "✅ Stoffmenge im Logbuch und auf SwitchDrive gespeichert!"
         )
-
-        st.success("✅ Stoffmenge im Logbuch und auf SwitchDrive gespeichert!")
     else:
         st.warning("⚠️ Bitte eine molare Masse > 0 eingeben.")
 
 st.markdown("---")
+
 
 # Abschnitt 2: Masse
 st.header("Masse (m)")
@@ -69,16 +84,13 @@ if st.button("💾 Masse speichern", key="save_m"):
         "Ergebnis": f"m={m2:.4f} g"
     }
 
-    st.session_state.logbuch_daten["molformel"].append(eintrag)
-
-    st.session_state.data_manager.save_user_data(
-        st.session_state.logbuch_daten,
-        "logbuch_daten.json"
+    speichere_logbuch(
+        eintrag,
+        "✅ Masse im Logbuch und auf SwitchDrive gespeichert!"
     )
 
-    st.success("✅ Masse im Logbuch und auf SwitchDrive gespeichert!")
-
 st.markdown("---")
+
 
 # Abschnitt 3: Molare Masse
 st.header("Molare Masse (M)")
@@ -103,14 +115,10 @@ if st.button("💾 Molare Masse speichern", key="save_M"):
             "Ergebnis": f"M={M3:.4f} g/mol"
         }
 
-        st.session_state.logbuch_daten["molformel"].append(eintrag)
-
-        st.session_state.data_manager.save_user_data(
-            st.session_state.logbuch_daten,
-            "logbuch_daten.json"
+        speichere_logbuch(
+            eintrag,
+            "✅ Molare Masse im Logbuch und auf SwitchDrive gespeichert!"
         )
-
-        st.success("✅ Molare Masse im Logbuch und auf SwitchDrive gespeichert!")
     else:
         st.warning("⚠️ Bitte eine Stoffmenge > 0 eingeben.")
 
