@@ -1,26 +1,92 @@
 [
     {
-        "Datum & Uhrzeit": "20.05.2026 10:06:33",
+        "Datum & Uhrzeit": "20.05.2026 15:49:06",
         "Rechnung": "Molarität",
-        "Eingaben": "n=0.01 mol, V=0.01 L",
-        "Ergebnis": "c=1.0000 mol/L"
+        "Eingaben": "n=3.0 mol, V=2.0 L",
+        "Ergebnis": "c=1.5000 mol/L"
     },
     {
-        "Datum & Uhrzeit": "20.05.2026 10:06:34",
+        "Datum & Uhrzeit": "20.05.2026 15:49:09",
         "Rechnung": "Molalität",
-        "Eingaben": "n=0.01 mol, m=0.1 g",
-        "Ergebnis": "β=0.1000 mol/g"
+        "Eingaben": "n=5.0 mol, m=3.0 g",
+        "Ergebnis": "β=1.6667 mol/g"
     },
     {
-        "Datum & Uhrzeit": "20.05.2026 10:06:39",
-        "Rechnung": "Molarität",
-        "Eingaben": "n=0.01 mol, V=0.01 L",
-        "Ergebnis": "c=1.0000 mol/L"
-    },
-    {
-        "Datum & Uhrzeit": "20.05.2026 10:06:41",
+        "Datum & Uhrzeit": "20.05.2026 15:49:11",
         "Rechnung": "Teilchenzahl",
-        "Eingaben": "n=0.01 mol",
-        "Ergebnis": "N=6.022e+21"
+        "Eingaben": "n=4.0 mol",
+        "Ergebnis": "N=2.409e+24"
+    },
+    {
+        "Datum & Uhrzeit": "20.05.2026 15:52:37",
+        "Rechnung": "Molarität",
+        "Eingaben": "n=3.0 mol, V=4.0 L",
+        "Ergebnis": "c=0.7500 mol/L"
+    },
+    {
+        "Datum & Uhrzeit": "20.05.2026 15:52:39",
+        "Rechnung": "Molalität",
+        "Eingaben": "n=4.0 mol, m=5.0 g",
+        "Ergebnis": "β=0.8000 mol/g"
+    },
+    {
+        "Datum & Uhrzeit": "20.05.2026 15:52:41",
+        "Rechnung": "Teilchenzahl",
+        "Eingaben": "n=4.0 mol",
+        "Ergebnis": "N=2.409e+24"
+    },
+    {
+        "Datum & Uhrzeit": "20.05.2026 16:02:10",
+        "Rechnung": "Molarität",
+        "Eingaben": "n=3.0 mol, V=4.0 L",
+        "Ergebnis": "c=0.7500 mol/L"
+    },
+    {
+        "Datum & Uhrzeit": "20.05.2026 16:02:12",
+        "Rechnung": "Molalität",
+        "Eingaben": "n=3.0 mol, m=4.0 g",
+        "Ergebnis": "β=0.7500 mol/g"
+    },
+    {
+        "Datum & Uhrzeit": "20.05.2026 16:02:14",
+        "Rechnung": "Teilchenzahl",
+        "Eingaben": "n=45.0 mol",
+        "Ergebnis": "N=2.710e+25"
+    },
+    {
+        "Datum & Uhrzeit": "20.05.2026 16:03:42",
+        "Rechnung": "Molarität",
+        "Eingaben": "n=4.0 mol, V=5.0 L",
+        "Ergebnis": "c=0.8000 mol/L"
+    },
+    {
+        "Datum & Uhrzeit": "20.05.2026 16:03:45",
+        "Rechnung": "Molalität",
+        "Eingaben": "n=5.0 mol, m=6.0 g",
+        "Ergebnis": "β=0.8333 mol/g"
+    },
+    {
+        "Datum & Uhrzeit": "20.05.2026 16:03:49",
+        "Rechnung": "Teilchenzahl",
+        "Eingaben": "n=5.0 mol",
+        "Ergebnis": "N=3.011e+24"
+    },
+    {
+        "Datum & Uhrzeit": "20.05.2026 16:06:40",
+        "Rechnung": "Molarität",
+        "Eingaben": "n=6.0 mol, V=4.0 L",
+        "Ergebnis": "c=1.5000 mol/L"
+    },
+    {
+        "Datum & Uhrzeit": "20.05.2026 16:06:42",
+        "Rechnung": "Molalität",
+        "Eingaben": "n=6.0 mol, m=8.0 g",
+        "Ergebnis": "β=0.7500 mol/g"
+    },
+    {
+        "Datum & Uhrzeit": "20.05.2026 16:06:45",
+        "Rechnung": "Teilchenzahl",
+        "Eingaben": "n=4.0 mol",
+        "Ergebnis": "N=2.409e+24"
     }
 ]
