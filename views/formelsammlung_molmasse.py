@@ -6,6 +6,7 @@ from utils.storage import save_to_switchdrive
 
 
 st.title("⚛️ Interaktives Periodensystem - Molmasse berechnen")
+st.markdown("---")
 
 st.write("""
 🧪 **Interaktives PSE – molare Masse clever berechnen**

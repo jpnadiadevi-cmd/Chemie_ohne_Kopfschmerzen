@@ -3,7 +3,7 @@ import streamlit as st
 st.set_page_config(page_title="Formelsammlung", layout="wide")
 
 st.title("📚 Formelsammlung")
-
+st.markdown("---")
 """Hier findest du wichtige Formeln und Berechnungen für den Chemie Alltag. Von Konzentrationen und Teilchen über die Molformel bis zur molaren Masse mit PSE – alles an einem Ort! Klicke einfach auf die Buttons, um zu den jeweiligen Themen zu gelangen. 🧪"""
 
 st.markdown("---")

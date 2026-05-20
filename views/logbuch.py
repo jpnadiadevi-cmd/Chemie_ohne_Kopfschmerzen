@@ -1,6 +1,7 @@
 import streamlit as st
 
 st.title("📓 Logbuch")
+st.markdown("---")
 st.write("""
 🧪 **Logbuch – Chemie ohne Kopfschmerzen**
 

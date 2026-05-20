@@ -4,7 +4,7 @@ from datetime import datetime
 from utils.storage import save_to_switchdrive
 
 st.title("📝 Protokoll")
-
+st.markdown("---")
 st.write("""
 🧾 **Protokoll – sauber dokumentiert**
 

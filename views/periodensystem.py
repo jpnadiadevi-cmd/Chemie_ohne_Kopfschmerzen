@@ -4,6 +4,7 @@ from data.pse_data import elemente, farben_kategorien
 st.set_page_config(layout="wide")
 
 st.title("⚛️ Interaktives Periodensystem - Alle 118 Elemente")
+st.markdown("---")
 st.write("Klicke auf ein Element, um detaillierte Informationen zu sehen!")
 
 elemente_sortiert = sorted(elemente, key=lambda x: x["ordnungszahl"])
