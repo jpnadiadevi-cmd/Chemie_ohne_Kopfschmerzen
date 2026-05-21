@@ -12,10 +12,6 @@ st.set_page_config(
 )
 
 st.markdown("""
-<style>
-.stApp {
-    background: linear-gradient(180deg, #fff8eb 0%, #fffdf8 45%, #ffffff 100%);
-}
 
 .block-container {
     padding-top: 2rem;
