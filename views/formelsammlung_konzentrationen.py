@@ -13,8 +13,24 @@ st.set_page_config(
 
 st.markdown("""
 <style>
-.stApp {
-    background: linear-gradient(180deg, #fff8eb 0%, #fffdf8 45%, #ffffff 100%);
+.stAlert {
+
+    background: #fff8eb !important;
+
+    border: 1px solid #f0dfbd !important;
+
+    border-radius: 22px !important;
+
+    padding: 1.2rem !important;
+
+    font-size: 2rem !important;
+
+    font-weight: 700 !important;
+
+    color: #30303d !important;
+
+    box-shadow:
+        0 5px 15px rgba(0,0,0,0.04);
 }
 
 .block-container {
