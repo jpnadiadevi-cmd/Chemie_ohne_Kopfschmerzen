@@ -32,7 +32,7 @@ st.markdown("""
     );
 }
 
-/* Content */
+/* CONTENT */
 .block-container {
     padding-top: 2rem;
     padding-bottom: 3rem;
@@ -41,7 +41,8 @@ st.markdown("""
 
 /* HERO */
 .hero-box {
-    background: rgba(255,255,255,0.85);
+
+    background: rgba(255,255,255,0.88);
 
     border-radius: 28px;
 
@@ -54,37 +55,52 @@ st.markdown("""
 }
 
 .hero-title {
+
     font-size: 3rem;
+
     font-weight: 800;
+
     color: #30303d;
+
     margin-bottom: 0.7rem;
 }
 
 .hero-text {
+
     font-size: 1.1rem;
+
     line-height: 1.8;
+
     color: #5e5e6d;
 }
 
-/* RECHNER */
+/* CALC SECTION */
 .calc-card {
-    margin-bottom: 2rem;
+
+    margin-bottom: 2.5rem;
 }
 
 .calc-title {
-    font-size: 1.7rem;
+
+    font-size: 1.8rem;
+
     font-weight: 800;
+
     color: #30303d;
-    margin-bottom: 0.4rem;
+
+    margin-bottom: 0.3rem;
 }
 
 .calc-subtitle {
+
     color: #70707d;
+
     margin-bottom: 1.5rem;
+
     font-style: italic;
 }
 
-/* METRIC */
+/* METRIC BOX */
 [data-testid="stMetric"] {
 
     background: #fff8ea;
@@ -99,25 +115,31 @@ st.markdown("""
         0 5px 15px rgba(0,0,0,0.04);
 }
 
-/* INFO BOXEN */
-.stAlert {
+/* INFO BOXES */
+[data-testid="stAlert"] {
 
-    background: #fff8eb !important;
+    background: #fff8ea !important;
 
-    border: 1px solid #f0dfbd !important;
+    border: 1px solid #f3dfb6 !important;
 
     border-radius: 22px !important;
 
-    padding: 1.2rem !important;
+    padding: 1rem !important;
 
-    font-size: 1.3rem !important;
+    box-shadow:
+        0 5px 15px rgba(0,0,0,0.04) !important;
+}
 
-    font-weight: 700 !important;
+/* TEXT INSIDE INFO BOX */
+[data-testid="stAlert"] p {
 
     color: #30303d !important;
 
-    box-shadow:
-        0 5px 15px rgba(0,0,0,0.04);
+    font-size: 1.5rem !important;
+
+    font-weight: 700 !important;
+
+    line-height: 1.5 !important;
 }
 
 /* INPUTS */
@@ -256,12 +278,15 @@ def speichere_ins_logbuch(eintrag):
 
 st.markdown("""
 <div class="calc-card">
+
 <div class="calc-title">
 1️⃣ Molarität: c [mol/L] = n / V
 </div>
 
 <div class="calc-subtitle">
 Berechne die Konzentration einer Lösung
+</div>
+
 </div>
 """, unsafe_allow_html=True)
 
@@ -301,7 +326,6 @@ with col2:
     else:
         st.info("Bitte gib ein Volumen > 0 ein")
 
-st.markdown("</div>", unsafe_allow_html=True)
 
 # ---------------------------------------------------
 # MOLALITÄT
@@ -309,12 +333,15 @@ st.markdown("</div>", unsafe_allow_html=True)
 
 st.markdown("""
 <div class="calc-card">
+
 <div class="calc-title">
 2️⃣ Molalität: β [mol/g] = n / m
 </div>
 
 <div class="calc-subtitle">
 Berechne die Molalität einer Lösung
+</div>
+
 </div>
 """, unsafe_allow_html=True)
 
@@ -354,7 +381,6 @@ with col2:
     else:
         st.info("Bitte gib eine Masse > 0 ein")
 
-st.markdown("</div>", unsafe_allow_html=True)
 
 # ---------------------------------------------------
 # TEILCHENZAHL
@@ -362,12 +388,15 @@ st.markdown("</div>", unsafe_allow_html=True)
 
 st.markdown("""
 <div class="calc-card">
+
 <div class="calc-title">
 3️⃣ Teilchenzahl: N = n × 6.022 × 10²³
 </div>
 
 <div class="calc-subtitle">
 Berechne die Anzahl der Teilchen
+</div>
+
 </div>
 """, unsafe_allow_html=True)
 
@@ -391,18 +420,18 @@ with col2:
     N = n_teilchen * AVOGADRO
 
     if N >= 1e9:
+
         st.metric(
             "Teilchenzahl N",
             f"{N:.3e}"
         )
 
     else:
+
         st.metric(
             "Teilchenzahl N",
             f"{N:,.0f}"
         )
-
-st.markdown("</div>", unsafe_allow_html=True)
 
 # ---------------------------------------------------
 # INFO
