@@ -11,221 +11,161 @@ st.set_page_config(
 )
 
 # ---------------------------------------------------
-# DESIGN
+# DESIGN WIE HOMEPAGE
 # ---------------------------------------------------
 
 st.markdown("""
 <style>
 
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+html, body, [class*="css"] {
+    font-family: 'Inter', sans-serif;
+}
+
 .stApp {
-    background:
-    linear-gradient(
-        180deg,
-        #fff8eb 0%,
-        #fffdf8 45%,
-        #ffffff 100%
-    );
+    background: #fffdf8;
+    color: #30303d;
 }
 
-/* CONTENT */
 .block-container {
-    padding-top: 2rem;
-    padding-bottom: 4rem;
     max-width: 1200px;
+    padding-top: 2.2rem;
+    padding-bottom: 4rem;
 }
 
-/* HERO */
-.hero-box {
-
-    background: rgba(255,255,255,0.88);
-
-    border-radius: 30px;
-
-    padding: 2rem;
-
-    box-shadow:
-        0 15px 40px rgba(0,0,0,0.08);
-
-    margin-bottom: 3rem;
+/* TITEL */
+h1 {
+    font-size: 3rem !important;
+    font-weight: 800 !important;
+    color: #30303d !important;
+    letter-spacing: -0.04em;
+    margin-bottom: 2.2rem !important;
 }
 
-.hero-title {
-
-    font-size: 3rem;
-
-    font-weight: 800;
-
-    color: #30303d;
-
-    margin-bottom: 0.7rem;
+h2, h3 {
+    color: #30303d !important;
+    font-weight: 800 !important;
+    letter-spacing: -0.03em;
 }
 
-.hero-text {
-
-    font-size: 1.1rem;
-
-    line-height: 1.8;
-
-    color: #5e5e6d;
+/* TRENNLINIEN */
+hr {
+    border: none;
+    border-top: 1px solid #dedede;
+    margin: 2.7rem 0 !important;
 }
 
-/* FORMULA BOX */
-.formula-box {
-
-    background: rgba(255,255,255,0.82);
-
-    border-radius: 24px;
-
-    padding: 2rem;
-
-    box-shadow:
-        0 8px 22px rgba(0,0,0,0.06);
-
+/* FORMEL */
+[data-testid="stLatex"] {
     text-align: center;
-
-    margin-bottom: 3rem;
+    font-size: 1.25rem;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
 }
 
-/* CALC SECTION */
-.calc-card {
-
-    margin-bottom: 4rem;
+/* INPUT LABELS */
+label {
+    color: #30303d !important;
+    font-weight: 500 !important;
 }
 
-.calc-title {
-
-    font-size: 1.8rem;
-
-    font-weight: 800;
-
-    color: #30303d;
-
-    margin-bottom: 0.4rem;
+/* NUMBER INPUT */
+.stNumberInput input {
+    background-color: #f1f3f8 !important;
+    border: none !important;
+    border-radius: 10px !important;
+    color: #30303d !important;
+    font-size: 1rem !important;
+    padding: 0.8rem 1rem !important;
 }
 
-.calc-subtitle {
-
-    color: #70707d;
-
-    margin-bottom: 1.8rem;
-
-    font-style: italic;
+.stNumberInput input:focus {
+    box-shadow: 0 0 0 2px rgba(245, 191, 79, 0.35) !important;
 }
 
-/* RESULT BOXES */
+/* PLUS MINUS BUTTONS */
+.stNumberInput button {
+    background-color: #f1f3f8 !important;
+    border: none !important;
+    color: #30303d !important;
+}
+
+/* METRIC / RESULT */
 [data-testid="stMetric"] {
-
     background: #fff8ea;
+    border: 1px solid #f1d99d;
+    border-radius: 16px;
+    padding: 1.2rem;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.04);
+}
 
-    border: 1px solid #f3dfb6;
+[data-testid="stMetricLabel"] {
+    color: #30303d !important;
+    font-weight: 600 !important;
+}
 
-    padding: 1rem;
-
-    border-radius: 22px;
-
-    box-shadow:
-        0 5px 15px rgba(0,0,0,0.04);
+[data-testid="stMetricValue"] {
+    color: #30303d !important;
+    font-weight: 800 !important;
 }
 
 /* INFO BOX */
 [data-testid="stAlert"] {
-
-    background: #fff8ea !important;
-
-    border: 1px solid #f3dfb6 !important;
-
-    border-radius: 22px !important;
-
-    padding: 1rem !important;
-
-    box-shadow:
-        0 5px 15px rgba(0,0,0,0.04) !important;
+    background-color: #eaf3ff !important;
+    border: none !important;
+    border-radius: 10px !important;
+    color: #0054a6 !important;
 }
 
 [data-testid="stAlert"] p {
-
-    color: #30303d !important;
-
-    font-size: 1.2rem !important;
-
-    font-weight: 700 !important;
+    font-size: 1rem !important;
+    font-weight: 500 !important;
 }
 
-/* INPUTS */
-.stNumberInput > div {
-
-    border-radius: 14px;
+/* ABSCHNITTE */
+.calc-title {
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: #30303d;
+    letter-spacing: -0.03em;
+    margin-bottom: 0.3rem;
 }
 
-/* DIVIDERS */
-hr {
-    margin-top: 3rem !important;
-    margin-bottom: 3rem !important;
+.calc-subtitle {
+    font-size: 1rem;
+    color: #5e5e6d;
+    margin-bottom: 1.5rem;
 }
 
 </style>
 """, unsafe_allow_html=True)
 
 # ---------------------------------------------------
-# HERO
+# HEADER
 # ---------------------------------------------------
 
-st.markdown("""
-<div class="hero-box">
+st.markdown("# 🧬 Die Molformel")
+st.markdown("---")
 
-<div class="hero-title">
-🧬 Die Molformel
-</div>
-
-<div class="hero-text">
-Berechne Stoffmenge, Masse oder molare Masse schnell und übersichtlich.
-
-Gib einfach zwei Werte ein — der dritte Wert wird automatisch berechnet.
-</div>
-
-</div>
-""", unsafe_allow_html=True)
-
-# ---------------------------------------------------
-# FORMULAS
-# ---------------------------------------------------
-
-st.markdown("""
-<div class="formula-box">
-""", unsafe_allow_html=True)
-
-st.markdown("""
-# Berechne Stoffmenge, Masse oder Molare Masse
-""")
+st.markdown("## Berechne Stoffmenge, Masse oder Molare Masse")
 
 st.latex(r"n = \frac{m}{M} \quad | \quad m = M \cdot n \quad | \quad M = \frac{m}{n}")
 
-st.markdown("""
-</div>
-""", unsafe_allow_html=True)
+st.markdown("---")
 
 # ---------------------------------------------------
 # STOFFMENGE
 # ---------------------------------------------------
 
 st.markdown("""
-<div class="calc-card">
-
-<div class="calc-title">
-1️⃣ Stoffmenge berechnen
-</div>
-
-<div class="calc-subtitle">
-Formel: n = m / M
-</div>
-
-</div>
+<div class="calc-title">1️⃣ Stoffmenge berechnen</div>
+<div class="calc-subtitle">Formel: n = m / M</div>
 """, unsafe_allow_html=True)
 
 col1, col2 = st.columns(2)
 
 with col1:
-
     m1 = st.number_input(
         "Masse m [g]",
         key="mol_m1",
@@ -241,7 +181,6 @@ with col1:
     )
 
 with col2:
-
     n1 = m1 / M1 if M1 != 0 else 0.0
 
     st.metric(
@@ -256,23 +195,13 @@ st.markdown("---")
 # ---------------------------------------------------
 
 st.markdown("""
-<div class="calc-card">
-
-<div class="calc-title">
-2️⃣ Masse berechnen
-</div>
-
-<div class="calc-subtitle">
-Formel: m = M × n
-</div>
-
-</div>
+<div class="calc-title">2️⃣ Masse berechnen</div>
+<div class="calc-subtitle">Formel: m = M × n</div>
 """, unsafe_allow_html=True)
 
 col3, col4 = st.columns(2)
 
 with col3:
-
     M2 = st.number_input(
         "Molare Masse M [g/mol]",
         key="mol_M2",
@@ -288,7 +217,6 @@ with col3:
     )
 
 with col4:
-
     m2 = M2 * n2
 
     st.metric(
@@ -303,23 +231,13 @@ st.markdown("---")
 # ---------------------------------------------------
 
 st.markdown("""
-<div class="calc-card">
-
-<div class="calc-title">
-3️⃣ Molare Masse berechnen
-</div>
-
-<div class="calc-subtitle">
-Formel: M = m / n
-</div>
-
-</div>
+<div class="calc-title">3️⃣ Molare Masse berechnen</div>
+<div class="calc-subtitle">Formel: M = m / n</div>
 """, unsafe_allow_html=True)
 
 col5, col6 = st.columns(2)
 
 with col5:
-
     m3 = st.number_input(
         "Masse m [g]",
         key="mol_m3",
@@ -335,7 +253,6 @@ with col5:
     )
 
 with col6:
-
     M3 = m3 / n3 if n3 != 0 else 0.0
 
     st.metric(
@@ -350,4 +267,3 @@ with col6:
 st.markdown("<div style='margin-top: 3rem;'></div>", unsafe_allow_html=True)
 
 st.info("👉 Zwei Werte eingeben, der dritte Wert wird automatisch berechnet.")
-
