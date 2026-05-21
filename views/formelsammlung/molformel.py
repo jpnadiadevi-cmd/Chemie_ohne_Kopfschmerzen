@@ -11,7 +11,7 @@ st.set_page_config(
 )
 
 # ---------------------------------------------------
-# DESIGN WIE HOMEPAGE
+# STREAMLIT HOMEPAGE STYLE
 # ---------------------------------------------------
 
 st.markdown("""
@@ -23,98 +23,131 @@ html, body, [class*="css"] {
     font-family: 'Inter', sans-serif;
 }
 
+/* APP */
 .stApp {
-    background: #fffdf8;
+    background-color: #fffdf8;
     color: #30303d;
 }
 
+/* CONTAINER */
 .block-container {
     max-width: 1200px;
-    padding-top: 2.2rem;
+    padding-top: 3rem;
     padding-bottom: 4rem;
 }
 
-/* TITEL */
+/* TITLES */
 h1 {
-    font-size: 3rem !important;
+    font-size: 3.2rem !important;
     font-weight: 800 !important;
-    color: #30303d !important;
     letter-spacing: -0.04em;
-    margin-bottom: 2.2rem !important;
+    color: #30303d !important;
+    margin-bottom: 2rem !important;
 }
 
-h2, h3 {
-    color: #30303d !important;
+h2 {
+    font-size: 2.4rem !important;
     font-weight: 800 !important;
     letter-spacing: -0.03em;
+    color: #30303d !important;
 }
 
-/* TRENNLINIEN */
-hr {
-    border: none;
-    border-top: 1px solid #dedede;
-    margin: 2.7rem 0 !important;
-}
-
-/* FORMEL */
+/* LATEX */
 [data-testid="stLatex"] {
     text-align: center;
-    font-size: 1.25rem;
-    margin-top: 1.5rem;
-    margin-bottom: 1.5rem;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    font-size: 1.3rem;
 }
 
-/* INPUT LABELS */
-label {
+/* DIVIDER */
+hr {
+    border: none !important;
+    border-top: 1px solid #dddddd !important;
+    margin-top: 3rem !important;
+    margin-bottom: 3rem !important;
+}
+
+/* LABELS */
+label,
+[data-testid="stWidgetLabel"] p {
     color: #30303d !important;
+    font-size: 1rem !important;
     font-weight: 500 !important;
 }
 
-/* NUMBER INPUT */
-.stNumberInput input {
+/* INPUTS */
+[data-testid="stNumberInput"] input {
     background-color: #f1f3f8 !important;
     border: none !important;
     border-radius: 10px !important;
     color: #30303d !important;
-    font-size: 1rem !important;
-    padding: 0.8rem 1rem !important;
+    font-size: 1.1rem !important;
+    height: 3rem !important;
 }
 
-.stNumberInput input:focus {
-    box-shadow: 0 0 0 2px rgba(245, 191, 79, 0.35) !important;
+/* INPUT FOCUS */
+[data-testid="stNumberInput"] input:focus {
+    box-shadow: 0 0 0 2px rgba(245,191,79,0.35) !important;
 }
 
-/* PLUS MINUS BUTTONS */
-.stNumberInput button {
+/* PLUS / MINUS BUTTONS */
+[data-testid="stNumberInput"] button {
     background-color: #f1f3f8 !important;
     border: none !important;
     color: #30303d !important;
+    box-shadow: none !important;
 }
 
-/* METRIC / RESULT */
+[data-testid="stNumberInput"] button:hover {
+    background-color: #fff8ea !important;
+    color: #30303d !important;
+}
+
+/* METRIC */
 [data-testid="stMetric"] {
-    background: #fff8ea;
-    border: 1px solid #f1d99d;
-    border-radius: 16px;
-    padding: 1.2rem;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.04);
+    background: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+    box-shadow: none !important;
 }
 
 [data-testid="stMetricLabel"] {
     color: #30303d !important;
-    font-weight: 600 !important;
+    font-weight: 500 !important;
+    font-size: 1rem !important;
 }
 
 [data-testid="stMetricValue"] {
     color: #30303d !important;
-    font-weight: 800 !important;
+    font-weight: 500 !important;
+    font-size: 3rem !important;
+}
+
+/* BUTTONS */
+.stButton > button {
+    width: 100%;
+    background: white !important;
+    color: #30303d !important;
+    border: 1px solid #e5e5e5 !important;
+    border-radius: 14px !important;
+    height: 3.3rem !important;
+    font-size: 1.05rem !important;
+    font-weight: 500 !important;
+    transition: 0.2s;
+}
+
+.stButton > button:hover {
+    border-color: #f5bf4f !important;
+    background-color: #fff8ea !important;
+    color: #30303d !important;
 }
 
 /* INFO BOX */
 [data-testid="stAlert"] {
     background-color: #eaf3ff !important;
     border: none !important;
-    border-radius: 10px !important;
+    border-radius: 12px !important;
     color: #0054a6 !important;
 }
 
@@ -123,19 +156,9 @@ label {
     font-weight: 500 !important;
 }
 
-/* ABSCHNITTE */
-.calc-title {
-    font-size: 1.75rem;
-    font-weight: 800;
-    color: #30303d;
-    letter-spacing: -0.03em;
-    margin-bottom: 0.3rem;
-}
-
-.calc-subtitle {
-    font-size: 1rem;
-    color: #5e5e6d;
-    margin-bottom: 1.5rem;
+/* ANCHOR LINKS AUSBLENDEN */
+a.anchor-link {
+    display: none !important;
 }
 
 </style>
@@ -145,7 +168,8 @@ label {
 # HEADER
 # ---------------------------------------------------
 
-st.markdown("# 🧬 Die Molformel")
+st.title("🧬 Die Molformel")
+
 st.markdown("---")
 
 st.markdown("## Berechne Stoffmenge, Masse oder Molare Masse")
@@ -155,115 +179,85 @@ st.latex(r"n = \frac{m}{M} \quad | \quad m = M \cdot n \quad | \quad M = \frac{m
 st.markdown("---")
 
 # ---------------------------------------------------
-# STOFFMENGE
+# INPUTS
 # ---------------------------------------------------
 
-st.markdown("""
-<div class="calc-title">1️⃣ Stoffmenge berechnen</div>
-<div class="calc-subtitle">Formel: n = m / M</div>
-""", unsafe_allow_html=True)
-
-col1, col2 = st.columns(2)
+col1, col2, col3 = st.columns(3)
 
 with col1:
-    m1 = st.number_input(
-        "Masse m [g]",
-        key="mol_m1",
-        value=0.0,
-        format="%.4f"
-    )
 
-    M1 = st.number_input(
-        "Molare Masse M [g/mol]",
-        key="mol_M1",
+    n = st.number_input(
+        "Stoffmenge n [mol]",
         value=0.0,
         format="%.4f"
     )
 
 with col2:
-    n1 = m1 / M1 if M1 != 0 else 0.0
 
-    st.metric(
-        "Stoffmenge n",
-        f"{n1:.4f} mol"
+    m = st.number_input(
+        "Masse m [g]",
+        value=0.0,
+        format="%.4f"
     )
-
-st.markdown("---")
-
-# ---------------------------------------------------
-# MASSE
-# ---------------------------------------------------
-
-st.markdown("""
-<div class="calc-title">2️⃣ Masse berechnen</div>
-<div class="calc-subtitle">Formel: m = M × n</div>
-""", unsafe_allow_html=True)
-
-col3, col4 = st.columns(2)
 
 with col3:
-    M2 = st.number_input(
+
+    M = st.number_input(
         "Molare Masse M [g/mol]",
-        key="mol_M2",
         value=0.0,
         format="%.4f"
     )
 
-    n2 = st.number_input(
-        "Stoffmenge n [mol]",
-        key="mol_n2",
-        value=0.0,
-        format="%.4f"
-    )
+# ---------------------------------------------------
+# BERECHNUNG
+# ---------------------------------------------------
 
-with col4:
-    m2 = M2 * n2
+result = None
+result_label = ""
 
-    st.metric(
-        "Masse m",
-        f"{m2:.4f} g"
-    )
+filled = sum([
+    n != 0,
+    m != 0,
+    M != 0
+])
+
+if filled == 2:
+
+    if n == 0 and M != 0:
+        result = m / M
+        result_label = "Stoffmenge n [mol]"
+
+    elif m == 0:
+        result = M * n
+        result_label = "Masse m [g]"
+
+    elif M == 0 and n != 0:
+        result = m / n
+        result_label = "Molare Masse M [g/mol]"
+
+# ---------------------------------------------------
+# RESULT
+# ---------------------------------------------------
 
 st.markdown("---")
 
-# ---------------------------------------------------
-# MOLARE MASSE
-# ---------------------------------------------------
+st.subheader("📊 Ergebnis")
 
-st.markdown("""
-<div class="calc-title">3️⃣ Molare Masse berechnen</div>
-<div class="calc-subtitle">Formel: M = m / n</div>
-""", unsafe_allow_html=True)
-
-col5, col6 = st.columns(2)
-
-with col5:
-    m3 = st.number_input(
-        "Masse m [g]",
-        key="mol_m3",
-        value=0.0,
-        format="%.4f"
-    )
-
-    n3 = st.number_input(
-        "Stoffmenge n [mol]",
-        key="mol_n3",
-        value=0.0,
-        format="%.4f"
-    )
-
-with col6:
-    M3 = m3 / n3 if n3 != 0 else 0.0
+if result is not None:
 
     st.metric(
-        "Molare Masse M",
-        f"{M3:.4f} g/mol"
+        result_label,
+        f"{result:.4f}"
     )
 
+else:
+
+    st.info("👉 Bitte gib zwei Werte ein, um den dritten zu berechnen.")
+
 # ---------------------------------------------------
-# INFO
+# SAVE BUTTON
 # ---------------------------------------------------
 
-st.markdown("<div style='margin-top: 3rem;'></div>", unsafe_allow_html=True)
+st.markdown("---")
 
-st.info("👉 Zwei Werte eingeben, der dritte Wert wird automatisch berechnet.")
+st.button("💾 Ergebnis ins Logbuch speichern")
