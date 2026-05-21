@@ -171,6 +171,7 @@ a.anchor-link {
 st.title("🧬 Die Molformel")
 
 st.markdown("---")
+import streamlit as st
 
 st.markdown("## Berechne Stoffmenge, Masse oder Molare Masse")
 
