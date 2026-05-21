@@ -5,136 +5,201 @@ import json
 from utils.storage import save_to_switchdrive
 
 
+# ---------------------------------------------------
+# PAGE CONFIG
+# ---------------------------------------------------
+
 st.set_page_config(
     page_title="Konzentrationen & Teilchenzahl",
     page_icon="🧪",
     layout="wide"
 )
 
+# ---------------------------------------------------
+# DESIGN
+# ---------------------------------------------------
+
 st.markdown("""
 <style>
+
 .stApp {
-    background: linear-gradient(180deg, #fff8eb 0%, #fffdf8 45%, #ffffff 100%);
+    background:
+    linear-gradient(
+        180deg,
+        #fff8eb 0%,
+        #fffdf8 45%,
+        #ffffff 100%
+    );
 }
 
+/* Content */
 .block-container {
     padding-top: 2rem;
     padding-bottom: 3rem;
+    max-width: 1200px;
 }
 
-.hero-card {
+/* HERO */
+.hero-box {
     background: rgba(255,255,255,0.85);
-    border-radius: 26px;
-    padding: 1.8rem 2rem;
-    box-shadow: 0 12px 35px rgba(0,0,0,0.07);
-    border: 1px solid rgba(255,255,255,0.5);
+
+    border-radius: 28px;
+
+    padding: 2rem;
+
+    box-shadow:
+        0 15px 40px rgba(0,0,0,0.08);
+
     margin-bottom: 2rem;
 }
 
-.hero-card h1 {
-    margin: 0;
-    font-size: 2.5rem;
+.hero-title {
+    font-size: 3rem;
+    font-weight: 800;
     color: #30303d;
+    margin-bottom: 0.7rem;
 }
 
-.hero-card p {
-    margin-top: 0.9rem;
-    font-size: 1.08rem;
-    line-height: 1.7;
-    color: #5b5b68;
+.hero-text {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #5e5e6d;
 }
 
-.info-list {
-    background: rgba(255,255,255,0.72);
-    border-radius: 22px;
-    padding: 1.3rem 1.6rem;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.06);
-    margin-bottom: 2rem;
-}
+/* RECHNER KARTEN */
+.calc-box {
 
-.calc-card {
-    background: rgba(255,255,255,0.88);
-    border-radius: 24px;
-    padding: 1.5rem 1.7rem;
-    box-shadow: 0 10px 28px rgba(0,0,0,0.07);
-    border: 1px solid rgba(255,255,255,0.55);
+    background: rgba(255,255,255,0.9);
+
+    border-radius: 26px;
+
+    padding: 1.7rem;
+
+    margin-top: 1.5rem;
     margin-bottom: 1.8rem;
+
+    box-shadow:
+        0 12px 32px rgba(0,0,0,0.07);
 }
 
 .calc-title {
-    font-size: 1.55rem;
+    font-size: 1.7rem;
     font-weight: 800;
     color: #30303d;
-    margin-bottom: 0.3rem;
+    margin-bottom: 0.4rem;
 }
 
 .calc-subtitle {
-    color: #666674;
+    color: #70707d;
+    margin-bottom: 1.5rem;
     font-style: italic;
-    margin-bottom: 1.2rem;
 }
 
-.stMetric {
-    background: #fff8eb;
-    border-radius: 18px;
+/* METRICS */
+[data-testid="stMetric"] {
+
+    background: #fff8ea;
+
+    border: 1px solid #f3dfb6;
+
     padding: 1rem;
-    border: 1px solid #f0dfbd;
+
+    border-radius: 20px;
+
+    box-shadow:
+        0 5px 15px rgba(0,0,0,0.04);
 }
 
+/* INPUTS */
+.stNumberInput > div {
+
+    border-radius: 14px;
+}
+
+/* BUTTONS */
 .stButton > button {
-    border-radius: 16px;
-    border: 1px solid #efe2c4;
-    background: rgba(255,255,255,0.92);
+
+    width: 100%;
+
+    border-radius: 18px;
+
+    border: none;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ffe6a7,
+            #ffd36b
+        );
+
     color: #30303d;
+
     font-weight: 700;
-    box-shadow: 0 6px 18px rgba(0,0,0,0.06);
-    transition: all 0.22s ease;
+
+    padding: 0.7rem;
+
+    box-shadow:
+        0 8px 20px rgba(0,0,0,0.08);
+
+    transition: all 0.2s ease;
 }
 
 .stButton > button:hover {
+
     transform: translateY(-2px);
-    background: #fff1c9;
-    border-color: #f0c96a;
-    box-shadow: 0 12px 25px rgba(0,0,0,0.10);
+
+    box-shadow:
+        0 14px 28px rgba(0,0,0,0.12);
 }
 
-.constants-card {
-    background: rgba(255,255,255,0.82);
-    border-radius: 22px;
-    padding: 1.4rem 1.6rem;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.06);
-    border-left: 6px solid #f0c96a;
+/* INFO TEXT */
+.small-info {
+
+    margin-top: 2rem;
+
+    color: #666674;
+
+    line-height: 1.7;
+
+    font-size: 1rem;
 }
+
 </style>
 """, unsafe_allow_html=True)
 
+# ---------------------------------------------------
+# HERO
+# ---------------------------------------------------
 
 st.markdown("""
-<div class="hero-card">
-    <h1>🧪 Konzentrationen & Teilchenzahl</h1>
-    <p>
-        Berechne wichtige Konzentrationen und Teilchenzahlen in der Chemie.
-        Gib einfach deine Werte ein und erhalte sofort ein übersichtliches Ergebnis.
-    </p>
+<div class="hero-box">
+
+<div class="hero-title">
+🧪 Konzentrationen & Teilchenzahl
+</div>
+
+<div class="hero-text">
+Berechne wichtige Konzentrationen und Teilchenzahlen in der Chemie.
+
+Von Molarität über Molalität bis zur Teilchenzahl —
+alle wichtigen Berechnungen übersichtlich an einem Ort.
+</div>
+
 </div>
 """, unsafe_allow_html=True)
 
-st.markdown("""
-<div class="info-list">
-    <b>Diese Seite hilft dir bei:</b>
-    <ul>
-        <li><b>Molarität</b> – Konzentration in mol/L</li>
-        <li><b>Molalität</b> – Konzentration in mol/g</li>
-        <li><b>Teilchenzahl</b> – Anzahl der Atome oder Moleküle</li>
-    </ul>
-</div>
-""", unsafe_allow_html=True)
-
+# ---------------------------------------------------
+# STORAGE
+# ---------------------------------------------------
 
 def save_to_local(filename, data):
-    """Speichert Daten lokal als JSON"""
+
     try:
-        json_data = json.dumps(data, indent=4, ensure_ascii=False)
+        json_data = json.dumps(
+            data,
+            indent=4,
+            ensure_ascii=False
+        )
 
         with open(filename, "w", encoding="utf-8") as f:
             f.write(json_data)
@@ -158,6 +223,7 @@ AVOGADRO = 6.022e23
 
 
 def speichere_ins_logbuch(eintrag):
+
     st.session_state.logbuch_daten["konzentration"].append(eintrag)
 
     save_to_local(
@@ -174,152 +240,251 @@ def speichere_ins_logbuch(eintrag):
         st.info("💾 Lokal gespeichert")
 
 
-st.markdown('<div class="calc-card">', unsafe_allow_html=True)
-st.markdown('<div class="calc-title">1️⃣ Molarität: c [mol/L] = n / V</div>', unsafe_allow_html=True)
-st.markdown('<div class="calc-subtitle">Berechne die Konzentration einer Lösung</div>', unsafe_allow_html=True)
+# ---------------------------------------------------
+# MOLARITÄT
+# ---------------------------------------------------
 
-col1, col2 = st.columns([1, 1])
+st.markdown("""
+<div class="calc-box">
+<div class="calc-title">
+1️⃣ Molarität: c = n / V
+</div>
+
+<div class="calc-subtitle">
+Berechne die Konzentration einer Lösung
+</div>
+""", unsafe_allow_html=True)
+
+col1, col2 = st.columns(2)
 
 with col1:
-    st.write("**Eingaben:**")
+
     n_molar = st.number_input(
         "Stoffmenge n [mol]",
         min_value=0.0,
         value=0.0,
-        step=0.01,
-        key="n_molar"
+        step=0.01
     )
 
     V_molar = st.number_input(
         "Volumen V [L]",
         min_value=0.0,
         value=0.0,
-        step=0.01,
-        key="V_molar"
+        step=0.01
     )
 
 with col2:
-    st.write("**Ergebnis:**")
+
+    st.write("### Ergebnis")
+
     if V_molar > 0:
+
         c_molar = n_molar / V_molar
-        st.metric("Molarität c", f"{c_molar:.4f} mol/L")
+
+        st.metric(
+            "Molarität c",
+            f"{c_molar:.4f} mol/L"
+        )
+
     else:
-        st.info("ℹ️ Bitte gib ein Volumen > 0 ein")
+        st.info("ℹ️ Bitte Volumen > 0 eingeben")
 
-st.markdown('</div>', unsafe_allow_html=True)
+st.markdown("</div>", unsafe_allow_html=True)
 
+# ---------------------------------------------------
+# MOLALITÄT
+# ---------------------------------------------------
 
-st.markdown('<div class="calc-card">', unsafe_allow_html=True)
-st.markdown('<div class="calc-title">2️⃣ Molalität: β [mol/g] = n / m</div>', unsafe_allow_html=True)
-st.markdown('<div class="calc-subtitle">Berechne die Molalität einer Lösung</div>', unsafe_allow_html=True)
+st.markdown("""
+<div class="calc-box">
+<div class="calc-title">
+2️⃣ Molalität: β = n / m
+</div>
 
-col1, col2 = st.columns([1, 1])
+<div class="calc-subtitle">
+Berechne die Molalität einer Lösung
+</div>
+""", unsafe_allow_html=True)
+
+col1, col2 = st.columns(2)
 
 with col1:
-    st.write("**Eingaben:**")
+
     n_molal = st.number_input(
         "Stoffmenge n [mol]",
         min_value=0.0,
         value=0.0,
-        step=0.01,
-        key="n_molal"
+        step=0.01
     )
 
     m_molal = st.number_input(
         "Masse m [g]",
         min_value=0.0,
         value=0.0,
-        step=0.1,
-        key="m_molal"
+        step=0.1
     )
 
 with col2:
-    st.write("**Ergebnis:**")
+
+    st.write("### Ergebnis")
+
     if m_molal > 0:
+
         beta_molal = n_molal / m_molal
-        st.metric("Molalität β", f"{beta_molal:.4f} mol/g")
+
+        st.metric(
+            "Molalität β",
+            f"{beta_molal:.4f} mol/g"
+        )
+
     else:
-        st.info("ℹ️ Bitte gib eine Masse > 0 ein")
+        st.info("ℹ️ Bitte Masse > 0 eingeben")
 
-st.markdown('</div>', unsafe_allow_html=True)
+st.markdown("</div>", unsafe_allow_html=True)
 
+# ---------------------------------------------------
+# TEILCHENZAHL
+# ---------------------------------------------------
 
-st.markdown('<div class="calc-card">', unsafe_allow_html=True)
-st.markdown('<div class="calc-title">3️⃣ Teilchenzahl: N = n × 6.022 × 10²³</div>', unsafe_allow_html=True)
-st.markdown('<div class="calc-subtitle">Berechne die Anzahl der Atome oder Moleküle</div>', unsafe_allow_html=True)
+st.markdown("""
+<div class="calc-box">
+<div class="calc-title">
+3️⃣ Teilchenzahl: N = n × 6.022 × 10²³
+</div>
 
-col1, col2 = st.columns([1, 1])
+<div class="calc-subtitle">
+Berechne die Anzahl der Teilchen
+</div>
+""", unsafe_allow_html=True)
+
+col1, col2 = st.columns(2)
 
 with col1:
-    st.write("**Eingaben:**")
+
     n_teilchen = st.number_input(
         "Stoffmenge n [mol]",
         min_value=0.0,
         value=0.0,
-        step=0.01,
-        key="n_teilchen"
+        step=0.01
     )
 
 with col2:
-    st.write("**Ergebnis:**")
+
+    st.write("### Ergebnis")
+
     N = n_teilchen * AVOGADRO
 
     if N >= 1e9:
-        st.metric("Teilchenzahl N", f"{N:.3e}")
+        st.metric(
+            "Teilchenzahl N",
+            f"{N:.3e}"
+        )
+
     else:
-        st.metric("Teilchenzahl N", f"{N:,.0f}")
+        st.metric(
+            "Teilchenzahl N",
+            f"{N:,.0f}"
+        )
 
-st.markdown('</div>', unsafe_allow_html=True)
+st.markdown("</div>", unsafe_allow_html=True)
 
+# ---------------------------------------------------
+# INFO
+# ---------------------------------------------------
 
 st.markdown("""
-<div class="constants-card">
-    <b>Wichtige Konstanten:</b>
-    <ul>
-        <li>🔬 <b>Avogadro-Konstante:</b> 6.022 × 10²³ Teilchen/mol</li>
-        <li>💧 <b>Dichte von Wasser:</b> ca. 1 g/mL = 1 kg/L</li>
-    </ul>
-    <b>Tipp:</b> Molalität ist temperaturunabhängig, Molarität dagegen nicht.
+<div class="small-info">
+
+🔬 <b>Avogadro-Konstante:</b> 6.022 × 10²³ Teilchen/mol
+
+<br><br>
+
+💧 <b>Dichte von Wasser:</b> ungefähr 1 g/mL
+
+<br><br>
+
+📌 <b>Tipp:</b> Molalität ist temperaturunabhängig.
+
 </div>
 """, unsafe_allow_html=True)
 
+# ---------------------------------------------------
+# LOGBUCH
+# ---------------------------------------------------
 
-st.markdown("### 💾 Ergebnisse speichern")
+st.write("## 💾 Ergebnisse speichern")
 
 col1, col2, col3 = st.columns(3)
 
 with col1:
-    if st.button("💾 Molarität ins Logbuch", key="save_molar", use_container_width=True):
+
+    if st.button(
+        "Molarität speichern",
+        use_container_width=True
+    ):
+
         if V_molar > 0:
+
             eintrag = {
-                "Datum & Uhrzeit": datetime.now().strftime("%d.%m.%Y %H:%M:%S"),
-                "Rechnung": "Molarität",
-                "Eingaben": f"n={n_molar} mol, V={V_molar} L",
-                "Ergebnis": f"c={n_molar / V_molar:.4f} mol/L"
+                "Datum & Uhrzeit":
+                datetime.now().strftime("%d.%m.%Y %H:%M:%S"),
+
+                "Rechnung":
+                "Molarität",
+
+                "Eingaben":
+                f"n={n_molar} mol, V={V_molar} L",
+
+                "Ergebnis":
+                f"c={n_molar / V_molar:.4f} mol/L"
             }
+
             speichere_ins_logbuch(eintrag)
-        else:
-            st.warning("⚠️ Bitte erst Werte eingeben!")
 
 with col2:
-    if st.button("💾 Molalität ins Logbuch", key="save_molal", use_container_width=True):
+
+    if st.button(
+        "Molalität speichern",
+        use_container_width=True
+    ):
+
         if m_molal > 0:
+
             eintrag = {
-                "Datum & Uhrzeit": datetime.now().strftime("%d.%m.%Y %H:%M:%S"),
-                "Rechnung": "Molalität",
-                "Eingaben": f"n={n_molal} mol, m={m_molal} g",
-                "Ergebnis": f"β={n_molal / m_molal:.4f} mol/g"
+                "Datum & Uhrzeit":
+                datetime.now().strftime("%d.%m.%Y %H:%M:%S"),
+
+                "Rechnung":
+                "Molalität",
+
+                "Eingaben":
+                f"n={n_molal} mol, m={m_molal} g",
+
+                "Ergebnis":
+                f"β={n_molal / m_molal:.4f} mol/g"
             }
+
             speichere_ins_logbuch(eintrag)
-        else:
-            st.warning("⚠️ Bitte erst Werte eingeben!")
 
 with col3:
-    if st.button("💾 Teilchenzahl ins Logbuch", key="save_teilchen", use_container_width=True):
+
+    if st.button(
+        "Teilchenzahl speichern",
+        use_container_width=True
+    ):
+
         eintrag = {
-            "Datum & Uhrzeit": datetime.now().strftime("%d.%m.%Y %H:%M:%S"),
-            "Rechnung": "Teilchenzahl",
-            "Eingaben": f"n={n_teilchen} mol",
-            "Ergebnis": f"N={n_teilchen * AVOGADRO:.3e}"
+            "Datum & Uhrzeit":
+            datetime.now().strftime("%d.%m.%Y %H:%M:%S"),
+
+            "Rechnung":
+            "Teilchenzahl",
+
+            "Eingaben":
+            f"n={n_teilchen} mol",
+
+            "Ergebnis":
+            f"N={n_teilchen * AVOGADRO:.3e}"
         }
+
         speichere_ins_logbuch(eintrag)
