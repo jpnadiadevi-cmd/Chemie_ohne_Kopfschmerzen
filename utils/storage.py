@@ -19,8 +19,15 @@ def save_to_switchdrive(filename, data):
 
         json_bytes = json_data.encode("utf-8")
 
-        # GEMEINSAMER ORDNER
         remote_path = f"Chemie_Informatik2/{filename}"
+        remote_folder = "/".join(remote_path.split("/")[:-1])
+
+        folder_url = (
+            f"https://{quote(username, safe='')}:{quote(password, safe='')}"
+            f"@drive.switch.ch/remote.php/webdav/{remote_folder}"
+        )
+
+        requests.request("MKCOL", folder_url, verify=True)
 
         upload_url = (
             f"https://{quote(username, safe='')}:{quote(password, safe='')}"

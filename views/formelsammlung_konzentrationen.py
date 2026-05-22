@@ -161,12 +161,12 @@ def speichere_ins_logbuch(eintrag):
     st.session_state.logbuch_daten["konzentration"].append(eintrag)
 
     save_to_local(
-        "konzentration_logbuch.json",
+        "data/konzentration_logbuch.json",
         st.session_state.logbuch_daten["konzentration"]
     )
 
     if save_to_switchdrive(
-        "konzentration_logbuch.json",
+        "data/konzentration_logbuch.json",
         st.session_state.logbuch_daten["konzentration"]
     ):
         st.success("✅ Auf SwitchDrive und lokal gespeichert!")
