@@ -1,5 +1,6 @@
 import json
 from datetime import datetime
+from zoneinfo import ZoneInfo
 
 import streamlit as st
 
@@ -132,7 +133,7 @@ def speichere_ins_logbuch(eintrag):
 
 def erstelle_logbuch_eintrag(rechnung, eingaben, ergebnis):
     return {
-        "Datum & Uhrzeit": datetime.now().strftime("%d.%m.%Y %H:%M:%S"),
+        "Datum & Uhrzeit": datetime.now(ZoneInfo("Europe/Zurich")).strftime("%d.%m.%Y %H:%M:%S"),
         "Rechnung": rechnung,
         "Eingaben": eingaben,
         "Ergebnis": ergebnis

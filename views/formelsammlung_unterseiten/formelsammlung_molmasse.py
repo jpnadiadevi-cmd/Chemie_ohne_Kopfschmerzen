@@ -1,4 +1,5 @@
 from datetime import datetime
+from zoneinfo import ZoneInfo
 
 import streamlit as st
 
@@ -354,7 +355,7 @@ def erstelle_logbuch_eintrag(total_mass):
     formula_str = erstelle_formel_string(element_counts)
 
     return {
-        "Datum & Uhrzeit": datetime.now().strftime("%d.%m.%Y %H:%M:%S"),
+        "Datum & Uhrzeit": datetime.now(ZoneInfo("Europe/Zurich")).strftime("%d.%m.%Y %H:%M:%S"),
         "Rechnung": "Molmasse mit PSE",
         "Eingaben": (
             "Elemente: "

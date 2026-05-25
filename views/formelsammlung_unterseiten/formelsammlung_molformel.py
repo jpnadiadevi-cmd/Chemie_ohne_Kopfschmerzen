@@ -1,4 +1,5 @@
 from datetime import datetime
+from zoneinfo import ZoneInfo
 
 import streamlit as st
 
@@ -166,7 +167,7 @@ def formatiere_eingabe(wert):
 
 def erstelle_logbuch_eintrag(n_input, m_input, M_input, result_key, result_value):
     return {
-        "Datum & Uhrzeit": datetime.now().strftime("%d.%m.%Y %H:%M:%S"),
+        "Datum & Uhrzeit": datetime.now(ZoneInfo("Europe/Zurich")).strftime("%d.%m.%Y %H:%M:%S"),
         "Rechnung": "Molformel (n, m, M)",
         "Eingaben": (
             f"n={formatiere_eingabe(n_input)}, "
