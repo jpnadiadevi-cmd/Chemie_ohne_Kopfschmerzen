@@ -4,6 +4,13 @@ import streamlit as st
 
 from utils.storage import save_to_switchdrive
 
+from functions.protokoll_manager import (
+    erstelle_neues_protokoll,
+    experiment_name_ungueltig,
+    experiment_existiert,
+    loesche_protokoll
+)
+
 
 st.set_page_config(
     page_title="Protokoll",
@@ -13,6 +20,7 @@ st.set_page_config(
 
 
 def lade_css():
+
     st.markdown("""
     <style>
     .stApp {
@@ -102,7 +110,9 @@ def lade_css():
 
 
 def initialisiere_session_state():
+
     if "protokolle" not in st.session_state:
+
         st.session_state.protokolle = (
             st.session_state.data_manager.load_user_data(
                 "protokolle.json",
@@ -115,6 +125,7 @@ def initialisiere_session_state():
 
 
 def save_protocols():
+
     st.session_state.data_manager.save_user_data(
         st.session_state.protokolle,
         "protokolle.json"
@@ -127,6 +138,7 @@ def save_protocols():
 
 
 def zeige_kopfbereich():
+
     st.markdown("""
     <div class="hero-card">
         <h1>📝 Protokoll</h1>
@@ -150,9 +162,11 @@ def zeige_kopfbereich():
 
 
 def zeige_neues_experiment_button():
+
     col1, col2 = st.columns([4, 1])
 
     with col2:
+
         if st.button(
             "➕ Neues Experiment",
             use_container_width=True
@@ -161,13 +175,14 @@ def zeige_neues_experiment_button():
 
 
 def zeige_experiment_formular():
+
     if not st.session_state.show_new_experiment:
         return
 
     st.markdown('<div class="protocol-card">', unsafe_allow_html=True)
 
     st.markdown(
-        '<div class="card-title">🧪 Neues Experiment erstellen</div>',
+        '<div class="card-title">🩷 Neues Experiment erstellen</div>',
         unsafe_allow_html=True
     )
 
@@ -181,25 +196,22 @@ def zeige_experiment_formular():
         submitted = st.form_submit_button("Erstellen")
 
         if submitted:
+
             daten = st.session_state.protokolle
 
-            if new_folder.strip() == "":
+            if experiment_name_ungueltig(new_folder):
+
                 st.warning("⚠️ Bitte Namen eingeben.")
 
-            elif new_folder in daten:
+            elif experiment_existiert(new_folder, daten):
+
                 st.warning("⚠️ Experiment existiert bereits.")
 
             else:
-                daten[new_folder] = {
-                    "erstellt": datetime.now().strftime("%d.%m.%Y %H:%M:%S"),
-                    "titel": new_folder,
-                    "ziel": "",
-                    "material": "",
-                    "durchführung": "",
-                    "beobachtung": "",
-                    "auswertung": "",
-                    "fazit": ""
-                }
+
+                daten[new_folder] = (
+                    erstelle_neues_protokoll(new_folder)
+                )
 
                 st.session_state.protokolle = daten
 
@@ -217,6 +229,7 @@ def zeige_experiment_formular():
 
 
 def zeige_experimente():
+
     daten = st.session_state.protokolle
 
     st.markdown('<div class="protocol-card">', unsafe_allow_html=True)
@@ -232,8 +245,11 @@ def zeige_experimente():
     )
 
     if not daten:
+
         st.info("📝 Noch keine Experimente vorhanden.")
+
         st.markdown('</div>', unsafe_allow_html=True)
+
         return
 
     folders = list(daten.keys())
@@ -241,6 +257,7 @@ def zeige_experimente():
     cols = st.columns(4)
 
     for index, folder in enumerate(folders):
+
         with cols[index % 4]:
 
             if st.button(
@@ -248,13 +265,16 @@ def zeige_experimente():
                 use_container_width=True,
                 key=f"folder_{folder}"
             ):
+
                 st.session_state.selected_protocol = folder
+
                 st.rerun()
 
     st.markdown('</div>', unsafe_allow_html=True)
 
 
 def zeige_protokoll():
+
     daten = st.session_state.protokolle
 
     if (
@@ -264,6 +284,7 @@ def zeige_protokoll():
         return
 
     selected = st.session_state.selected_protocol
+
     protocol = daten[selected]
 
     st.markdown('<div class="experiment-card">', unsafe_allow_html=True)
@@ -271,17 +292,21 @@ def zeige_protokoll():
     col1, col2 = st.columns([5, 1])
 
     with col1:
+
         st.markdown(
             f'<div class="card-title">🩷 {selected}</div>',
             unsafe_allow_html=True
         )
 
     with col2:
+
         if st.button(
             "❌ Schließen",
             use_container_width=True
         ):
+
             del st.session_state.selected_protocol
+
             st.rerun()
 
     st.markdown("---")
@@ -333,12 +358,15 @@ def zeige_protokoll():
     col1, col2, col3 = st.columns(3)
 
     with col1:
+
         if st.button(
             "💾 Speichern",
             use_container_width=True,
             key="save_protocol"
         ):
+
             daten[selected] = protocol
+
             st.session_state.protokolle = daten
 
             save_protocols()
@@ -348,12 +376,17 @@ def zeige_protokoll():
             )
 
     with col2:
+
         if st.button(
             "🗑️ Löschen",
             use_container_width=True,
             key="delete_protocol"
         ):
-            del daten[selected]
+
+            daten = loesche_protokoll(
+                daten,
+                selected
+            )
 
             st.session_state.protokolle = daten
 
@@ -368,22 +401,30 @@ def zeige_protokoll():
             st.rerun()
 
     with col3:
+
         if st.button(
             "↩️ Zurück zur Übersicht",
             use_container_width=True,
             key="back_protocol"
         ):
+
             del st.session_state.selected_protocol
+
             st.rerun()
 
     st.markdown('</div>', unsafe_allow_html=True)
 
 
 lade_css()
+
 initialisiere_session_state()
 
 zeige_kopfbereich()
+
 zeige_neues_experiment_button()
+
 zeige_experiment_formular()
+
 zeige_experimente()
+
 zeige_protokoll()

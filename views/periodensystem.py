@@ -1,11 +1,20 @@
 import streamlit as st
+
 from data.pse_data import elemente, farben_kategorien
+
+from functions.pse_manager import (
+    erstelle_element_grid,
+    hole_farbe,
+    formatiere_elektronegativitaet
+)
+
 
 st.set_page_config(
     page_title="Periodensystem",
     page_icon="⚛️",
     layout="wide"
 )
+
 
 st.markdown("""
 <style>
@@ -111,22 +120,43 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
+
 st.markdown("""
 <div class="hero-title">
     <h1>⚛️ Interaktives Periodensystem</h1>
-    <p>Alle 118 Elemente übersichtlich dargestellt. Klicke auf ein Element, um Details wie Atommasse, Gruppe, Periode und Elektronegativität zu sehen.</p>
+    <p>
+        Alle 118 Elemente übersichtlich dargestellt.
+        Klicke auf ein Element, um Details wie Atommasse,
+        Gruppe, Periode und Elektronegativität zu sehen.
+    </p>
 </div>
 """, unsafe_allow_html=True)
 
-elemente_sortiert = sorted(elemente, key=lambda x: x["ordnungszahl"])
 
-st.markdown('<div class="section-title">Periodensystem mit allen 118 Elementen</div>', unsafe_allow_html=True)
+elemente_sortiert = sorted(
+    elemente,
+    key=lambda x: x["ordnungszahl"]
+)
+
+element_grid = erstelle_element_grid(
+    elemente_sortiert
+)
+
+
+st.markdown(
+    '<div class="section-title">Periodensystem mit allen 118 Elementen</div>',
+    unsafe_allow_html=True
+)
+
 st.write("**Kategorien-Legende:**")
+
 
 legend_cols = st.columns(len(farben_kategorien))
 
 for idx, (kategorie, farbe) in enumerate(farben_kategorien.items()):
+
     with legend_cols[idx]:
+
         st.markdown(
             f"""
             <div class="legend-box" style="background-color:{farbe};">
@@ -136,29 +166,28 @@ for idx, (kategorie, farbe) in enumerate(farben_kategorien.items()):
             unsafe_allow_html=True
         )
 
+
 st.markdown("---")
+
 st.write("**Klicke auf ein Element:**")
 
-element_grid = {}
-
-for el in elemente_sortiert:
-    periode = el["periode"]
-    gruppe = el["gruppe"]
-
-    if periode not in element_grid:
-        element_grid[periode] = {}
-
-    element_grid[periode][gruppe] = el
 
 for periode in range(1, 8):
+
     cols = st.columns(18)
 
     if periode in element_grid:
+
         for gruppe, el in element_grid[periode].items():
+
             col_idx = gruppe - 1
 
             with cols[col_idx]:
-                farbe = farben_kategorien.get(el["kategorie"], "#FFFFFF")
+
+                farbe = hole_farbe(
+                    el["kategorie"],
+                    farben_kategorien
+                )
 
                 st.markdown(
                     f"""
@@ -174,38 +203,75 @@ for periode in range(1, 8):
                     key=f"btn_{el['ordnungszahl']}",
                     help=f"Klicke für {el['name']}"
                 ):
+
                     st.session_state["selected_element"] = el
+
 
 st.markdown("---")
 
-if "selected_element" in st.session_state:
-    el = st.session_state["selected_element"]
-    farbe = farben_kategorien.get(el["kategorie"], "#FFFFFF")
 
-    st.markdown('<div class="detail-card">', unsafe_allow_html=True)
+if "selected_element" in st.session_state:
+
+    el = st.session_state["selected_element"]
+
+    farbe = hole_farbe(
+        el["kategorie"],
+        farben_kategorien
+    )
+
+    st.markdown(
+        '<div class="detail-card">',
+        unsafe_allow_html=True
+    )
 
     col1, col2 = st.columns([2, 1])
 
     with col1:
-        st.subheader(f"⚛️ {el['name']} ({el['symbol']})")
+
+        st.subheader(
+            f"⚛️ {el['name']} ({el['symbol']})"
+        )
 
         col_info1, col_info2 = st.columns(2)
 
         with col_info1:
-            st.metric("Ordnungszahl", el["ordnungszahl"])
-            st.metric("Atommasse", f"{el['atommasse']} u")
-            st.metric("Periode", el["periode"])
+
+            st.metric(
+                "Ordnungszahl",
+                el["ordnungszahl"]
+            )
+
+            st.metric(
+                "Atommasse",
+                f"{el['atommasse']} u"
+            )
+
+            st.metric(
+                "Periode",
+                el["periode"]
+            )
 
         with col_info2:
-            st.metric("Gruppe", el["gruppe"])
-            st.metric("Kategorie", el["kategorie"])
 
-            if el["elektronegativität"] is not None:
-                st.metric("Elektronegativität", f"{el['elektronegativität']:.2f}")
-            else:
-                st.metric("Elektronegativität", "N/A")
+            st.metric(
+                "Gruppe",
+                el["gruppe"]
+            )
+
+            st.metric(
+                "Kategorie",
+                el["kategorie"]
+            )
+
+            st.metric(
+                "Elektronegativität",
+                formatiere_elektronegativitaet(
+                    el["elektronegativität"]
+                )
+            )
 
     with col2:
+
         st.markdown(
             f"""
             <div class="big-symbol" style="background-color:{farbe};">
@@ -215,11 +281,19 @@ if "selected_element" in st.session_state:
             unsafe_allow_html=True
         )
 
-    st.markdown('</div>', unsafe_allow_html=True)
+    st.markdown(
+        '</div>',
+        unsafe_allow_html=True
+    )
 
     if st.button("❌ Element abwählen"):
+
         del st.session_state["selected_element"]
+
         st.rerun()
 
 else:
-    st.info("👆 Klicke auf ein Element, um detaillierte Informationen zu sehen!")
+
+    st.info(
+        "👆 Klicke auf ein Element, um detaillierte Informationen zu sehen!"
+    )

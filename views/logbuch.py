@@ -1,7 +1,13 @@
 from datetime import datetime
 
-import pandas as pd
 import streamlit as st
+
+from functions.logbuch_manager import (
+    hole_dataframe,
+    sammle_exportdaten,
+    erstelle_export_dataframe,
+    leere_kategorie
+)
 
 
 st.set_page_config(
@@ -12,6 +18,7 @@ st.set_page_config(
 
 
 def lade_css():
+
     st.markdown("""
     <style>
     .stApp {
@@ -105,7 +112,9 @@ def lade_css():
 
 
 def initialisiere_session_state():
+
     if "logbuch_daten" not in st.session_state:
+
         st.session_state.logbuch_daten = {
             "molmasse": [],
             "molformel": [],
@@ -114,6 +123,7 @@ def initialisiere_session_state():
 
 
 def zeige_kopfbereich():
+
     st.markdown("""
     <div class="hero-card">
         <h1>📓 Logbuch</h1>
@@ -137,33 +147,51 @@ def zeige_kopfbereich():
 
 
 def zeige_logbuch_tabelle(kategorie, leertext):
+
     daten = st.session_state.logbuch_daten[kategorie]
 
     col1, col2 = st.columns([4, 1])
 
     with col1:
+
         if daten:
-            dataframe = pd.DataFrame(daten)
+
+            dataframe = hole_dataframe(daten)
+
             st.dataframe(
                 dataframe,
                 use_container_width=True,
                 hide_index=True
             )
+
         else:
+
             st.info(leertext)
 
     with col2:
+
         if st.button(
             "🗑️ Löschen",
             key=f"delete_{kategorie}",
             use_container_width=True
         ):
-            st.session_state.logbuch_daten[kategorie] = []
+
+            st.session_state.logbuch_daten = (
+                leere_kategorie(
+                    st.session_state.logbuch_daten,
+                    kategorie
+                )
+            )
+
             st.rerun()
 
 
 def zeige_logbuch_tabs():
-    st.markdown('<div class="logbook-card">', unsafe_allow_html=True)
+
+    st.markdown(
+        '<div class="logbook-card">',
+        unsafe_allow_html=True
+    )
 
     st.markdown(
         '<div class="card-title">📋 Deine gespeicherten Ergebnisse</div>',
@@ -182,43 +210,44 @@ def zeige_logbuch_tabs():
     ])
 
     with tab1:
+
         st.subheader("Die Molformel – Logbuch")
+
         zeige_logbuch_tabelle(
             "molformel",
             "📝 Noch keine Einträge. Führe Berechnungen in 'Die Molformel' durch."
         )
 
     with tab2:
+
         st.subheader("Molmasse mit PSE – Logbuch")
+
         zeige_logbuch_tabelle(
             "molmasse",
             "📝 Noch keine Einträge. Führe Berechnungen in 'Molmasse berechnen' durch."
         )
 
     with tab3:
+
         st.subheader("Konzentration & Teilchen – Logbuch")
+
         zeige_logbuch_tabelle(
             "konzentration",
             "📝 Noch keine Einträge. Führe Berechnungen in 'Konzentration & Teilchen' durch."
         )
 
-    st.markdown('</div>', unsafe_allow_html=True)
-
-
-def sammle_exportdaten():
-    exportdaten = []
-
-    for kategorie, daten in st.session_state.logbuch_daten.items():
-        for eintrag in daten:
-            exporteintrag = eintrag.copy()
-            exporteintrag["Kategorie"] = kategorie
-            exportdaten.append(exporteintrag)
-
-    return exportdaten
+    st.markdown(
+        '</div>',
+        unsafe_allow_html=True
+    )
 
 
 def zeige_exportbereich():
-    st.markdown('<div class="export-card">', unsafe_allow_html=True)
+
+    st.markdown(
+        '<div class="export-card">',
+        unsafe_allow_html=True
+    )
 
     st.markdown(
         '<div class="card-title">📥 Daten exportieren</div>',
@@ -230,10 +259,16 @@ def zeige_exportbereich():
         unsafe_allow_html=True
     )
 
-    exportdaten = sammle_exportdaten()
+    exportdaten = sammle_exportdaten(
+        st.session_state.logbuch_daten
+    )
 
     if exportdaten:
-        df_export = pd.DataFrame(exportdaten)
+
+        df_export = erstelle_export_dataframe(
+            exportdaten
+        )
+
         csv = df_export.to_csv(index=False)
 
         st.download_button(
@@ -243,13 +278,21 @@ def zeige_exportbereich():
             mime="text/csv",
             use_container_width=True
         )
-    else:
-        st.warning("⚠️ Keine Daten zum Exportieren vorhanden.")
 
-    st.markdown('</div>', unsafe_allow_html=True)
+    else:
+
+        st.warning(
+            "⚠️ Keine Daten zum Exportieren vorhanden."
+        )
+
+    st.markdown(
+        '</div>',
+        unsafe_allow_html=True
+    )
 
 
 def zeige_hinweise():
+
     st.markdown("""
     <div class="hint-card">
         <b>💡 Hinweise zum Logbuch:</b>
@@ -264,8 +307,13 @@ def zeige_hinweise():
 
 
 initialisiere_session_state()
+
 lade_css()
+
 zeige_kopfbereich()
+
 zeige_logbuch_tabs()
+
 zeige_exportbereich()
+
 zeige_hinweise()
