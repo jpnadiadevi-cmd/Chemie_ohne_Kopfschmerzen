@@ -3,6 +3,15 @@ from datetime import datetime
 import json
 
 from utils.storage import save_to_switchdrive
+from functions.konzentration_rechner import (
+    berechne_molaritaet,
+    berechne_molalitaet,
+    berechne_teilchenzahl
+)
+
+
+AVOGADRO = 6.022e23
+LOGBOOK_PATH = "data/konzentration_logbuch.json"
 
 
 st.set_page_config(
@@ -10,6 +19,7 @@ st.set_page_config(
     page_icon="🧪",
     layout="wide"
 )
+
 
 st.markdown("""
 <style>
@@ -109,30 +119,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 
-st.markdown("""
-<div class="hero-card">
-    <h1>🧪 Konzentrationen & Teilchenzahl</h1>
-    <p>
-        Berechne wichtige Konzentrationen und Teilchenzahlen in der Chemie.
-        Gib einfach deine Werte ein und erhalte sofort ein übersichtliches Ergebnis.
-    </p>
-</div>
-""", unsafe_allow_html=True)
-
-st.markdown("""
-<div class="info-list">
-    <b>Diese Seite hilft dir bei:</b>
-    <ul>
-        <li><b>Molarität</b> – Konzentration in mol/L</li>
-        <li><b>Molalität</b> – Konzentration in mol/g</li>
-        <li><b>Teilchenzahl</b> – Anzahl der Atome oder Moleküle</li>
-    </ul>
-</div>
-""", unsafe_allow_html=True)
-
-
 def save_to_local(filename, data):
-    """Speichert Daten lokal als JSON"""
     try:
         json_data = json.dumps(data, indent=4, ensure_ascii=False)
 
@@ -146,6 +133,23 @@ def save_to_local(filename, data):
         return False
 
 
+def speichere_ins_logbuch(eintrag):
+    st.session_state.logbuch_daten["konzentration"].append(eintrag)
+
+    save_to_local(
+        LOGBOOK_PATH,
+        st.session_state.logbuch_daten["konzentration"]
+    )
+
+    if save_to_switchdrive(
+        LOGBOOK_PATH,
+        st.session_state.logbuch_daten["konzentration"]
+    ):
+        st.success("✅ Auf SwitchDrive und lokal gespeichert!")
+    else:
+        st.info("💾 Lokal gespeichert")
+
+
 if "logbuch_daten" not in st.session_state:
     st.session_state.logbuch_daten = {
         "molmasse": [],
@@ -154,34 +158,44 @@ if "logbuch_daten" not in st.session_state:
     }
 
 
-AVOGADRO = 6.022e23
+st.markdown("""
+<div class="hero-card">
+    <h1>🧪 Konzentrationen & Teilchenzahl</h1>
+    <p>
+        Berechne wichtige Konzentrationen und Teilchenzahlen in der Chemie.
+        Gib einfach deine Werte ein und erhalte sofort ein übersichtliches Ergebnis.
+    </p>
+</div>
+""", unsafe_allow_html=True)
 
 
-def speichere_ins_logbuch(eintrag):
-    st.session_state.logbuch_daten["konzentration"].append(eintrag)
-
-    save_to_local(
-        "data/konzentration_logbuch.json",
-        st.session_state.logbuch_daten["konzentration"]
-    )
-
-    if save_to_switchdrive(
-        "data/konzentration_logbuch.json",
-        st.session_state.logbuch_daten["konzentration"]
-    ):
-        st.success("✅ Auf SwitchDrive und lokal gespeichert!")
-    else:
-        st.info("💾 Lokal gespeichert")
+st.markdown("""
+<div class="info-list">
+    <b>Diese Seite hilft dir bei:</b>
+    <ul>
+        <li><b>Molarität</b> – Konzentration in mol/L</li>
+        <li><b>Molalität</b> – Konzentration in mol/g</li>
+        <li><b>Teilchenzahl</b> – Anzahl der Atome oder Moleküle</li>
+    </ul>
+</div>
+""", unsafe_allow_html=True)
 
 
 st.markdown('<div class="calc-card">', unsafe_allow_html=True)
-st.markdown('<div class="calc-title">1️⃣ Molarität: c [mol/L] = n / V</div>', unsafe_allow_html=True)
-st.markdown('<div class="calc-subtitle">Berechne die Konzentration einer Lösung</div>', unsafe_allow_html=True)
+st.markdown(
+    '<div class="calc-title">1️⃣ Molarität: c [mol/L] = n / V</div>',
+    unsafe_allow_html=True
+)
+st.markdown(
+    '<div class="calc-subtitle">Berechne die Konzentration einer Lösung</div>',
+    unsafe_allow_html=True
+)
 
 col1, col2 = st.columns([1, 1])
 
 with col1:
     st.write("**Eingaben:**")
+
     n_molar = st.number_input(
         "Stoffmenge n [mol]",
         min_value=0.0,
@@ -200,23 +214,39 @@ with col1:
 
 with col2:
     st.write("**Ergebnis:**")
-    if V_molar > 0:
-        c_molar = n_molar / V_molar
-        st.metric("Molarität c", f"{c_molar:.4f} mol/L")
+
+    result_molar = berechne_molaritaet(n_molar, V_molar)
+
+    if result_molar["status"] == "ok":
+        c_molar = result_molar["value"]
+
+        st.metric(
+            result_molar["label"],
+            f"{c_molar:.4f} mol/L"
+        )
+
     else:
-        st.info("ℹ️ Bitte gib ein Volumen > 0 ein")
+        c_molar = None
+        st.info(result_molar["message"])
 
 st.markdown('</div>', unsafe_allow_html=True)
 
 
 st.markdown('<div class="calc-card">', unsafe_allow_html=True)
-st.markdown('<div class="calc-title">2️⃣ Molalität: β [mol/g] = n / m</div>', unsafe_allow_html=True)
-st.markdown('<div class="calc-subtitle">Berechne die Molalität einer Lösung</div>', unsafe_allow_html=True)
+st.markdown(
+    '<div class="calc-title">2️⃣ Molalität: β [mol/g] = n / m</div>',
+    unsafe_allow_html=True
+)
+st.markdown(
+    '<div class="calc-subtitle">Berechne die Molalität einer Lösung</div>',
+    unsafe_allow_html=True
+)
 
 col1, col2 = st.columns([1, 1])
 
 with col1:
     st.write("**Eingaben:**")
+
     n_molal = st.number_input(
         "Stoffmenge n [mol]",
         min_value=0.0,
@@ -235,23 +265,39 @@ with col1:
 
 with col2:
     st.write("**Ergebnis:**")
-    if m_molal > 0:
-        beta_molal = n_molal / m_molal
-        st.metric("Molalität β", f"{beta_molal:.4f} mol/g")
+
+    result_molal = berechne_molalitaet(n_molal, m_molal)
+
+    if result_molal["status"] == "ok":
+        beta_molal = result_molal["value"]
+
+        st.metric(
+            result_molal["label"],
+            f"{beta_molal:.4f} mol/g"
+        )
+
     else:
-        st.info("ℹ️ Bitte gib eine Masse > 0 ein")
+        beta_molal = None
+        st.info(result_molal["message"])
 
 st.markdown('</div>', unsafe_allow_html=True)
 
 
 st.markdown('<div class="calc-card">', unsafe_allow_html=True)
-st.markdown('<div class="calc-title">3️⃣ Teilchenzahl: N = n × 6.022 × 10²³</div>', unsafe_allow_html=True)
-st.markdown('<div class="calc-subtitle">Berechne die Anzahl der Atome oder Moleküle</div>', unsafe_allow_html=True)
+st.markdown(
+    '<div class="calc-title">3️⃣ Teilchenzahl: N = n × 6.022 × 10²³</div>',
+    unsafe_allow_html=True
+)
+st.markdown(
+    '<div class="calc-subtitle">Berechne die Anzahl der Atome oder Moleküle</div>',
+    unsafe_allow_html=True
+)
 
 col1, col2 = st.columns([1, 1])
 
 with col1:
     st.write("**Eingaben:**")
+
     n_teilchen = st.number_input(
         "Stoffmenge n [mol]",
         min_value=0.0,
@@ -262,12 +308,24 @@ with col1:
 
 with col2:
     st.write("**Ergebnis:**")
-    N = n_teilchen * AVOGADRO
+
+    result_teilchen = berechne_teilchenzahl(
+        n_teilchen,
+        AVOGADRO
+    )
+
+    N = result_teilchen["value"]
 
     if N >= 1e9:
-        st.metric("Teilchenzahl N", f"{N:.3e}")
+        st.metric(
+            result_teilchen["label"],
+            f"{N:.3e}"
+        )
     else:
-        st.metric("Teilchenzahl N", f"{N:,.0f}")
+        st.metric(
+            result_teilchen["label"],
+            f"{N:,.0f}"
+        )
 
 st.markdown('</div>', unsafe_allow_html=True)
 
@@ -289,37 +347,56 @@ st.markdown("### 💾 Ergebnisse speichern")
 col1, col2, col3 = st.columns(3)
 
 with col1:
-    if st.button("💾 Molarität ins Logbuch", key="save_molar", use_container_width=True):
-        if V_molar > 0:
+    if st.button(
+        "💾 Molarität ins Logbuch",
+        key="save_molar",
+        use_container_width=True
+    ):
+        if c_molar is not None:
             eintrag = {
                 "Datum & Uhrzeit": datetime.now().strftime("%d.%m.%Y %H:%M:%S"),
                 "Rechnung": "Molarität",
                 "Eingaben": f"n={n_molar} mol, V={V_molar} L",
-                "Ergebnis": f"c={n_molar / V_molar:.4f} mol/L"
+                "Ergebnis": f"c={c_molar:.4f} mol/L"
             }
+
             speichere_ins_logbuch(eintrag)
+
         else:
             st.warning("⚠️ Bitte erst Werte eingeben!")
 
+
 with col2:
-    if st.button("💾 Molalität ins Logbuch", key="save_molal", use_container_width=True):
-        if m_molal > 0:
+    if st.button(
+        "💾 Molalität ins Logbuch",
+        key="save_molal",
+        use_container_width=True
+    ):
+        if beta_molal is not None:
             eintrag = {
                 "Datum & Uhrzeit": datetime.now().strftime("%d.%m.%Y %H:%M:%S"),
                 "Rechnung": "Molalität",
                 "Eingaben": f"n={n_molal} mol, m={m_molal} g",
-                "Ergebnis": f"β={n_molal / m_molal:.4f} mol/g"
+                "Ergebnis": f"β={beta_molal:.4f} mol/g"
             }
+
             speichere_ins_logbuch(eintrag)
+
         else:
             st.warning("⚠️ Bitte erst Werte eingeben!")
 
+
 with col3:
-    if st.button("💾 Teilchenzahl ins Logbuch", key="save_teilchen", use_container_width=True):
+    if st.button(
+        "💾 Teilchenzahl ins Logbuch",
+        key="save_teilchen",
+        use_container_width=True
+    ):
         eintrag = {
             "Datum & Uhrzeit": datetime.now().strftime("%d.%m.%Y %H:%M:%S"),
             "Rechnung": "Teilchenzahl",
             "Eingaben": f"n={n_teilchen} mol",
-            "Ergebnis": f"N={n_teilchen * AVOGADRO:.3e}"
+            "Ergebnis": f"N={N:.3e}"
         }
+
         speichere_ins_logbuch(eintrag)
