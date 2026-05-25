@@ -10,10 +10,9 @@ from functions.konzentration_rechner import (
     berechne_teilchenzahl
 )
 
-
 AVOGADRO = 6.022e23
-LOGBOOK_PATH = "data/konzentration_logbuch.json"
 
+LOGBUCH_DATEI = "logbuch_daten.json"
 
 st.set_page_config(
     page_title="Konzentrationen & Teilchenzahl",
@@ -111,18 +110,22 @@ def save_to_local(filename, data):
 
 
 def speichere_ins_logbuch(eintrag):
+
+    # Konzentrationseintrag anhängen
     st.session_state.logbuch_daten["konzentration"].append(eintrag)
 
+    # GANZES Logbuch speichern
     save_to_local(
-        LOGBOOK_PATH,
-        st.session_state.logbuch_daten["konzentration"]
+        LOGBUCH_DATEI,
+        st.session_state.logbuch_daten
     )
 
+    # GANZES Logbuch auf SwitchDrive speichern
     if save_to_switchdrive(
-        LOGBOOK_PATH,
-        st.session_state.logbuch_daten["konzentration"]
+        LOGBUCH_DATEI,
+        st.session_state.logbuch_daten
     ):
-        st.success("✅ Auf SwitchDrive und lokal gespeichert!")
+        st.success("✅ Im Logbuch gespeichert!")
     else:
         st.info("💾 Lokal gespeichert")
 
@@ -170,6 +173,7 @@ def beende_rechnerkarte():
 
 
 def zeige_molaritaet():
+
     starte_rechnerkarte(
         "1️⃣ Molarität: c [mol/L] = n / V",
         "Berechne die Konzentration einer Lösung"
@@ -178,6 +182,7 @@ def zeige_molaritaet():
     col1, col2 = st.columns([1, 1])
 
     with col1:
+
         st.write("**Eingaben:**")
 
         n_molar = st.number_input(
@@ -197,6 +202,7 @@ def zeige_molaritaet():
         )
 
     with col2:
+
         st.write("**Ergebnis:**")
 
         result = berechne_molaritaet(n_molar, v_molar)
@@ -209,10 +215,12 @@ def zeige_molaritaet():
             st.info(result["message"])
 
     beende_rechnerkarte()
+
     return n_molar, v_molar, c_molar
 
 
 def zeige_molalitaet():
+
     starte_rechnerkarte(
         "2️⃣ Molalität: β [mol/g] = n / m",
         "Berechne die Molalität einer Lösung"
@@ -221,6 +229,7 @@ def zeige_molalitaet():
     col1, col2 = st.columns([1, 1])
 
     with col1:
+
         st.write("**Eingaben:**")
 
         n_molal = st.number_input(
@@ -240,6 +249,7 @@ def zeige_molalitaet():
         )
 
     with col2:
+
         st.write("**Ergebnis:**")
 
         result = berechne_molalitaet(n_molal, m_molal)
@@ -252,10 +262,12 @@ def zeige_molalitaet():
             st.info(result["message"])
 
     beende_rechnerkarte()
+
     return n_molal, m_molal, beta_molal
 
 
 def zeige_teilchenzahl():
+
     starte_rechnerkarte(
         "3️⃣ Teilchenzahl: N = n × 6.022 × 10²³",
         "Berechne die Anzahl der Atome oder Moleküle"
@@ -264,6 +276,7 @@ def zeige_teilchenzahl():
     col1, col2 = st.columns([1, 1])
 
     with col1:
+
         st.write("**Eingaben:**")
 
         n_teilchen = st.number_input(
@@ -275,9 +288,11 @@ def zeige_teilchenzahl():
         )
 
     with col2:
+
         st.write("**Ergebnis:**")
 
         result = berechne_teilchenzahl(n_teilchen, AVOGADRO)
+
         teilchenzahl = result["value"]
 
         if teilchenzahl >= 1e9:
@@ -286,10 +301,12 @@ def zeige_teilchenzahl():
             st.metric(result["label"], f"{teilchenzahl:,.0f}")
 
     beende_rechnerkarte()
+
     return n_teilchen, teilchenzahl
 
 
 def zeige_konstanten():
+
     st.markdown("""
     <div class="constants-card">
         <b>Wichtige Konstanten:</b>
@@ -312,12 +329,15 @@ def zeige_speicherbuttons(
     n_teilchen,
     teilchenzahl
 ):
+
     st.markdown("### 💾 Ergebnisse speichern")
 
     col1, col2, col3 = st.columns(3)
 
     with col1:
-        if st.button("💾 Molarität ins Logbuch", key="save_molar", use_container_width=True):
+
+        if st.button("💾 Molarität ins Logbuch", use_container_width=True):
+
             if c_molar is None:
                 st.warning("⚠️ Bitte erst Werte eingeben!")
                 return
@@ -327,10 +347,13 @@ def zeige_speicherbuttons(
                 f"n={n_molar} mol, V={v_molar} L",
                 f"c={c_molar:.4f} mol/L"
             )
+
             speichere_ins_logbuch(eintrag)
 
     with col2:
-        if st.button("💾 Molalität ins Logbuch", key="save_molal", use_container_width=True):
+
+        if st.button("💾 Molalität ins Logbuch", use_container_width=True):
+
             if beta_molal is None:
                 st.warning("⚠️ Bitte erst Werte eingeben!")
                 return
@@ -340,19 +363,24 @@ def zeige_speicherbuttons(
                 f"n={n_molal} mol, m={m_molal} g",
                 f"β={beta_molal:.4f} mol/g"
             )
+
             speichere_ins_logbuch(eintrag)
 
     with col3:
-        if st.button("💾 Teilchenzahl ins Logbuch", key="save_teilchen", use_container_width=True):
+
+        if st.button("💾 Teilchenzahl ins Logbuch", use_container_width=True):
+
             eintrag = erstelle_logbuch_eintrag(
                 "Teilchenzahl",
                 f"n={n_teilchen} mol",
                 f"N={teilchenzahl:.3e}"
             )
+
             speichere_ins_logbuch(eintrag)
 
 
 if "logbuch_daten" not in st.session_state:
+
     st.session_state.logbuch_daten = {
         "molmasse": [],
         "molformel": [],
@@ -361,10 +389,13 @@ if "logbuch_daten" not in st.session_state:
 
 
 lade_css()
+
 zeige_kopfbereich()
 
 n_molar, v_molar, c_molar = zeige_molaritaet()
+
 n_molal, m_molal, beta_molal = zeige_molalitaet()
+
 n_teilchen, teilchenzahl = zeige_teilchenzahl()
 
 zeige_konstanten()

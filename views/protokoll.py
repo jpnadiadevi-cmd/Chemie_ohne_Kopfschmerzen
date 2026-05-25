@@ -372,7 +372,7 @@ def zeige_protokoll():
             save_protocols()
 
             st.success(
-                "✅ Protokoll auf SwitchDrive gespeichert!"
+                "✅ Protokoll gespeichert!"
             )
 
     with col2:

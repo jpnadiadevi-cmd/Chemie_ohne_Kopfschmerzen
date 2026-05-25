@@ -187,7 +187,7 @@ def speichere_ins_logbuch(eintrag, result_key, result_value):
 
     if save_to_switchdrive(LOGBOOK_FILE, st.session_state.logbuch_daten):
         st.success(
-            f"✅ {result_key}={result_value:.4f} im Logbuch und auf SwitchDrive gespeichert!"
+            f"✅ {result_key}={result_value:.4f} im Logbuch gespeichert!"
         )
     else:
         st.info(

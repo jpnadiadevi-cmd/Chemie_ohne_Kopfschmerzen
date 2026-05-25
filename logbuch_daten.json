@@ -1,0 +1,57 @@
+{
+    "konzentration": [
+        {
+            "Datum & Uhrzeit": "25.05.2026 12:15:02",
+            "Rechnung": "Molarität",
+            "Eingaben": "n=40.0 mol, V=0.006 L",
+            "Ergebnis": "c=6666.6667 mol/L"
+        },
+        {
+            "Datum & Uhrzeit": "25.05.2026 12:15:06",
+            "Rechnung": "Molalität",
+            "Eingaben": "n=40.0 mol, m=0.004 g",
+            "Ergebnis": "β=10000.0000 mol/g"
+        },
+        {
+            "Datum & Uhrzeit": "25.05.2026 12:15:08",
+            "Rechnung": "Teilchenzahl",
+            "Eingaben": "n=0.005 mol",
+            "Ergebnis": "N=3.011e+21"
+        },
+        {
+            "Datum & Uhrzeit": "25.05.2026 12:26:13",
+            "Rechnung": "Molarität",
+            "Eingaben": "n=0.03 mol, V=0.01 L",
+            "Ergebnis": "c=3.0000 mol/L"
+        },
+        {
+            "Datum & Uhrzeit": "25.05.2026 12:26:15",
+            "Rechnung": "Molalität",
+            "Eingaben": "n=0.01 mol, m=0.1 g",
+            "Ergebnis": "β=0.1000 mol/g"
+        },
+        {
+            "Datum & Uhrzeit": "25.05.2026 12:26:18",
+            "Rechnung": "Teilchenzahl",
+            "Eingaben": "n=0.03 mol",
+            "Ergebnis": "N=1.807e+22"
+        }
+    ],
+    "molformel": [
+        {
+            "Datum & Uhrzeit": "25.05.2026 12:15:18",
+            "Rechnung": "Molformel (n, m, M)",
+            "Eingaben": "n=0.01, m=0.01, M=—",
+            "Ergebnis": "M=1.0000"
+        }
+    ],
+    "molmasse": [
+        {
+            "Datum & Uhrzeit": "25.05.2026 12:15:28",
+            "Rechnung": "Molmasse mit PSE",
+            "Eingaben": "Elemente: H, H, O",
+            "Formel": "H2O",
+            "Ergebnis": "18.015 g/mol"
+        }
+    ]
+}
