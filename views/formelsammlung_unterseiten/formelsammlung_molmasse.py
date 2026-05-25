@@ -15,21 +15,128 @@ from functions.molmasse_rechner import (
 LOGBOOK_FILE = "logbuch_daten.json"
 
 
-st.title("⚛️ Interaktives Periodensystem - Molmasse berechnen")
-st.markdown("---")
+st.set_page_config(
+    page_title="Molmasse berechnen",
+    page_icon="⚛️",
+    layout="wide"
+)
 
-st.write("""
-🧪 **Interaktives PSE – molare Masse clever berechnen**
 
-Willkommen beim interaktiven Periodensystem!
-Hier werden Elemente nicht nur angeklickt, sondern direkt zur molaren Masse zusammengestellt 😉
+def lade_css():
+    st.markdown("""
+    <style>
+    .stApp {
+        background: linear-gradient(180deg, #fff8eb 0%, #fffdf8 45%, #ffffff 100%);
+    }
 
-Keine Sorge:
-Dieses PSE ist übersichtlicher als ein Labortisch vor der Prüfung
-und deutlich hilfreicher als reines Auswendiglernen 😄
+    .block-container {
+        padding-top: 2rem;
+        padding-bottom: 3rem;
+    }
 
-👉 Hinter jeder Formel steckt mehr als nur Chemie – manchmal auch ein wenig Geduld.
-""")
+    .hero-card {
+        background: rgba(255,255,255,0.85);
+        border-radius: 26px;
+        padding: 1.8rem 2rem;
+        box-shadow: 0 12px 35px rgba(0,0,0,0.07);
+        border: 1px solid rgba(255,255,255,0.5);
+        margin-bottom: 2rem;
+    }
+
+    .hero-card h1 {
+        margin: 0;
+        font-size: 2.5rem;
+        color: #30303d;
+    }
+
+    .hero-card p {
+        margin-top: 0.9rem;
+        font-size: 1.08rem;
+        line-height: 1.7;
+        color: #5b5b68;
+    }
+
+    .info-list, .calc-card, .result-card {
+        background: rgba(255,255,255,0.88);
+        border-radius: 24px;
+        padding: 1.5rem 1.7rem;
+        box-shadow: 0 10px 28px rgba(0,0,0,0.07);
+        border: 1px solid rgba(255,255,255,0.55);
+        margin-bottom: 1.8rem;
+    }
+
+    .calc-title {
+        font-size: 1.55rem;
+        font-weight: 800;
+        color: #30303d;
+        margin-bottom: 0.3rem;
+    }
+
+    .calc-subtitle {
+        color: #666674;
+        font-style: italic;
+        margin-bottom: 1.2rem;
+    }
+
+    .legend-box {
+        padding: 10px;
+        border-radius: 12px;
+        text-align: center;
+        font-size: 12px;
+        font-weight: 700;
+        border: 1px solid rgba(0,0,0,0.25);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        min-height: 42px;
+    }
+
+    .element-box {
+        width: 100%;
+        padding: 12px 4px;
+        border: 2px solid rgba(0,0,0,0.35);
+        border-radius: 12px;
+        text-align: center;
+        font-weight: 800;
+        font-size: 16px;
+        min-height: 48px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+    }
+
+    .formula-card {
+        background: #fff8eb;
+        border-radius: 18px;
+        padding: 1.3rem;
+        border: 1px solid #f0dfbd;
+        text-align: center;
+        font-size: 1.35rem;
+        font-weight: 700;
+        margin-top: 1rem;
+    }
+
+    .stMetric {
+        background: #fff8eb;
+        border-radius: 18px;
+        padding: 1rem;
+        border: 1px solid #f0dfbd;
+    }
+
+    .stButton > button {
+        border-radius: 16px;
+        border: 1px solid #efe2c4;
+        background: rgba(255,255,255,0.92);
+        color: #30303d;
+        font-weight: 700;
+        box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+        transition: all 0.22s ease;
+    }
+
+    .stButton > button:hover {
+        transform: translateY(-2px);
+        background: #fff1c9;
+        border-color: #f0c96a;
+        box-shadow: 0 12px 25px rgba(0,0,0,0.10);
+    }
+    </style>
+    """, unsafe_allow_html=True)
 
 
 def initialisiere_session_state():
@@ -44,6 +151,30 @@ def initialisiere_session_state():
         }
 
 
+def zeige_kopfbereich():
+    st.markdown("""
+    <div class="hero-card">
+        <h1>⚛️ Interaktives Periodensystem</h1>
+        <p>
+            Berechne die molare Masse deiner Verbindung direkt über das Periodensystem.
+            Wähle einfach die Elemente aus und deine Molekülformel sowie die Gesamtmasse
+            werden automatisch berechnet.
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+
+    st.markdown("""
+    <div class="info-list">
+        <b>Diese Seite hilft dir bei:</b>
+        <ul>
+            <li><b>Elemente auswählen</b> – direkt aus dem Periodensystem</li>
+            <li><b>Molekülformel erstellen</b> – automatisch aus deinen ausgewählten Elementen</li>
+            <li><b>Molmasse berechnen</b> – Ergebnis in g/mol</li>
+        </ul>
+    </div>
+    """, unsafe_allow_html=True)
+
+
 def zeige_legende():
     st.write("**Kategorien-Legende:**")
 
@@ -53,14 +184,7 @@ def zeige_legende():
         with legend_cols[idx]:
             st.markdown(
                 f"""
-                <div style='
-                    background-color: {farbe};
-                    padding: 10px;
-                    border-radius: 5px;
-                    text-align: center;
-                    font-size: 12px;
-                    border: 1px solid #333;
-                '>
+                <div class="legend-box" style="background-color: {farbe};">
                     {kategorie}
                 </div>
                 """,
@@ -88,17 +212,7 @@ def zeige_element(element):
 
     st.markdown(
         f"""
-        <div style='
-            width: 100%;
-            padding: 12px 4px;
-            background-color: {farbe};
-            border: 2px solid #333;
-            border-radius: 5px;
-            text-align: center;
-            font-weight: bold;
-            font-size: 16px;
-            min-height: 45px;
-        '>
+        <div class="element-box" style="background-color: {farbe};">
             {element["symbol"]}
         </div>
         """,
@@ -115,12 +229,21 @@ def zeige_element(element):
 
 
 def zeige_periodensystem():
-    st.subheader("Periodensystem mit allen 118 Elementen")
+    st.markdown('<div class="calc-card">', unsafe_allow_html=True)
+
+    st.markdown(
+        '<div class="calc-title">🧪 Periodensystem mit allen 118 Elementen</div>',
+        unsafe_allow_html=True
+    )
+
+    st.markdown(
+        '<div class="calc-subtitle">Klicke auf ein Element, um es zur Berechnung hinzuzufügen</div>',
+        unsafe_allow_html=True
+    )
 
     zeige_legende()
 
     st.markdown("---")
-    st.write("**Klicke auf ein Element, um es zur Berechnung hinzuzufügen:**")
 
     element_grid = erstelle_element_grid()
 
@@ -134,16 +257,23 @@ def zeige_periodensystem():
             with cols[gruppe - 1]:
                 zeige_element(element)
 
+    st.markdown('</div>', unsafe_allow_html=True)
+
 
 def zeige_ausgewaehlte_elemente():
+    st.markdown('<div class="result-card">', unsafe_allow_html=True)
+
+    st.markdown(
+        '<div class="calc-title">📊 Ausgewählte Elemente und Molmasse</div>',
+        unsafe_allow_html=True
+    )
+
     if not st.session_state.selected_elements_list:
         st.info(
             "👆 Klicke auf die ➕ Buttons, um Elemente zur Berechnung hinzuzufügen!"
         )
+        st.markdown('</div>', unsafe_allow_html=True)
         return
-
-    st.markdown("---")
-    st.subheader("📊 Ausgewählte Elemente und Molmasse")
 
     total_mass = berechne_gesamtmasse(
         st.session_state.selected_elements_list
@@ -152,7 +282,6 @@ def zeige_ausgewaehlte_elemente():
     st.write("**Ausgewählte Elemente:**")
 
     header_cols = st.columns([1, 2, 2, 1])
-
     headers = ["Nr.", "Element", "Molmasse", "Löschen"]
 
     for col, header in zip(header_cols, headers):
@@ -188,13 +317,18 @@ def zeige_ausgewaehlte_elemente():
         st.metric("Gesamte Molmasse", f"{total_mass:.3f} g/mol")
 
     zeige_molekuelformel()
-
     zeige_buttons(total_mass)
+
+    st.markdown('</div>', unsafe_allow_html=True)
 
 
 def zeige_molekuelformel():
     st.markdown("---")
-    st.subheader("🔬 Molekülformel")
+
+    st.markdown(
+        '<div class="calc-title">🔬 Molekülformel</div>',
+        unsafe_allow_html=True
+    )
 
     element_counts = erstelle_element_counts(
         st.session_state.selected_elements_list
@@ -204,11 +338,7 @@ def zeige_molekuelformel():
 
     st.markdown(
         f"""
-        <div style='
-            padding: 20px;
-            background-color: #f0f0f0;
-            border-radius: 5px;
-        '>
+        <div class="formula-card">
             {formula_html}
         </div>
         """,
@@ -229,10 +359,8 @@ def erstelle_logbuch_eintrag(total_mass):
         "Eingaben": (
             "Elemente: "
             + ", ".join(
-                [
-                    element["symbol"]
-                    for element in st.session_state.selected_elements_list
-                ]
+                element["symbol"]
+                for element in st.session_state.selected_elements_list
             )
         ),
         "Formel": formula_str,
@@ -248,14 +376,10 @@ def speichere_logbuch(eintrag):
         LOGBOOK_FILE
     )
 
-    if save_to_switchdrive(
-        LOGBOOK_FILE,
-        st.session_state.logbuch_daten
-    ):
+    if save_to_switchdrive(LOGBOOK_FILE, st.session_state.logbuch_daten):
         st.success(
             "✅ Eintrag ins Logbuch und auf SwitchDrive gespeichert!"
         )
-
     else:
         st.info(
             "💾 Eintrag im Logbuch gespeichert, "
@@ -265,6 +389,8 @@ def speichere_logbuch(eintrag):
 
 def zeige_buttons(total_mass):
     st.markdown("---")
+
+    st.markdown("### 💾 Ergebnis speichern")
 
     col1, col2 = st.columns(2)
 
@@ -287,7 +413,7 @@ def zeige_buttons(total_mass):
 
 
 initialisiere_session_state()
-
+lade_css()
+zeige_kopfbereich()
 zeige_periodensystem()
-
 zeige_ausgewaehlte_elemente()
