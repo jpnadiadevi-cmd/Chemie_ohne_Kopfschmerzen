@@ -87,10 +87,10 @@ Wähle ein Thema aus
 """, unsafe_allow_html=True)
 
 if st.button("🧪 Konzentrationen und Teilchen", use_container_width=True):
-    st.switch_page("views/formelsammlung_konzentrationen.py")
+    st.switch_page("views/formelsammlung_unterseiten/formelsammlung_konzentrationen.py")
 
 if st.button("🧬 Die Molformel", use_container_width=True):
-    st.switch_page("views/formelsammlung_molformel.py")
+    st.switch_page("views/formelsammlung_unterseiten/formelsammlung_molformel.py")
 
 if st.button("⚗️ Die molare Masse mit PSE", use_container_width=True):
-    st.switch_page("views/formelsammlung_molmasse.py")
+    st.switch_page("views/formelsammlung_unterseiten/formelsammlung_molmasse.py")

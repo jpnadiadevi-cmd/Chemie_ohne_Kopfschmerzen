@@ -55,19 +55,19 @@ pg_formelsammlung = st.Page(
 )
 
 pg_formelsammlung_konzentrationen = st.Page(
-    "views/formelsammlung_konzentrationen.py",
+    "views/formelsammlung_unterseiten/formelsammlung_konzentrationen.py",
     title="Konzentrationen und Teilchen",
     icon=":material/water:"
 )
 
 pg_formelsammlung_molformel = st.Page(
-    "views/formelsammlung_molformel.py",
+    "views/formelsammlung_unterseiten/formelsammlung_molformel.py",
     title="Die Molformel",
     icon=":material/bubble_chart:"
 )
 
 pg_formelsammlung_molmasse = st.Page(
-    "views/formelsammlung_molmasse.py",
+    "views/formelsammlung_unterseiten/formelsammlung_molmasse.py",
     title="Die molare Masse mit PSE",
     icon=":material/scale:"
 )
