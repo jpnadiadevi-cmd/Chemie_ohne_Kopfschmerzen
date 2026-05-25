@@ -272,7 +272,7 @@ def zeige_protokoll():
 
     with col1:
         st.markdown(
-            f'<div class="card-title">🧪 {selected}</div>',
+            f'<div class="card-title">🩷 {selected}</div>',
             unsafe_allow_html=True
         )
 
