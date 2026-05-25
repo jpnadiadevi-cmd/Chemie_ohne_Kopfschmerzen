@@ -1,0 +1,164 @@
+## Nutzertest der fertiggestellten App
+
+### Hypothese
+
+Wir gehen davon aus, dass die fertiggestellte App **„Chemie ohne Kopfschmerzen“** von der Testperson intuitiv bedient werden kann. Die Nutzerin oder der Nutzer soll sich ohne zusätzliche Erklärung auf der Startseite zurechtfinden und die wichtigsten Funktionen selbstständig öffnen und verwenden können.
+
+Besonders wichtig ist uns, dass die Navigation zwischen den Bereichen **Periodensystem**, **Formelsammlung**, **Rechner**, **Logbuch** und **Protokoll** klar verständlich ist. Die Testperson soll erkennen, wofür die einzelnen Seiten gedacht sind und wie sie chemische Berechnungen durchführen, Ergebnisse speichern und Protokolle erfassen kann.
+
+Zusätzlich möchten wir überprüfen, ob die fertige App übersichtlich wirkt, ob die Buttons genügend sichtbar sind und ob die Speicherung im Logbuch und Protokoll nachvollziehbar funktioniert.
+
+---
+
+## Protokoll des Nutzertests
+
+### Testperson
+
+Der Nutzertest wurde mit einer Person durchgeführt, die grundlegende Chemiekenntnisse besitzt und die App vorher noch nicht verwendet hatte. Dadurch konnten wir beobachten, ob die App auch ohne Einführung verständlich ist.
+
+### Testablauf
+
+Die Testperson erhielt die Aufgabe, die App selbstständig zu erkunden und mehrere zentrale Funktionen auszuprobieren. Dabei sollte sie laut mitteilen, was verständlich ist, wo Unsicherheiten entstehen und welche Elemente besonders hilfreich wirken.
+
+Getestet wurden folgende Bereiche:
+
+1. Startseite
+2. Periodensystem
+3. Formelsammlung
+4. Konzentration und Teilchen
+5. Molformel
+6. Molare Masse mit PSE
+7. Logbuch
+8. Protokoll
+
+---
+
+## Beobachtungen während des Tests
+
+### Startseite / Homebildschirm
+
+Die Startseite wurde als übersichtlich und gut strukturiert wahrgenommen. Die Testperson konnte schnell erkennen, welche Hauptbereiche die App anbietet. Besonders hilfreich war, dass die Funktionen klar voneinander getrennt sind.
+
+Die Gestaltung wirkte freundlich und passend zum Thema Chemie. Die Testperson empfand die Startseite als guten Einstieg in die App. Im Vergleich zur früheren Version wirkte die App vollständiger und professioneller.
+
+### Periodensystem
+
+Das Periodensystem wurde als kreativ, bildlich und interaktiv beschrieben. Die Testperson verstand schnell, dass einzelne Elemente angeklickt werden können, um weitere Informationen zu erhalten.
+
+Positiv aufgefallen ist, dass die Elemente farblich nach Kategorien dargestellt werden. Dadurch wirkt das Periodensystem nicht nur informativer, sondern auch visuell ansprechender. Die Detailansicht mit Symbol, Ordnungszahl, Atommasse, Gruppe, Periode und Elektronegativität wurde als hilfreich empfunden.
+
+### Formelsammlung
+
+Die Formelsammlung wurde als kompakt und übersichtlich beschrieben. Die Testperson konnte erkennen, dass sie als Einstiegspunkt zu verschiedenen chemischen Rechnern dient.
+
+Die Buttons waren verständlicher als in der früheren Version, könnten aber weiterhin noch etwas stärker hervorgehoben werden. Trotzdem war die Navigation insgesamt klar und die Testperson konnte die Unterseiten ohne Hilfe öffnen.
+
+### Konzentration und Teilchen
+
+Diese Seite wurde als selbsterklärend und übersichtlich wahrgenommen. Die Testperson konnte die Eingabefelder für Molarität, Molalität und Teilchenzahl gut unterscheiden.
+
+Positiv war, dass die Ergebnisse direkt angezeigt werden und die App Hinweise gibt, wenn noch Werte fehlen. Dadurch wurde die Bedienung sicherer und verständlicher.
+
+Die Möglichkeit, Ergebnisse ins Logbuch zu speichern, wurde als praktisch empfunden, weil man frühere Rechnungen später wieder anschauen kann.
+
+### Die Molformel
+
+Die Molformel-Seite wurde ebenfalls als selbsterklärend beschrieben. Die Formel wurde klar angezeigt und die Testperson verstand, dass zwei Werte eingegeben werden müssen, damit der dritte Wert berechnet werden kann.
+
+Die Rückmeldungen der App bei falscher Eingabe wurden als hilfreich wahrgenommen. Besonders positiv war, dass die App erklärt, wenn zu wenige oder zu viele Werte eingegeben wurden.
+
+### Molare Masse via PSE
+
+Die Seite zur molaren Masse mit dem Periodensystem wurde als besonders kreativ, interaktiv und praktisch bewertet. Die Testperson fand es hilfreich, Elemente direkt aus dem Periodensystem auszuwählen und daraus automatisch die molare Masse berechnen zu lassen.
+
+Die Darstellung der ausgewählten Elemente und der Molekülformel wurde als verständlich empfunden. Auch die Möglichkeit, einzelne Elemente wieder zu löschen oder alle Elemente zurückzusetzen, wurde positiv bewertet.
+
+### Logbuch
+
+Das Logbuch wurde als kompakt, übersichtlich und nützlich beschrieben. Die Testperson konnte nachvollziehen, dass gespeicherte Ergebnisse aus verschiedenen Bereichen gesammelt werden.
+
+Besonders praktisch war die Unterteilung nach Kategorien. Dadurch bleiben Molformel, Molmasse und Konzentrationsrechnungen getrennt und einfacher auffindbar.
+
+Auch die Export-Funktion wurde als sinnvoll wahrgenommen, da die Daten so ausserhalb der App weiterverwendet werden können.
+
+### Protokoll
+
+Die Protokoll-Seite wurde als sehr praktisch und ordnend beschrieben. Die Testperson konnte ein neues Experiment erstellen und die verschiedenen Felder ausfüllen.
+
+Die klare Unterteilung in Ziel, Material, Durchführung, Beobachtung, Auswertung und Fazit wurde positiv bewertet. Dadurch unterstützt die App nicht nur Berechnungen, sondern auch die Dokumentation von Experimenten.
+
+---
+
+## Test-Grid
+
+### Was war gut?
+
+Die App wurde insgesamt als übersichtlich, verständlich und hilfreich wahrgenommen. Die Testperson fand die meisten Funktionen ohne zusätzliche Erklärung.
+
+Besonders positiv waren:
+
+- die klare Navigation zwischen den Seiten
+- das interaktive Periodensystem
+- die direkte Anzeige von Ergebnissen
+- die Speicherung im Logbuch
+- die Protokoll-Funktion für Experimente
+- die freundliche und motivierende Gestaltung
+- die verständlichen Hinweise bei falschen oder fehlenden Eingaben
+
+Die App wirkt in der fertigen Version deutlich vollständiger als in der Konzeptphase. Besonders die Kombination aus Berechnungen, Logbuch und Protokoll wurde als sinnvoll empfunden.
+
+### Was war weniger gut?
+
+Einige Punkte könnten noch verbessert werden. Die Buttons in der Formelsammlung sind verständlich, könnten aber optisch noch stärker hervorgehoben werden. Dadurch wäre noch schneller erkennbar, dass sie zu den einzelnen Rechnern führen.
+
+Ausserdem könnten einzelne Erklärungstexte auf manchen Seiten etwas kürzer sein, damit die wichtigsten Informationen schneller sichtbar sind.
+
+Bei den Berechnungen stellte sich ausserdem die Frage, ob die Anzahl der Kommastellen überall gleich sinnvoll gewählt ist. Eine einheitliche Darstellung der Resultate könnte die App noch professioneller machen.
+
+### Neue Ideen
+
+Während des Nutzertests entstanden mehrere Ideen für eine mögliche Weiterentwicklung der App:
+
+- kurze Erklärungen zu jeder Formel direkt neben dem Rechner
+- Beispielaufgaben für Molarität, Molalität und Molformel
+- zusätzliche Bilder oder Symbole zur besseren Orientierung
+- Darstellung einfacher Molekülstrukturen
+- eine Suchfunktion im Periodensystem
+- eine Möglichkeit, gespeicherte Logbuch-Einträge einzeln zu löschen
+- eine klarere Hervorhebung der wichtigsten Buttons
+
+Diese Ideen sind nicht zwingend nötig, würden die App aber noch benutzerfreundlicher machen.
+
+### Neue Probleme oder offene Fragen
+
+Während des Tests wurden auch einige offene Fragen sichtbar:
+
+- Sind alle Rechner in jeder Situation mathematisch korrekt?
+- Sind die gewählten Kommastellen für alle Berechnungen sinnvoll?
+- Sollten gewisse Fehlermeldungen noch genauer formuliert werden?
+- Soll das Logbuch dauerhaft für alle Nutzerinnen und Nutzer gleich funktionieren?
+- Sollten gespeicherte Daten noch klarer bestätigt werden?
+
+Diese Punkte könnten in einer nächsten Version weiter geprüft und verbessert werden.
+
+---
+
+## Auswertung
+
+Die Hypothese wurde grösstenteils bestätigt. Die Testperson konnte die App selbstständig bedienen und fand sich auf der Startseite sowie in den Unterseiten gut zurecht.
+
+Die wichtigsten Funktionen wurden verstanden und erfolgreich genutzt.
+
+Im Vergleich zum früheren Nutzertest wurde deutlich, dass die App durch die Umsetzung vollständiger, stabiler und verständlicher geworden ist. Viele frühere offene Punkte, wie die Speicherung von Daten und die bessere Strukturierung, wurden inzwischen verbessert.
+
+---
+
+## Schlussfolgerungen
+
+Der Nutzertest zeigt, dass die fertiggestellte App ihren Zweck erfüllt. Sie unterstützt Lernende/Studierende dabei, chemische Berechnungen verständlicher durchzuführen und Ergebnisse übersichtlich zu speichern.
+
+Die App ist nicht nur funktional, sondern bietet auch eine klare Struktur und eine angenehme Benutzeroberfläche. Besonders wertvoll ist, dass sie mehrere Bereiche des Chemieunterrichts verbindet: Formeln, Periodensystem, Rechnungen, Logbuch und Protokollführung.
+
+Für eine nächste Version würden wir vor allem die visuelle Hervorhebung einzelner Buttons verbessern, die Erklärungstexte teilweise kürzen und die Darstellung der Kommastellen vereinheitlichen.
+
+Insgesamt zeigt der Nutzertest, dass die App für die Zielgruppe verständlich, praktisch und hilfreich ist.

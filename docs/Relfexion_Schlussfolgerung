@@ -1,0 +1,24 @@
+# Persönliche Reflexion und Learnings
+
+Während der Entwicklung unserer Chemie-App konnten wir viele wertvolle Erfahrungen im Bereich Softwareentwicklung, Benutzerführung und Projektorganisation sammeln. Zu Beginn unseres Projekts lag der Fokus hauptsächlich darauf, dass die App technisch funktioniert und die wichtigsten chemischen Berechnungen korrekt durchgeführt werden können. Im Verlauf der Umsetzung haben wir jedoch gemerkt, dass eine gute App aus deutlich mehr besteht als nur funktionierendem Code.
+
+Ein wichtiges Learning war für uns, wie entscheidend eine saubere Strukturierung des Projekts ist. Anfangs befand sich ein grosser Teil der Logik direkt in den einzelnen Streamlit-Seiten. Dadurch wurde der Code schnell unübersichtlich und schwieriger wartbar. Im weiteren Verlauf des Projekts haben wir gelernt, Funktionen und Views voneinander zu trennen. Berechnungen und Datenlogik wurden in eigene Dateien im `functions`-Ordner ausgelagert, während die Streamlit-Seiten hauptsächlich für die Benutzeroberfläche zuständig blieben. Dadurch wurde unser Projekt deutlich übersichtlicher und professioneller aufgebaut.
+
+Zusätzlich konnten wir viele technische Fähigkeiten erweitern. Besonders gelernt haben wir:
+
+- wie `Session State` in Streamlit funktioniert
+- wie Daten lokal gespeichert und zusätzlich auf SwitchDrive synchronisiert werden können
+- wie Benutzeroberflächen mit CSS gestaltet und verbessert werden
+- wie wichtig eine klare Navigation und intuitive Benutzerführung ist
+- wie Fehler systematisch gesucht, analysiert und behoben werden
+- wie man grössere Projekte strukturiert organisiert
+
+Auch die Arbeit mit GitHub war ein wichtiger Bestandteil unseres Projekts. Wir mussten lernen, Änderungen sauber zu verwalten, Dateien sinnvoll zu organisieren und eine nachvollziehbare Projektstruktur aufzubauen. Dabei wurde uns bewusst, wie wichtig Ordnung und klare Benennungen in einem Softwareprojekt sind.
+
+Besonders spannend fanden wir die Verbindung zwischen Chemie und Informatik. Durch die Entwicklung der App konnten chemische Inhalte interaktiv und verständlicher dargestellt werden. Die Kombination aus Berechnungen, Visualisierung und Datenspeicherung machte das Projekt abwechslungsreich und praxisnah.
+
+Während der Entwicklung haben wir ausserdem gelernt, wie wichtig Feedback von anderen Personen ist. Durch Nutzertests und Rückmeldungen konnten wir Schwächen erkennen und die Benutzeroberfläche weiter verbessern. Viele Ideen entstanden erst während des Testens der fertigen App.
+
+Rückblickend würden wir bei einem nächsten Projekt die Strukturierung des Codes noch früher planen und Funktionen von Anfang an konsequent trennen. Ausserdem würden wir einige Bereiche früher testen, um mögliche Probleme schneller zu erkennen.
+
+Insgesamt sind wir jedoch sehr zufrieden mit dem Endergebnis. Die App funktioniert zuverlässig, ist übersichtlich aufgebaut und unterstützt Lernende bei chemischen Berechnungen sowie beim Dokumentieren von Experimenten. Das Projekt hat uns sowohl fachlich als auch organisatorisch viele wichtige Erfahrungen vermittelt.
